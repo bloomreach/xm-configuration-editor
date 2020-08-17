@@ -1,0 +1,7 @@
+definitions:
+  config:
+    /hippo:configuration/hippo:userroles/xm.config-editor.user:
+      jcr:primaryType: hipposys:userrole
+      hipposys:description: Required to see the Channel Config Editor OpenUi Extension
+      hipposys:system: true
+      hipposys:userroles: []

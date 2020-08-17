@@ -1,0 +1,108 @@
+definitions:
+  config:
+    /hippo:configuration/hippo:translations/hippo:types/channelconfigeditordemo:bannerdocument:
+      jcr:primaryType: hipposys:resourcebundles
+      /en:
+        jcr:primaryType: hipposys:resourcebundle
+        channelconfigeditordemo:content: Content
+        channelconfigeditordemo:image: Image
+        channelconfigeditordemo:link: Link
+        channelconfigeditordemo:title: Title
+        jcr:name: Banner
+      /nl:
+        jcr:primaryType: hipposys:resourcebundle
+        channelconfigeditordemo:content: Inhoud
+        channelconfigeditordemo:image: Afbeelding
+        channelconfigeditordemo:link: Link
+        channelconfigeditordemo:title: Titel
+        jcr:name: Banner
+      /fr:
+        jcr:primaryType: hipposys:resourcebundle
+        channelconfigeditordemo:content: Contenu
+        channelconfigeditordemo:image: Image
+        channelconfigeditordemo:link: Lien
+        channelconfigeditordemo:title: Titre
+        jcr:name: Bannière
+      /de:
+        jcr:primaryType: hipposys:resourcebundle
+        channelconfigeditordemo:content: Inhalt
+        channelconfigeditordemo:image: Abbildung
+        channelconfigeditordemo:link: Link
+        channelconfigeditordemo:title: Titel
+        jcr:name: Banner
+    /hippo:configuration/hippo:translations/hippo:types/channelconfigeditordemo:newsdocument:
+      jcr:primaryType: hipposys:resourcebundles
+      /en:
+        jcr:primaryType: hipposys:resourcebundle
+        channelconfigeditordemo:author: Author
+        channelconfigeditordemo:content: Content
+        channelconfigeditordemo:date: Date
+        channelconfigeditordemo:image: Image
+        channelconfigeditordemo:introduction: Introduction
+        channelconfigeditordemo:location: Location
+        channelconfigeditordemo:source: Source
+        channelconfigeditordemo:title: Title
+        jcr:name: News Item
+      /nl:
+        jcr:primaryType: hipposys:resourcebundle
+        channelconfigeditordemo:author: Auteur
+        channelconfigeditordemo:content: Inhoud
+        channelconfigeditordemo:date: Datum
+        channelconfigeditordemo:image: Afbeelding
+        channelconfigeditordemo:introduction: Introductie
+        channelconfigeditordemo:location: Locatie
+        channelconfigeditordemo:source: Bron
+        channelconfigeditordemo:title: Titel
+        jcr:name: Nieuwsbericht
+      /de:
+        jcr:primaryType: hipposys:resourcebundle
+        channelconfigeditordemo:author: Verfasser
+        channelconfigeditordemo:content: Inhalt
+        channelconfigeditordemo:date: Datum
+        channelconfigeditordemo:image: Abbildung
+        channelconfigeditordemo:introduction: Einführung
+        channelconfigeditordemo:location: Standort
+        channelconfigeditordemo:source: Quelle
+        channelconfigeditordemo:title: Titel
+        jcr:name: News
+      /fr:
+        jcr:primaryType: hipposys:resourcebundle
+        channelconfigeditordemo:author: Auteur
+        channelconfigeditordemo:content: Contenu
+        channelconfigeditordemo:date: Date
+        channelconfigeditordemo:image: Image
+        channelconfigeditordemo:introduction: Introduction
+        channelconfigeditordemo:location: Lieu
+        channelconfigeditordemo:source: Source
+        channelconfigeditordemo:title: Titre
+        jcr:name: Message d'info
+    /hippo:configuration/hippo:translations/hippo:types/channelconfigeditordemo:contentdocument:
+      jcr:primaryType: hipposys:resourcebundles
+      /en:
+        jcr:primaryType: hipposys:resourcebundle
+        channelconfigeditordemo:content: Content
+        channelconfigeditordemo:introduction: Introduction
+        channelconfigeditordemo:publicationdate: Publication date
+        channelconfigeditordemo:title: Title
+        jcr:name: Simple Document
+      /nl:
+        jcr:primaryType: hipposys:resourcebundle
+        channelconfigeditordemo:content: Inhoud
+        channelconfigeditordemo:introduction: Introductie
+        channelconfigeditordemo:publicationdate: Publicatiedatum
+        channelconfigeditordemo:title: Titel
+        jcr:name: Eenvoudig Document
+      /fr:
+        jcr:primaryType: hipposys:resourcebundle
+        channelconfigeditordemo:content: Contenu
+        channelconfigeditordemo:introduction: Introduction
+        channelconfigeditordemo:publicationdate: Date de publication
+        channelconfigeditordemo:title: Titre
+        jcr:name: Document simple
+      /de:
+        jcr:primaryType: hipposys:resourcebundle
+        channelconfigeditordemo:content: Inhalt
+        channelconfigeditordemo:introduction: Einführung
+        channelconfigeditordemo:publicationdate: Publikationsdatum
+        channelconfigeditordemo:title: Titel
+        jcr:name: Einfaches Dokument

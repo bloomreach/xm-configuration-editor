@@ -1,0 +1,8 @@
+/hst:hst/hst:configurations/channelconfigeditordemo/hst:workspace/hst:containers/homepage/containermain/banner:
+  jcr:primaryType: hst:containeritemcomponent
+  hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
+  hst:iconpath: images/essentials/catalog-component-icons/banner.svg
+  hst:label: Banner
+  hst:parameternames: [document, org.hippoecm.hst.core.component.template]
+  hst:parametervalues: [banners/banner1, 'webfile:/freemarker/hstdefault/essentials-banner.ftl']
+  hst:template: essentials-banner

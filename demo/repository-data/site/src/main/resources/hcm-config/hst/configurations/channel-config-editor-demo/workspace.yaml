@@ -1,0 +1,12 @@
+definitions:
+  config:
+    /hst:hst/hst:configurations/channelconfigeditordemo/hst:workspace:
+      jcr:primaryType: hst:workspace
+      jcr:mixinTypes: ['dxphst:mergeable']
+      dxphst:treehash: 9DECECEF57BBEE45B416B0932D5B6673
+      /hst:abstractpages:
+        .meta:residual-child-node-category: content
+        jcr:primaryType: hst:pages
+      /hst:components:
+        .meta:residual-child-node-category: content
+        jcr:primaryType: hst:components

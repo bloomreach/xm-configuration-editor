@@ -1,0 +1,14 @@
+definitions:
+  config:
+    /hippo:configuration/hippo:groups/admin:
+      hipposys:userroles:
+        .meta:category: system
+        .meta:add-new-system-values: true
+        type: string
+        value: [xm.default-user.system-admin, xm.repository-browser.user, xm.config-editor.current-page.viewer,
+          xm.config-editor.current-page.editor]
+      hipposys:members:
+        .meta:category: system
+        .meta:add-new-system-values: true
+        type: string
+        value: [admin]

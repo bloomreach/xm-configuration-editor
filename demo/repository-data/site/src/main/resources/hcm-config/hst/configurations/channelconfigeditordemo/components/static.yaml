@@ -1,0 +1,6 @@
+definitions:
+  config:
+    /hst:hst/hst:configurations/channelconfigeditordemo/hst:components/static:
+      .meta:order-before: managed
+      jcr:primaryType: hst:component
+      hst:description: Static Component

@@ -1,0 +1,7 @@
+/content/gallery/channelconfigeditordemo:
+  jcr:primaryType: hippogallery:stdImageGallery
+  jcr:mixinTypes: ['hippo:named', 'mix:referenceable']
+  jcr:uuid: cad8c8e9-7e89-4e8f-b745-11c231ef507e
+  hippo:name: XM Channel Config Editor Demo
+  hippostd:foldertype: [new-image-folder]
+  hippostd:gallerytype: ['hippogallery:imageset']

@@ -1,0 +1,7 @@
+definitions:
+  config:
+    /hippo:configuration/hippo:frontend/cms/ui-extensions/channelConfigEditor:
+      jcr:primaryType: frontend:uiExtension
+      frontend:displayName: Channel Config Editor
+      frontend:extensionPoint: channel.page.tools
+      frontend:url: http://localhost:3000/#/current-page

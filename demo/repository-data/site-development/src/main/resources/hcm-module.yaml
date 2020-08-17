@@ -1,0 +1,6 @@
+site: channel-config-editor-demo
+group: channel-config-editor-demo
+project: channel-config-editor-demo
+module:
+  name: channel-config-editor-demo-repository-data-site-development
+  after: channel-config-editor-demo-repository-data-site

@@ -1,0 +1,8 @@
+definitions:
+  config:
+    /hippo:configuration/hippo:domains/frontend-config/frontend-config/exclude-configEditor-extension:
+      jcr:primaryType: hipposys:facetrule
+      hipposys:equals: false
+      hipposys:facet: jcr:path
+      hipposys:type: Reference
+      hipposys:value: /hippo:configuration/hippo:frontend/cms/ui-extensions/channelConfigEditor

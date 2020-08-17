@@ -1,0 +1,5 @@
+definitions:
+  namespace:
+    channelconfigeditordemo:
+      uri: http://www.channelconfigeditordemo.com/channelconfigeditordemo/nt/1.0
+      cnd: namespaces/channel-config-editor-demo.cnd

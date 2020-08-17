@@ -1,0 +1,15 @@
+definitions:
+  config:
+    /hippo:namespaces/channelconfigeditordemo/basedocument:
+      jcr:primaryType: hipposysedit:templatetype
+      jcr:mixinTypes: ['mix:referenceable']
+      jcr:uuid: 46b51494-46b8-4480-afbc-b4bd20a64c27
+      /hipposysedit:nodetype:
+        jcr:primaryType: hippo:handle
+        jcr:mixinTypes: ['mix:referenceable']
+        jcr:uuid: 6b19e099-51d0-451f-ab6f-d9a87f6d82bf
+        /hipposysedit:nodetype:
+          jcr:primaryType: hipposysedit:nodetype
+          jcr:mixinTypes: ['hipposysedit:remodel']
+          hipposysedit:supertype: ['hippo:document', 'hippostdpubwf:document', 'hippostd:publishableSummary']
+          hipposysedit:uri: http://www.channelconfigeditordemo.com/channelconfigeditordemo/nt/1.0

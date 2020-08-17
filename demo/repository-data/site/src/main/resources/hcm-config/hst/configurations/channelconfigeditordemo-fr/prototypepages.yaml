@@ -1,0 +1,4 @@
+definitions:
+  config:
+    /hst:hst/hst:configurations/channelconfigeditordemo-fr/hst:prototypepages:
+      jcr:primaryType: hst:pages

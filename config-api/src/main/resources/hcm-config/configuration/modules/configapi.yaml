@@ -1,0 +1,18 @@
+definitions:
+  config:
+    /hippo:configuration/hippo:modules/configapi:
+      jcr:primaryType: hipposys:module
+      hipposys:className: com.bloomreach.xm.config.api.ConfigApiModule
+      /hippo:moduleconfig:
+        jcr:primaryType: nt:unstructured
+        enabled: false
+        /static:
+          jcr:primaryType: hst:component
+          jcr:uuid: 5aef3a26-3915-44cc-903f-174aba5fab6b
+          hst:description: Static Component
+        /managed:
+          jcr:primaryType: hst:containercomponent
+          jcr:uuid: 00f964e5-72b2-456e-8d82-d74a5aa2dea6
+          hst:description: Managed Component
+          hst:lastmodified: 2020-08-08T06:23:11.158+02:00
+          hst:xtype: hst.vbox

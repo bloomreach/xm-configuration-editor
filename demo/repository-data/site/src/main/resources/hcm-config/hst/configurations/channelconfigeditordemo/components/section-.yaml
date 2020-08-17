@@ -1,0 +1,16 @@
+definitions:
+  config:
+    /hst:hst/hst:configurations/channelconfigeditordemo/hst:components/section-:
+      jcr:primaryType: hst:component
+      hst:description: Section
+      /row-:
+        jcr:primaryType: hst:component
+        hst:description: Row
+        /col-1:
+          jcr:primaryType: hst:containercomponent
+          hst:description: Column
+          hst:xtype: hst.vbox
+        /col-2:
+          jcr:primaryType: hst:containercomponent
+          hst:description: Column
+          hst:xtype: hst.vbox

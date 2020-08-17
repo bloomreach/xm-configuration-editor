@@ -1,0 +1,10 @@
+definitions:
+  config:
+    /hst:hst/hst:configurations/channelconfigeditordemo/hst:prototypepages/contentpage:
+      jcr:primaryType: hst:component
+      jcr:mixinTypes: ['hst:prototypemeta']
+      hst:displayname: Simple Content Page
+      hst:referencecomponent: hst:abstractpages/base
+      hst:description: Content Page
+      /main:
+        jcr:primaryType: hst:component

@@ -1,0 +1,5 @@
+group: hippo-cms
+project:
+  name: xm-configuration-editor
+  after: [hippo-repository, hippo-cms]
+module: xm-configuration-editor

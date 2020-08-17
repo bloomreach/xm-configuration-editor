@@ -1,0 +1,5 @@
+/hst:hst/hst:configurations/channelconfigeditordemo/hst:workspace/hst:sitemenus/main/test123:
+  .meta:order-before: news
+  jcr:primaryType: hst:sitemenuitem
+  hst:referencesitemapitem: test123
+  hst:repobased: false

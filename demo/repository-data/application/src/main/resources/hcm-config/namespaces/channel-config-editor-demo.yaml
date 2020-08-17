@@ -1,0 +1,6 @@
+definitions:
+  config:
+    /hippo:namespaces/channelconfigeditordemo:
+      jcr:primaryType: hipposysedit:namespace
+      jcr:mixinTypes: ['mix:referenceable']
+      jcr:uuid: 9ee9a00e-8a8a-4c66-96ca-5e98894642bc

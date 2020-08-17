@@ -1,0 +1,14 @@
+definitions:
+  config:
+    /hst:hst/hst:configurations/channelconfigeditordemo/hst:components/row-:
+      .meta:order-before: col-
+      jcr:primaryType: hst:component
+      hst:description: Row
+      /col-1:
+        jcr:primaryType: hst:containercomponent
+        hst:description: Column
+        hst:xtype: hst.vbox
+      /col-2:
+        jcr:primaryType: hst:containercomponent
+        hst:description: Column
+        hst:xtype: hst.vbox

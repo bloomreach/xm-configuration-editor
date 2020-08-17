@@ -1,0 +1,7 @@
+group: 
+  name: channel-config-editor-demo
+  after: hippo-cms
+project: channel-config-editor-demo
+module: 
+  name: channel-config-editor-demo-repository-data-development
+  after: channel-config-editor-demo-repository-data-application

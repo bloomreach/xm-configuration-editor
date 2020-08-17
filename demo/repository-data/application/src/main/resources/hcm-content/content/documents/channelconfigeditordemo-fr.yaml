@@ -1,0 +1,7 @@
+/content/documents/channelconfigeditordemo-fr:
+  jcr:primaryType: hippostd:folder
+  jcr:mixinTypes: ['hippotranslation:translated', 'mix:versionable']
+  jcr:uuid: e1c2c6aa-2f98-4655-a26a-2a3874258e0c
+  hippostd:foldertype: [new-translated-folder, new-document]
+  hippotranslation:id: ef431b35-7412-4e0b-b0b0-51869ae930dd
+  hippotranslation:locale: fr

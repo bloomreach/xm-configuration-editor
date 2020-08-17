@@ -1,0 +1,9 @@
+/content/documents/channelconfigeditordemo:
+  .meta:order-before: administration
+  jcr:primaryType: hippostd:folder
+  jcr:mixinTypes: ['hippo:named', 'hippotranslation:translated', 'mix:referenceable']
+  jcr:uuid: 65d5d1a6-fc80-4411-a170-dd4cbfcfe33b
+  hippo:name: XM Channel Config Editor Demo
+  hippostd:foldertype: [new-translated-folder, new-document]
+  hippotranslation:id: ef431b35-7412-4e0b-b0b0-51869ae930dd
+  hippotranslation:locale: en
