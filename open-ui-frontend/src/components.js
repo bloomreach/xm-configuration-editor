@@ -21,7 +21,6 @@ import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import {deleteComponentWithName, getAllComponents, putComponentWithName} from './config-api';
 import {componentToNode, convertComponentsToTreeDataArray, getId, nodeToComponent} from './util';
-import UiExtension from "@bloomreach/ui-extension";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
@@ -60,16 +59,15 @@ class Components extends React.Component {
   }
 
   componentDidMount () {
-    UiExtension.register().then((ui) => {
-      this.setState({baseUrl: ui.baseUrl});
-      ui.channel.page.get().then(page => page.channel.id).then(channelId => {
-        getAllComponents(this.state.baseUrl, channelId).then(result => {
-          const treeData = convertComponentsToTreeDataArray(result);
-          this.setState({components: treeData});
-        });
-        this.setState({channelId: channelId});
-      })
-    });
+    const ui = this.ui;
+    this.setState({baseUrl: ui.baseUrl});
+    ui.channel.page.get().then(page => page.channel.id).then(channelId => {
+      getAllComponents(this.state.baseUrl, channelId).then(result => {
+        const treeData = convertComponentsToTreeDataArray(result);
+        this.setState({components: treeData});
+      });
+      this.setState({channelId: channelId});
+    })
   }
 
   deleteComponent (item) {

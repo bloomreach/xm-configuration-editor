@@ -20,9 +20,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         <ACLProvider value={acl}>
           <HashRouter>
             <Switch>
-              <Route path="/current-page" render={props => <CurrentPage/>}/>
-              <Route path="/components" render={props => <Components/>}/>
-              <Route exact path="/" render={props => <Navigation/>}/>
+              <Route path="/current-page" render={props => <CurrentPage ui={ui}/>}/>
+              <Route path="/components" render={props => <Components ui={ui}/>}/>
+              <Route exact path="/" render={props => <Navigation ui={ui} />}/>
             </Switch>
           </HashRouter>
         </ACLProvider>

@@ -9,8 +9,6 @@ import IconButton from "@material-ui/core/IconButton";
 import ExpandLessOutlinedIcon from '@material-ui/icons/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
 import UndoOutlinedIcon from '@material-ui/icons/UndoOutlined';
-
-import UiExtension from '@bloomreach/ui-extension';
 import {getAllComponents, getPageWithName, getUrl, putPageWithName} from "./config-api";
 import PositionedSnackbar from "./PositionedSnackbar";
 import ComponentTree from "./component-tree";
@@ -44,16 +42,15 @@ class CurrentPage extends React.Component {
   }
 
   componentDidMount () {
-    UiExtension.register().then((ui) => {
-      this.setState({baseUrl: ui.baseUrl});
-      ui.channel.page.on('navigate', this.handleNavigate);
-      ui.channel.page.get().then(page => {
-        this.handleNavigate(page);
-        getAllComponents(ui.baseUrl, page.channel.id).then(result => {
-          //todo check if is inpacted, changed the underlying method
-          const treeData = convertComponentsToTreeDataArray(result);
-          this.setState({components: treeData});
-        });
+    const ui = this.ui;
+    this.setState({baseUrl: ui.baseUrl});
+    ui.channel.page.on('navigate', this.handleNavigate);
+    ui.channel.page.get().then(page => {
+      this.handleNavigate(page);
+      getAllComponents(ui.baseUrl, page.channel.id).then(result => {
+        //todo check if is inpacted, changed the underlying method
+        const treeData = convertComponentsToTreeDataArray(result);
+        this.setState({components: treeData});
       });
     });
   }
@@ -173,25 +170,24 @@ class CurrentPage extends React.Component {
   handleSave () {
     let treeDataToPage = nodeToComponent(this.state.treeData[0]);
     treeDataToPage.type = "page";
-    UiExtension.register().then((ui) => {
-      ui.channel.page.get().then(page => {
-        putPageWithName(this.state.baseUrl, page.channel.id, page.path, treeDataToPage)
-          .then(response => {
-            if (response.status === 201 && response.headers.location) {
-              this.updateComponentHierarchy(getUrl(response.headers.location));
-              this.resetRevisionHistory();
-              ui.channel.refresh().then(() => {
-                console.log('channel refreshed');
-              })
-              ui.channel.page.refresh().then(() => {
-                console.log('page refreshed');
-              });
-            }
-            return response.data
-          }).catch(exception => {
-          console.log(exception.response.data.errorMessage);
-          this.openSnackbar(exception.response.data.errorMessage, 'error');
-        });
+    const ui = this.ui;
+    ui.channel.page.get().then(page => {
+      putPageWithName(this.state.baseUrl, page.channel.id, page.path, treeDataToPage)
+        .then(response => {
+          if (response.status === 201 && response.headers.location) {
+            this.updateComponentHierarchy(getUrl(response.headers.location));
+            this.resetRevisionHistory();
+            ui.channel.refresh().then(() => {
+              console.log('channel refreshed');
+            })
+            ui.channel.page.refresh().then(() => {
+              console.log('page refreshed');
+            });
+          }
+          return response.data
+        }).catch(exception => {
+        console.log(exception.response.data.errorMessage);
+        this.openSnackbar(exception.response.data.errorMessage, 'error');
       });
     });
   }
