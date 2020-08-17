@@ -129,49 +129,6 @@ public class ConfigApiResource {
         return Response.ok(components).build();
     }
 
-//    @Path("/channels/{channel_id}/components/{component_name}")
-//    @PUT
-//    @Produces({MediaType.APPLICATION_JSON})
-//    public Response putComponentWithName(@Context HttpServletRequest request, @PathParam("channel_id") String channelId, @PathParam("component_name") String componentName, final AbstractComponent component) throws ChannelNotFoundException {
-//        final Session requestSession = getImpersonatedSession();
-//        final HstSite hstSite = getHstSite(channelId);
-//        try {
-//            //todo authorize request
-//            //todo locking
-//            //todo move component registry to live which will affect how hstSite object is got.
-//            buildComponentNode(requestSession, component, hstSite, getUserSession(request).getUserID());
-//            requestSession.save();
-//        } catch (RepositoryException ex) {
-//            LOGGER.error(ex.getMessage());
-//            throw new InternalServerErrorException("Internal server error", ex);
-//        } finally {
-//            closeSession(requestSession);
-//        }
-//        return Response.status(201).location(URI.create(String.format("/channels/%s/components/%s", channelId, componentName))).entity(component).build();
-//    }
-//
-//    @Path("/channels/{channel_id}/components/{component_name}")
-//    @DELETE
-//    @Produces({MediaType.APPLICATION_JSON})
-//    public Response deleteComponentWithName(@Context HttpServletRequest request, @PathParam("channel_id") String channelId, @PathParam("component_name") String componentName) throws ChannelNotFoundException {
-//        final Session requestSession = getImpersonatedSession();
-//        final HstSite hstSite = getHstSite(channelId);
-//        try {
-//            //todo authorize request
-//            //todo locking
-//            //todo actual delete, now only in the frontend
-//            //check if such a  component already exists. If so, we have to update it.
-////            final String componentRegistryPath = hstSite.getConfigurationPath() + "/hst:workspace/hst:components"; //TODO refactor
-////            final Node componentRegistryNode = requestSession.getNode(componentRegistryPath);
-////            componentRegistryNode.remove();
-////            requestSession.save();
-//
-//        } finally {
-//            closeSession(requestSession);
-//        }
-//        return Response.ok().build();
-//    }
-
     @Path("/acl")
     @GET
     @Produces({MediaType.APPLICATION_JSON})

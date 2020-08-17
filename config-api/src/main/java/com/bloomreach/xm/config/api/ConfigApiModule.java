@@ -17,7 +17,6 @@ public class ConfigApiModule extends AbstractReconfigurableDaemonModule {
 
     @Override
     protected void doConfigure(Node node) throws RepositoryException {
-
     }
 
     @Override
