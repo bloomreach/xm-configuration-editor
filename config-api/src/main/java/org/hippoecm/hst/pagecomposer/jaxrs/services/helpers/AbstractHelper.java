@@ -49,7 +49,7 @@ import static org.hippoecm.hst.configuration.HstNodeTypes.GENERAL_PROPERTY_PARAM
 import static org.hippoecm.hst.configuration.HstNodeTypes.GENERAL_PROPERTY_PARAMETER_VALUES;
 import static org.hippoecm.hst.configuration.HstNodeTypes.NODENAME_HST_WORKSPACE;
 import static org.hippoecm.hst.configuration.HstNodeTypes.SITEMENUITEM_PROPERTY_ROLES;
-
+//fork because of line 160-165, todo remove in the future
 public abstract class AbstractHelper {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractHelper.class);
