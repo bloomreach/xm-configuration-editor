@@ -104,7 +104,7 @@
   <modules>
     <module>open-ui-frontend</module>
     <module>config-api</module>
-    <module>demo</module>
+<!--    <module>demo</module>-->
   </modules>
 
 </project>
