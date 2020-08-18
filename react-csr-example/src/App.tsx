@@ -83,7 +83,10 @@ export default function App (props: RouteComponentProps) {
         </nav>
       </header>
       <section className="container flex-fill pt-3">
-        <BrComponent path=""/>
+        <BrComponent path="top"/>
+      </section>
+      <section className="container flex-fill pt-3">
+        <BrComponent path="main-1"/>
       </section>
       <footer className="bg-dark text-light py-3">
         <div className="container clearfix">
