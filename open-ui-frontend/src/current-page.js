@@ -50,7 +50,6 @@ class CurrentPage extends React.Component {
     ui.channel.page.get().then(page => {
       this.handleNavigate(page);
       getAllComponents(ui.baseUrl, page.channel.id).then(result => {
-        //todo check if is inpacted, changed the underlying method
         const treeData = convertComponentsToTreeDataArray(result);
         this.setState({components: treeData});
       });
