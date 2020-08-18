@@ -13,6 +13,8 @@ import {getAllComponents, getPageWithName, getUrl, putPageWithName} from "./conf
 import PositionedSnackbar from "./PositionedSnackbar";
 import ComponentTree from "./component-tree";
 import {componentToNode, convertComponentsToTreeDataArray, deepCopy, nodeToComponent} from "./util";
+import {ACLConsumer} from "./ACLContext";
+import ImmutableComponentTree from "./immutable-component-tree";
 
 class CurrentPage extends React.Component {
 
@@ -135,24 +137,37 @@ class CurrentPage extends React.Component {
   }
 
   render () {
-
     const {treeData} = this.state || [];
+    const validTree = treeData && treeData.length > 0;
 
-    return <Fragment>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <AppBar position="sticky" variant={'outlined'} color={'default'}>
-            {this.getCurrentPageToolBar()}
-          </AppBar>
-          {treeData && treeData.length > 0 &&
-          <ComponentTree treeData={treeData} onTreeDataChange={this.updateTreeData}
-                         componentsForMenu={this.state.components} onDrawerDataChange={this.handleDrawerDataChange} drawerData={this.state.drawerData}/>}
-        </Grid>
-      </Grid>
-      <PositionedSnackbar open={this.state.snackbarOpen} vertical={'bottom'} horizontal={'center'}
-                          handleClose={() => this.handleSnackbarClose()} message={this.state.snackbarMessage}
-                          severity={this.state.snackbarSeverity}/>
-    </Fragment>
+    return <ACLConsumer>
+      {permissions =>
+        <Fragment>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+
+              <AppBar position="sticky" variant={'outlined'} color={'default'}>
+                {this.getCurrentPageToolBar()}
+              </AppBar>
+
+              {validTree && permissions?.currentPageEditAllowed &&
+              <ComponentTree treeData={treeData} onTreeDataChange={this.updateTreeData}
+                             componentsForMenu={this.state.components} onDrawerDataChange={this.handleDrawerDataChange} drawerData={this.state.drawerData}/>
+              }
+              {validTree && !permissions?.currentPageEditAllowed && permissions?.currentPageViewAllowed &&
+              <ImmutableComponentTree treeData={treeData}
+                                      onDrawerDataChange={this.handleDrawerDataChange} drawerData={this.state.drawerData}/>
+              }
+
+            </Grid>
+          </Grid>
+          < PositionedSnackbar open={this.state.snackbarOpen} vertical={'bottom'} horizontal={'center'}
+                               handleClose={() => this.handleSnackbarClose()} message={this.state.snackbarMessage}
+                               severity={this.state.snackbarSeverity}/>
+
+        </Fragment>
+      }
+    </ACLConsumer>
   }
 
   updateComponentHierarchy (responsePromise) {
