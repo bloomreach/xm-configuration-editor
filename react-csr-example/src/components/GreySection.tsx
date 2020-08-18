@@ -20,12 +20,12 @@ import {BrComponent, BrProps} from '@bloomreach/react-sdk';
 export function GreySection (props: BrProps) {
   return (
     <div style={{backgroundColor: 'darkgray'}} className={`jumbotron mb-3 ${props.page.isPreview() ? 'has-edit-button' : ''}`}>
-      <p>grey section start - {props.component.getName()}</p>
+      {/*<p>grey section start - {props.component.getName()}</p>*/}
       <div className={'container'}>
         <BrComponent>
         </BrComponent>
       </div>
-      <p>grey section end</p>
+      {/*<p>grey section end</p>*/}
     </div>
   );
 }

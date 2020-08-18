@@ -20,12 +20,12 @@ import {BrComponent, BrProps} from '@bloomreach/react-sdk';
 export function WhiteSection (props: BrProps) {
   return (
     <div style={{backgroundColor: 'white'}} className={`jumbotron mb-3 ${props.page.isPreview() ? 'has-edit-button' : ''}`}>
-      <p>white section start - {props.component.getName()}</p>
+      {/*<p>white section start - {props.component.getName()}</p>*/}
       <div className={'container'}>
         <BrComponent>
         </BrComponent>
       </div>
-      <p>white section start</p>
+      {/*<p>white section start</p>*/}
     </div>
   );
 }

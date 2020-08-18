@@ -21,12 +21,12 @@ export function Row (props: React.PropsWithChildren<BrProps>) {
   // @ts-ignore
   return (
     <div>
-      <p>row start - {props.component.getName()}</p>
+      {/*<p>row start - {props.component.getName()}</p>*/}
       <div className={`row ${props.page.isPreview() ? 'has-edit-button' : ''}`}>
         <BrComponent>
         </BrComponent>
       </div>
-      <p>row end</p>
+      {/*<p>row end</p>*/}
     </div>
   );
 }

@@ -22,7 +22,7 @@ export function Section (props: BrProps) {
 
   return (
     <div className={`jumbotron mb-3 ${props.page.isPreview() ? 'has-edit-button' : ''}`}>
-      {props.component.getName()}
+      {/*{props.component.getName()}*/}
       {/*{console.log('props')}*/}
       {/*<h2>{props.component.getParameters().rowtitle}</h2>*/}
       <div className={'container'}>
