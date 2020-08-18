@@ -84,56 +84,64 @@ class CurrentPage extends React.Component {
   }
 
   getCurrentPageToolBar () {
-    return <Toolbar>
-      <IconButton
-        edge="start"
-        color="inherit"
-        aria-label="Save"
-        onClick={() => this.handleSave()}
-        disabled={this.state.treeDataRevisionArray.length <= 1}
-      >
-        <SaveOutlinedIcon/>
-      </IconButton>
-      <IconButton
-        edge="start"
-        color="inherit"
-        aria-label="Undo"
-        disabled={this.state.treeDataRevisionArray.length <= 1}
-        onClick={() => this.handleUndo()}
-      >
-        <UndoOutlinedIcon/>
-      </IconButton>
-      <IconButton
-        edge="start"
-        color="inherit"
-        aria-label="Collapse All"
-        onClick={this.collapseAll}
-      >
-        <ExpandLessOutlinedIcon/>
-      </IconButton>
-      <IconButton
-        edge="start"
-        color="inherit"
-        aria-label="Expand All"
-        onClick={this.expandAll}
-      >
-        <ExpandMoreOutlinedIcon/>
-      </IconButton>
+    return <ACLConsumer>
+      {permissions =>
+        <Toolbar>
+          {permissions?.currentPageEditAllowed &&
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="Save"
+            onClick={() => this.handleSave()}
+            disabled={this.state.treeDataRevisionArray.length <= 1}
+          >
+            <SaveOutlinedIcon/>
+          </IconButton>
+          }
+          {permissions?.currentPageEditAllowed &&
+          < IconButton
+            edge="start"
+            color="inherit"
+            aria-label="Undo"
+            disabled={this.state.treeDataRevisionArray.length <= 1}
+            onClick={() => this.handleUndo()}
+          >
+            <UndoOutlinedIcon/>
+          </IconButton>
+          }
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="Collapse All"
+            onClick={this.collapseAll}
+          >
+            <ExpandLessOutlinedIcon/>
+          </IconButton>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="Expand All"
+            onClick={this.expandAll}
+          >
+            <ExpandMoreOutlinedIcon/>
+          </IconButton>
 
-      {/*todo enable when working on items outside of the workspace*/}
-      {/*<FormControlLabel*/}
-      {/*  edge="end"*/}
-      {/*  control={*/}
-      {/*    <Switch*/}
-      {/*      checked={false}*/}
-      {/*      name="developer"*/}
-      {/*      color="primary"*/}
-      {/*      edge="end"*/}
-      {/*    />*/}
-      {/*  }*/}
-      {/*  label="Developer"*/}
-      {/*/>*/}
-    </Toolbar>
+          {/*todo enable when working on items outside of the workspace*/}
+          {/*<FormControlLabel*/}
+          {/*  edge="end"*/}
+          {/*  control={*/}
+          {/*    <Switch*/}
+          {/*      checked={false}*/}
+          {/*      name="developer"*/}
+          {/*      color="primary"*/}
+          {/*      edge="end"*/}
+          {/*    />*/}
+          {/*  }*/}
+          {/*  label="Developer"*/}
+          {/*/>*/}
+        </Toolbar>
+      }
+    </ACLConsumer>
   }
 
   render () {
