@@ -31,7 +31,7 @@ npm run dev
 
 
 
-
+## development mode:
 -----
 Start the UI Extension project which is at /open-ui-frontend
 (Port should be 3000)
