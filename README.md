@@ -1,4 +1,4 @@
-#Config Editor
+# Config Editor (WIP documentation)
 
 The Config Editor project is a tool in the channel manager, as an Open UI Page Tool extension, to edit HST configuration.
 
