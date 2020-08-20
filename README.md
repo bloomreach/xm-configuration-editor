@@ -63,10 +63,17 @@ Also see the demo video:
 
 # Development mode:
 
-Start the UI Extension project which is at /open-ui-frontend
+Build & Start the Open UI frontend project which is at /open-ui-frontend
+
 (Port should be 3000)
 ```bash
+yarn
 yarn start
 ```
+
+Go to the console and change the OpenUI extension URL to http://localhost:3000/#/current-page
+http://localhost:8080/cms/console/?1&path=/hippo:configuration/hippo:frontend/cms/ui-extensions/channelConfigEditor
+
+
 
 
