@@ -77,6 +77,14 @@ Also see the demo video:
 |xm.config-editor.current-page.viewer   |xm.config-editor.user   |Allows viewing of current page tab   |
 |xm.config-editor.user  |   |Required to see the Channel Config Editor OpenUi Extension   |
 
+
+## Release Notes
+
+| CMS Version  | Plugin Version | Description  |
+|---|---|---|
+|14.2   | 0.1.0  | Initial Release  |
+
+
 -----
 
 # Development mode:
