@@ -1,6 +1,6 @@
-# Config Editor
+# Configuration Editor
 
-The Config Editor project is a tool in the channel manager, as an Open UI Page Tool extension, to edit HST configuration.
+The Configuration Editor project is a tool in the channel manager, as an Open UI Page Tool extension, to edit HST configuration.
 
 Although the project has the ambition to edit all hst configuration we currently have only support for the "Current Page" feature.
 

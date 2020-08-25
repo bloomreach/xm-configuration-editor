@@ -1,4 +1,0 @@
-definitions:
-  config:
-    /hippo:configuration/hippo:frontend/cms/ui-extensions/channelConfigEditor:
-      frontend:url: http://localhost:3000/#/
