@@ -8,7 +8,7 @@ The current page feature will allow a CMS user with the appropriate user roles t
 
 ## Installation
 
-- In the root pom.xml configure in the properties a version for the plugin and add the bellow dependency both in the dependencyManagement section
+- In the root pom.xml configure in the properties a version for the plugin and add the bellow dependency in the dependencyManagement section
 ```xml
     <properties>
         <brxm-configuration-editor.version>x.y.z</brxm-configuration-editor.version>
