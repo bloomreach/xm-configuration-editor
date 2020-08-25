@@ -62,8 +62,8 @@ Page Tools:
 - On the right you should see the "Current Page" feature of the Config editor
 Current page allows the cms editor to create a page model based on predefined components from the developers. These components are located in the hst:components section of the HST configuration
 - Edit the current page model using the UI
-[Current Page](https://github.com/bloomreach/xm-configuration-editor/blob/master/resources/Channel%20Config%20Editor-1.png?raw=true "Current Page")
-[Current Page2](https://github.com/bloomreach/xm-configuration-editor/blob/master/resources/channel-config-editor2.png?raw=true "Current Page2")
+![Current Page](https://github.com/bloomreach/xm-configuration-editor/blob/master/resources/Channel%20Config%20Editor-1.png?raw=true "Current Page")
+![Current Page2](https://github.com/bloomreach/xm-configuration-editor/blob/master/resources/channel-config-editor2.png?raw=true "Current Page2")
 Also see the demo video:
 [Video](https://github.com/bloomreach/xm-configuration-editor/blob/master/resources/current%20page.mp4)
 - Click on the save icon to store the page model and publish it with the channel menu
