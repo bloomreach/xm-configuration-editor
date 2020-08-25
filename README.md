@@ -6,30 +6,49 @@ Although the project has the ambition to edit all hst configuration we currently
 
 The current page feature will allow a CMS user with the appropriate user roles to edit the page model of a landingpage.
 
+## Installation
 
-## Build the configuration api and the open ui frontend project
+- In the root pom.xml configure in the properties a version for the plugin and add the bellow dependency both in the dependencyManagement and dependencies section
+```xml
+    <properties>
+        <brxm-configuration-editor.version>x.y.z</brxm-configuration-editor.version>
+    </properties>
 
-The Configuration API is an API which allows modification to the HST configuration of a particular channel
-
-The Open UI frontend project is the frontend project (built in React) which is the UI for the Config API. This project is being bundled in a jar to be added in the CMS. The URL endpoint of the react application will be /cms/angular/xm-config-editor/index.html/#/current-page
-
-```bash
-mvn clean install
+    <dependencyManagement>
+        <dependencies>
+          <!--SNIP-->
+          
+           <dependency>
+                <groupId>com.bloomreach.xm</groupId>
+                <artifactId>brxm-configuration-editor-api</artifactId>
+                <version>${brxm-configuration-editor.version}</version>
+           </dependency>
+          
+           <dependency>
+                <groupId>com.bloomreach.xm</groupId>
+                <artifactId>brxm-configuration-editor-openui-frontend</artifactId>
+                <version>${brxm-configuration-editor.version}</version>
+           </dependency>
+          
+          <!--SNIP-->
+        </dependencies>
+    </dependencyManagement>
+    
 ```
 
-## Run the demo project
+- Add the below dependencies in the `cms-dependencies/pom.xml`
 
-Build and Start the brX project:
-
-```bash
-cd demo && mvn verify && mvn -Pcargo.run
-```
-
-Start the react-csr project (PORT 3001)
-
-```bash
-cd react-csr-example
-npm run dev 
+```xml
+     <dependency>
+        <groupId>com.bloomreach.xm</groupId>
+        <artifactId>brxm-configuration-editor-api</artifactId>
+     </dependency>
+              
+     <dependency>
+        <groupId>com.bloomreach.xm</groupId>
+        <artifactId>brxm-configuration-editor-openui-frontend</artifactId>
+     </dependency>
+              
 ```
 
 ## How it works:
@@ -58,10 +77,37 @@ Also see the demo video:
 |xm.config-editor.current-page.viewer   |xm.config-editor.user   |Allows viewing of current page tab   |
 |xm.config-editor.user  |   |Required to see the Channel Config Editor OpenUi Extension   |
 
-
 -----
 
 # Development mode:
+
+
+## Build the configuration api and the open ui frontend project
+
+The Configuration API is an API which allows modification to the HST configuration of a particular channel
+
+The Open UI frontend project is the frontend project (built in React) which is the UI for the Config API. This project is being bundled in a jar to be added in the CMS. The URL endpoint of the react application will be /cms/angular/xm-config-editor/index.html/#/current-page
+
+```bash
+mvn clean install
+```
+
+## Run the demo project(s)
+
+Build and Start the brX project:
+
+```bash
+cd demo && mvn verify && mvn -Pcargo.run
+```
+
+Start the react-csr project (PORT 3001)
+
+```bash
+cd react-csr-example
+npm run dev 
+```
+
+## Configuration Editor Frontend
 
 When developing the frontend you will need to run the frontend project locally instead of the bundled js which is incoporated in the cms.
 
