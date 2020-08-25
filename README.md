@@ -1,4 +1,4 @@
-# Config Editor (WIP documentation)
+# Config Editor
 
 The Config Editor project is a tool in the channel manager, as an Open UI Page Tool extension, to edit HST configuration.
 
@@ -62,6 +62,8 @@ Also see the demo video:
 -----
 
 # Development mode:
+
+When developing the frontend you will need to run the frontend project locally instead of the bundled js which is incoporated in the cms.
 
 Build & Start the Open UI frontend project which is at /open-ui-frontend
 
