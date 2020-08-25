@@ -64,6 +64,7 @@
     <essentials.version>14.2.0</essentials.version>
     <jsp-api.version>2.2</jsp-api.version>
     <taglibs.version>1.2.5</taglibs.version>
+    <brxm-configuration-editor.version>0.1.0-SNAPSHOT</brxm-configuration-editor.version>
 
     <development-module-deploy-dir>shared/lib</development-module-deploy-dir>
 

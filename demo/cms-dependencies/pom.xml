@@ -15,13 +15,13 @@
     <dependency>
       <groupId>com.bloomreach.xm</groupId>
       <artifactId>brxm-configuration-editor-api</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>${brxm-configuration-editor.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.bloomreach.xm</groupId>
       <artifactId>brxm-configuration-editor-openui-frontend</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>${brxm-configuration-editor.version}</version>
     </dependency>
 
     <dependency>
