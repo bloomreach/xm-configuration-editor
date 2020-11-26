@@ -5,27 +5,33 @@ import {
   AccordionDetails,
   AccordionSummary,
   Divider,
+  FormControl,
   IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
   Typography
 } from "@material-ui/core";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
-import {Channel} from "./api/models";
-import {exampleChannels} from "./samples/Example";
+import {Channel, Page} from "./api/models";
+import {exampleChannels, examplePages} from "./samples/Example";
 
-type ChannelsState = {
+type PagesState = {
   channels: Array<Channel>
+  pages: Array<Page>
 }
-type ChannelsProps = {}
+type PagesProps = {}
 
-class Channels extends React.Component<ChannelsProps, ChannelsState> {
+class Pages extends React.Component<PagesProps, PagesState> {
 
-  constructor (props: ChannelsProps) {
+  constructor (props: PagesProps) {
     super(props);
 
     this.state = {
-      channels: exampleChannels
+      channels: exampleChannels,
+      pages: examplePages
     }
   }
 
@@ -40,17 +46,30 @@ class Channels extends React.Component<ChannelsProps, ChannelsState> {
 
   render () {
     return <>
-      {this.state.channels.map((channel, index) => {
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Channel</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          // value={age}
+          // onChange={handleChange}
+        >
+          {this.state.channels.map(channel => {
+            return <MenuItem value={channel.id}>{channel.id}</MenuItem>
+          })}
+        </Select>
+      </FormControl>
+      {this.state.pages.map((page, index) => {
         return <Accordion key={index}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon/>}
             aria-controls="panel1c-content"
             id="panel1c-header"
           >
-            <Typography>{channel.id}</Typography>
+            <Typography>{page.name}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <pre>{JSON.stringify(channel, undefined, 2)}</pre>
+            <pre>{JSON.stringify(page, undefined, 2)}</pre>
           </AccordionDetails>
           <Divider/>
           <AccordionActions>
@@ -81,4 +100,4 @@ class Channels extends React.Component<ChannelsProps, ChannelsState> {
 
 }
 
-export default Channels;
+export default Pages;

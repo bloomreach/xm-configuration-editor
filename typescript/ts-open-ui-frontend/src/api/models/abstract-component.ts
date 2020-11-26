@@ -28,13 +28,13 @@ export interface AbstractComponent {
      * @type {string}
      * @memberof AbstractComponent
      */
-    description?: string;
+    description?: string | null;
     /**
      * a map of string parameters (names/values) for this component
      * @type {{ [key, string]: string;}}
      * @memberof AbstractComponent
      */
-    parameters?:  Array<{key: string, value: string}>;
+    parameters?:  any;
     /**
      * the layout used for rendering inner containers
      * @type {string}

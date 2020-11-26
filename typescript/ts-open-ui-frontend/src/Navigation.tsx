@@ -4,6 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Tab from "@material-ui/core/Tab";
 import TabPanel from "./TabPanel";
 import Channels from "./Channels";
+import Pages from "./Pages";
 
 type NavigationState = {
   tab: number
@@ -40,7 +41,7 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
         <Channels/>
       </TabPanel>
       <TabPanel value={tab} index={1}>
-        <h1>pages</h1>
+        <Pages/>
       </TabPanel>
     </Fragment>
   }

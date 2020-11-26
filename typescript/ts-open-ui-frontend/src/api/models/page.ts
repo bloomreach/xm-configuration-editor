@@ -24,31 +24,40 @@ export interface Page {
    * @type {string}
    * @memberof Page
    */
-  name: string;
+  name: string | null;
   /**
    * description for this page
    * @type {string}
    * @memberof Page
    */
-  description?: string;
+  description?: string | null;
   /**
    * a map of string parameters (names/values) for this page
    * @type {{ [key, string]: string;}}
    * @memberof Page
    */
-  parameters?: Array<{key: string, value: string}>;
+  parameters?: { key: string, value: string } | Object;
   /**
    * page type defines the usage. Only abstract pages can be extended. Valid values: abstract, page, xpage
    * @type {string}
    * @memberof Page
    */
-  type: PageTypeEnum;
+  type: string;
+  // type: PageTypeEnum ;
   /**
    * the name of the (abstract) page extended by this page
    * @type {string}
    * @memberof Page
    */
-  _extends?: string;
+  extends?: string | null;
+
+  /**
+   * the components that are defined in the current page
+   * @type {Array&lt;AbstractComponent&gt;}
+   * @memberof Page
+   */
+  components?: any;
+  // components?: Array<AbstractComponent>;
 
 }
 
@@ -57,8 +66,8 @@ export interface Page {
  * @enum {string}
  */
 export enum PageTypeEnum {
-  Abstract = 'abstract',
-  Page = 'page',
-  Xpage = 'xpage'
+  abstract = 'abstract',
+  page = 'page',
+  xpage = 'xpage'
 }
 
