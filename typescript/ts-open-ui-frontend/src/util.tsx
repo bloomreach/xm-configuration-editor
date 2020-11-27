@@ -25,32 +25,37 @@
 //   return component;
 // }
 
+import {TreeItem} from "react-sortable-tree";
+import {AbstractComponent, Page} from "./api/models";
+
 /**
  * Converts the component object coming from server to the node object that react ui understands
  **/
-// export function componentToNode (component: AbstractComponent, handle) {
-//   let node = {
-//     id: `${component.name}-${getId()}`,
-//     jcrNodeName: component.name,
-//     type: component.type,
-//     title: component.description,
-//     label: component.label,
-//     xtype: component.xtype,
-//     expanded: true,
-//     parameters: [],
-//     children: [],
-//     handle: handle
-//   };
-//   component.components && component.components.forEach(c => node.children.push(componentToNode(c, handle)));
-//   component.parameters && Object.entries(component.parameters).forEach((value, index) => {
-//     node.parameters.push({
-//       key: value[0],
-//       value: value[1]
-//     })
-//   })
-//   node.type = component.managed ? 'container' : 'component';
-//   return node;
-// }
+export function componentToNode (component: AbstractComponent | Page, handle?: string) {
+  const node =
+    ({
+      id: `${component.name}-${getId()}`,
+      jcrNodeName: component.name,
+      type: component.type,
+      title: component.description,
+      // label: component.label,
+      // xtype: component.xtype,
+      expanded: true,
+      parameters: [],
+      children: [],
+      handle: handle
+    }) as TreeItem;
+
+  // @ts-ignore
+  isNotEmptyOrNull(component.components) && component.components.forEach(c => node.children.push((componentToNode(c, handle)) as TreeItem));
+
+  // @ts-ignore
+  isNotEmptyOrNull(component.parameters) && Object.entries(component.parameters).forEach((key, value) => {
+    console.log(key);
+    console.log(value);
+  })
+  return node;
+}
 
 export function getId () {
   // Math.random should be unique because of its seeding algorithm.

@@ -13,6 +13,9 @@
  * Do not edit the class manually.
  */
 
+import {AbstractComponent} from "./abstract-component";
+import {Nullable} from "./nullable";
+
 /**
  *
  * @export
@@ -36,7 +39,7 @@ export interface Page {
    * @type {{ [key, string]: string;}}
    * @memberof Page
    */
-  parameters?: { key: string, value: string } | Object;
+  parameters?:  [string, any] | {};
   /**
    * page type defines the usage. Only abstract pages can be extended. Valid values: abstract, page, xpage
    * @type {string}
@@ -49,25 +52,15 @@ export interface Page {
    * @type {string}
    * @memberof Page
    */
-  extends?: string | null;
+  extends?: Nullable<string>
 
   /**
    * the components that are defined in the current page
    * @type {Array&lt;AbstractComponent&gt;}
    * @memberof Page
    */
-  components?: any;
+  components?: Nullable<Array<AbstractComponent>>;
   // components?: Array<AbstractComponent>;
 
-}
-
-/**
- * @export
- * @enum {string}
- */
-export enum PageTypeEnum {
-  abstract = 'abstract',
-  page = 'page',
-  xpage = 'xpage'
 }
 

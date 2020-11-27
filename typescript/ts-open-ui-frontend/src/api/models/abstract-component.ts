@@ -11,6 +11,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import {Nullable} from "./nullable";
+
 /**
  * the components that are defined in the current page
  * @export
@@ -28,51 +30,46 @@ export interface AbstractComponent {
      * @type {string}
      * @memberof AbstractComponent
      */
-    description?: string | null;
+    description?: Nullable<string>
     /**
      * a map of string parameters (names/values) for this component
      * @type {{ [key, string]: string;}}
      * @memberof AbstractComponent
      */
-    parameters?:  any;
+    parameters?: [string, any] | {};
     /**
      * the layout used for rendering inner containers
      * @type {string}
      * @memberof AbstractComponent
      */
-    xtype?: AbstractComponentXtypeEnum;
+    xtype?: Nullable<string>;
     /**
      * the type of this component
      * @type {string}
      * @memberof AbstractComponent
      */
-    type: AbstractComponentTypeEnum;
+    type: Nullable<string>;
+
+
 
     /**
      * the components that are defined in the current page
      * @type {Array&lt;AbstractComponent&gt;}
      * @memberof Page
      */
-    components?: Array<AbstractComponent>;
-}
+    components?: Nullable<Array<AbstractComponent>>;
 
-/**
-    * @export
-    * @enum {string}
-    */
-export enum AbstractComponentXtypeEnum {
-    Vbox = 'hst.vbox',
-    Unorderedlist = 'hst.unorderedlist',
-    Orderedlist = 'hst.orderedlist',
-    Span = 'hst.span',
-    Nomarkup = 'hst.nomarkup'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum AbstractComponentTypeEnum {
-    Static = 'static',
-    Managed = 'managed'
-}
+    /**
+     * default display label for this component
+     * @type {string}
+     * @memberof ManagedComponent
+     */
+    label?: Nullable<string>;
 
+    /**
+     * the catalog component definition this component is based on
+     * @type {string}
+     * @memberof StaticComponent
+     */
+    definition?: Nullable<string>;
+}
