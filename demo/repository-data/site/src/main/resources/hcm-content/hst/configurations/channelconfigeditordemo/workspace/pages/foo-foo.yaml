@@ -1,0 +1,9 @@
+/hst:hst/hst:configurations/channelconfigeditordemo/hst:workspace/hst:pages/foo-foo:
+  jcr:primaryType: hst:component
+  hst:description: Foo Page
+  hst:lastmodified: 2020-08-27T16:58:43.775+02:00
+  hst:parameternames: [pagetype]
+  hst:parametervalues: [foo]
+  hst:referencecomponent: hst:abstractpages/base
+  /main:
+    jcr:primaryType: hst:component

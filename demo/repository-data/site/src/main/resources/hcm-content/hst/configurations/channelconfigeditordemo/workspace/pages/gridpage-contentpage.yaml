@@ -9,6 +9,60 @@
     /section-grey-1:
       jcr:primaryType: hst:component
       hst:description: Grey Section
+      hst:parameternames: [background-color, pageType]
+      hst:parametervalues: [grey, bar]
+      /row-1:
+        jcr:primaryType: hst:component
+        hst:description: Row
+        hst:parameternames: [background-color, pageType]
+        hst:parametervalues: [grey, bar]
+        /c15c8901-4e15-4099-9ddd-7881c9a4214b:
+          jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
+          hst:description: Column
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
+          hst:parameternames: [background-color, pageType]
+          hst:parametervalues: [grey, bar]
+          hst:xtype: hst.vbox
+        /cc1a8d37-1b45-4599-bf4e-59bc0d01bb2f:
+          jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
+          hst:description: Column
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
+          hst:parameternames: [background-color, pageType]
+          hst:parametervalues: [grey, bar]
+          hst:xtype: hst.vbox
+    /section-white-1:
+      jcr:primaryType: hst:component
+      hst:description: White Section foo
+      hst:parameternames: [background-color]
+      hst:parametervalues: [white]
+      /row-1:
+        jcr:primaryType: hst:component
+        hst:description: Row
+        hst:parameternames: [background-color]
+        hst:parametervalues: [white]
+        /eee93791-9f8e-4093-9333-e3575aa5a450:
+          jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
+          hst:description: Column
+          hst:label: Left
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
+          hst:parameternames: [background-color]
+          hst:parametervalues: [white]
+          hst:xtype: hst.vbox
+        /49032892-6721-4cb4-a062-5ec75b2c71d0:
+          jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
+          hst:description: Column
+          hst:label: Right
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
+          hst:parameternames: [background-color]
+          hst:parametervalues: [white]
+          hst:xtype: hst.vbox
+    /section-grey-2:
+      jcr:primaryType: hst:component
+      hst:description: Grey Section
       hst:parameternames: [background-color]
       hst:parametervalues: [grey]
       /row-1:
@@ -16,10 +70,11 @@
         hst:description: Row
         hst:parameternames: [background-color]
         hst:parametervalues: [grey]
-        /08233ec1-1fb8-44b9-aecd-d35454a89982:
+        /221cf4f1-a31f-4b78-b520-f741ae31b1e5:
           jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
           hst:description: Column
-          hst:lastmodified: 2020-08-17T12:18:03.182+02:00
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
           hst:parameternames: [background-color]
           hst:parametervalues: [grey]
           hst:xtype: hst.vbox
@@ -31,11 +86,12 @@
             hst:parameternames: [document, org.hippoecm.hst.core.component.template]
             hst:parametervalues: [banners/banner1, 'webfile:/freemarker/hstdefault/essentials-banner.ftl']
             hst:template: essentials-banner
-        /11d0fbdd-ab2d-4191-a805-b7af560a171e:
+        /a70ebf5b-4a18-4d97-9cdb-48fc22ed193c:
           jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
           hst:description: Column
           hst:label: Middle
-          hst:lastmodified: 2020-08-17T12:18:03.182+02:00
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
           hst:parameternames: [background-color]
           hst:parametervalues: [grey]
           hst:xtype: hst.vbox
@@ -47,11 +103,12 @@
             hst:parameternames: [document, org.hippoecm.hst.core.component.template]
             hst:parametervalues: [banners/banner2, 'webfile:/freemarker/hstdefault/essentials-banner.ftl']
             hst:template: essentials-banner
-        /e25aa356-aa3f-4785-8d50-5b157ca5e39a:
+        /31b73f19-f758-4df9-91ce-13eff08d2b16:
           jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
           hst:description: Column
           hst:label: Right
-          hst:lastmodified: 2020-08-17T12:18:03.182+02:00
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
           hst:parameternames: [background-color]
           hst:parametervalues: [grey]
           hst:xtype: hst.vbox
@@ -68,10 +125,11 @@
         hst:description: Row
         hst:parameternames: [background-color]
         hst:parametervalues: [grey]
-        /9518f22f-e270-4754-b9b1-4f441ce96dfb:
+        /fa4e9fbd-4b96-4ef5-80bd-e6ffde4ee67b:
           jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
           hst:description: Column
-          hst:lastmodified: 2020-08-17T12:18:03.182+02:00
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
           hst:parameternames: [background-color]
           hst:parametervalues: [grey]
           hst:xtype: hst.vbox
@@ -83,10 +141,11 @@
             hst:parameternames: [document, org.hippoecm.hst.core.component.template]
             hst:parametervalues: [banners/banner2, 'webfile:/freemarker/hstdefault/essentials-banner.ftl']
             hst:template: essentials-banner
-        /a60ef7a4-17da-44d2-8d3a-8263e42d6948:
+        /1d428084-88b4-4365-b2f7-28c69bcfc631:
           jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
           hst:description: Column
-          hst:lastmodified: 2020-08-17T12:18:03.182+02:00
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
           hst:parameternames: [background-color]
           hst:parametervalues: [grey]
           hst:xtype: hst.vbox
@@ -98,7 +157,7 @@
             hst:parameternames: [document, org.hippoecm.hst.core.component.template]
             hst:parametervalues: [content/another-sample-document, 'webfile:/freemarker/hstdefault/essentials-banner.ftl']
             hst:template: essentials-banner
-    /section-white-1:
+    /section-white-2:
       jcr:primaryType: hst:component
       hst:description: White Section
       hst:parameternames: [background-color]
@@ -108,10 +167,11 @@
         hst:description: Row
         hst:parameternames: [background-color]
         hst:parametervalues: [white]
-        /aab2c26f-55b6-4102-8364-a4499f5dc378:
+        /96b88949-342b-45fb-a930-ef8a85892d28:
           jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
           hst:description: Column
-          hst:lastmodified: 2020-08-25T08:06:22.965+02:00
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
           hst:parameternames: [background-color]
           hst:parametervalues: [white]
           hst:xtype: hst.vbox
@@ -123,10 +183,11 @@
             hst:parameternames: [document, org.hippoecm.hst.core.component.template]
             hst:parametervalues: [banners/banner2, 'webfile:/freemarker/hstdefault/essentials-banner.ftl']
             hst:template: essentials-banner
-        /05d505f5-c3a2-4001-8f0b-06eff73aaf4b:
+        /f56993fe-54af-4319-8065-89a3823aa31d:
           jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
           hst:description: Column
-          hst:lastmodified: 2020-08-25T08:06:22.965+02:00
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
           hst:parameternames: [background-color]
           hst:parametervalues: [white]
           hst:xtype: hst.vbox
@@ -138,7 +199,7 @@
             hst:parameternames: [document, org.hippoecm.hst.core.component.template]
             hst:parametervalues: [content/sample-document, 'webfile:/freemarker/hstdefault/contentpage-main.ftl']
             hst:template: contentpage-main
-    /section-grey-2:
+    /section-grey-3:
       jcr:primaryType: hst:component
       hst:description: Grey Section
       hst:parameternames: [background-color]
@@ -148,10 +209,11 @@
         hst:description: Row
         hst:parameternames: [background-color]
         hst:parametervalues: [grey]
-        /bc4bcf8f-d6e3-45df-b8d1-76eaa5d789a4:
+        /6751d571-090e-48f6-8ef6-f80a17d0fad1:
           jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
           hst:description: Column
-          hst:lastmodified: 2020-08-25T08:06:22.965+02:00
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
           hst:parameternames: [background-color]
           hst:parametervalues: [grey]
           hst:xtype: hst.vbox
@@ -161,13 +223,20 @@
             hst:iconpath: images/essentials/catalog-component-icons/carousel.svg
             hst:label: Carousel
             hst:template: essentials-carousel
-        /35b112f0-7c3d-43c9-a525-c4001f1ac8dd:
+        /f88eaae2-b084-47b2-952b-0a0ca9558f32:
           jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
           hst:description: Column
-          hst:lastmodified: 2020-08-25T08:06:22.965+02:00
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
           hst:parameternames: [background-color]
           hst:parametervalues: [grey]
           hst:xtype: hst.vbox
+          /banner:
+            jcr:primaryType: hst:containeritemcomponent
+            hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
+            hst:iconpath: images/essentials/catalog-component-icons/banner.svg
+            hst:label: Banner
+            hst:template: essentials-banner
           /newslist:
             jcr:primaryType: hst:containeritemcomponent
             hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsNewsComponent
@@ -188,17 +257,53 @@
         hst:description: Row
         hst:parameternames: [rowtitle]
         hst:parametervalues: [This is a section]
-        /c1b9bed5-29e3-4d70-9c8d-258901016060:
+        /e049cd3b-a432-4bf5-9974-8d14a5083531:
           jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
           hst:description: Column
-          hst:lastmodified: 2020-08-17T12:18:03.182+02:00
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
           hst:parameternames: [rowtitle]
           hst:parametervalues: [This is a section]
           hst:xtype: hst.vbox
-        /c64532fd-ba3b-45ea-91c7-50d139a31f59:
+        /928f0e78-7d4a-44cb-8888-5225bde7c7e2:
           jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
           hst:description: Column
-          hst:lastmodified: 2020-08-17T12:18:03.182+02:00
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
           hst:parameternames: [rowtitle]
           hst:parametervalues: [This is a section]
+          hst:xtype: hst.vbox
+    /section-grey-4:
+      jcr:primaryType: hst:component
+      hst:description: Grey Section
+      hst:parameternames: [background-color, pageType]
+      hst:parametervalues: [grey, bar]
+      /row-1:
+        jcr:primaryType: hst:component
+        hst:description: Row
+        hst:parameternames: [background-color, pageType]
+        hst:parametervalues: [grey, bar]
+        /da976c0f-d139-459e-9e0a-d559638af8e3:
+          jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
+          hst:description: Column
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
+          hst:parameternames: [background-color, pageType]
+          hst:parametervalues: [grey, bar]
+          hst:xtype: hst.vbox
+          /banner:
+            jcr:primaryType: hst:containeritemcomponent
+            hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
+            hst:iconpath: images/essentials/catalog-component-icons/banner.svg
+            hst:label: Banner
+            hst:parameternames: [document, org.hippoecm.hst.core.component.template]
+            hst:parametervalues: [banners/banner1, 'webfile:/freemarker/hstdefault/essentials-banner.ftl']
+            hst:template: essentials-banner
+        /995900a5-35ba-4a8e-9e8f-552f880c6b50:
+          jcr:primaryType: hst:containercomponent
+          hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
+          hst:description: Column
+          hst:lastmodified: 2020-11-30T13:02:06.618+01:00
+          hst:parameternames: [background-color, pageType]
+          hst:parametervalues: [grey, bar]
           hst:xtype: hst.vbox

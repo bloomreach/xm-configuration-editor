@@ -1,0 +1,10 @@
+/hst:hst/hst:configurations/channelconfigeditordemo/hst:workspace/hst:sitemap/anwblandingpagina:
+  jcr:primaryType: hst:sitemapitem
+  hst:componentconfigurationid: hst:pages/anwblandingpagina-contentpage
+  hst:lastmodified: 2020-11-30T13:13:28.921+01:00
+  hst:pagetitle: anwblandingpagina
+  /test456:
+    jcr:primaryType: hst:sitemapitem
+    hst:componentconfigurationid: hst:pages/anwblandingpagina-test456-contentpage
+    hst:lastmodified: 2020-12-04T14:06:19.462+01:00
+    hst:pagetitle: test456

@@ -1,63 +1,42 @@
 package com.bloomreach.xm.config.api.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @JsonDeserialize(converter = PageConverter.class)
 public class Page extends BasePageComponent {
-    public enum TypeEnum {
-        ABSTRACT("abstract"),
-        PAGE("page"),
-        XPAGE("xpage");
-
-        private String value;
-
-        TypeEnum(String value) {
-            this.value = value;
-        }
-
-        @JsonValue
-        public String getValue() {
-            return value;
-        }
-
-        @Override
-        public String toString() {
-            return String.valueOf(value);
-        }
-
-        @JsonCreator
-        public static TypeEnum fromValue(String text) {
-            for (TypeEnum b : TypeEnum.values()) {
-                if (String.valueOf(b.value).equals(text)) {
-                    return b;
-                }
-            }
-            return null;
-        }
-    }
-
     @Schema(required = true, description = "page type defines the usage and extendability: only abstract pages may be extended")
     /**
      * page type defines the usage and extendability: only abstract pages may be extended
      **/
     private TypeEnum type = null;
-
     @Schema(description = "the name of the (abstract) page extended by this page.")
     /**
      * the name of the (abstract) page extended by this page.
      **/
     private String _extends = null;
-
     @Schema(description = "")
     private List<AbstractComponent> components = new ArrayList<>();
+
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
+    private static String toIndentedString(java.lang.Object o) {
+        if (o == null) {
+            return "null";
+        }
+        return o.toString().replace("\n", "\n    ");
+    }
 
     /**
      * page type defines the usage and extendability: only abstract pages may be extended
@@ -73,6 +52,15 @@ public class Page extends BasePageComponent {
         return type.getValue();
     }
 
+    @JsonProperty("type")
+    public void setType(final TypeEnum type) {
+        this.type = type;
+    }
+
+
+    public void setType(final String type) {
+        setType(TypeEnum.fromValue(type));
+    }
 
     /**
      * the name of the (abstract) page extended by this page.
@@ -130,14 +118,35 @@ public class Page extends BasePageComponent {
         return sb.toString();
     }
 
-    /**
-     * Convert the given object to string with each line indented by 4 spaces
-     * (except the first line).
-     */
-    private static String toIndentedString(java.lang.Object o) {
-        if (o == null) {
-            return "null";
+    public enum TypeEnum {
+        ABSTRACT("abstract"),
+        PAGE("page"),
+        XPAGE("xpage");
+
+        private String value;
+
+        TypeEnum(String value) {
+            this.value = value;
         }
-        return o.toString().replace("\n", "\n    ");
+
+        @JsonCreator
+        public static TypeEnum fromValue(String text) {
+            for (TypeEnum b : TypeEnum.values()) {
+                if (String.valueOf(b.value).equals(text)) {
+                    return b;
+                }
+            }
+            return null;
+        }
+
+        @JsonValue
+        public String getValue() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
     }
 }

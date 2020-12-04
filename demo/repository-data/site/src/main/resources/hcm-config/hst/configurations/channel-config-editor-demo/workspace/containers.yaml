@@ -9,11 +9,13 @@ definitions:
           jcr:primaryType: hst:containercomponent
           hst:label: Top
           hst:xtype: hst.vbox
+          hippo:identifier: 2e916f6d-51fb-4d81-bea8-7b2ab0447225
         /footer:
           .meta:residual-child-node-category: content
           jcr:primaryType: hst:containercomponent
           hst:label: Footer
           hst:xtype: hst.vbox
+          hippo:identifier: 39db3951-0140-4952-bd98-2b74f4bef0d3
       /homepage:
         jcr:primaryType: hst:containercomponentfolder
         /containermain:
@@ -22,6 +24,7 @@ definitions:
           hst:label: Home Page Main
           hst:xtype: hst.vbox
           hst:lastmodified: 2020-08-11T07:44:40.474+02:00
+          hippo:identifier: 83064557-3edf-4889-a997-f871a6bea2f7
       /pagenotfound:
         jcr:primaryType: hst:containercomponentfolder
         /main:
@@ -29,6 +32,7 @@ definitions:
           jcr:primaryType: hst:containercomponent
           hst:label: Page-Not-Found Main
           hst:xtype: hst.vbox
+          hippo:identifier: b059fcc5-a18d-4135-9477-965344bb1384
       /newslist:
         jcr:primaryType: hst:containercomponentfolder
         /main:
@@ -36,6 +40,7 @@ definitions:
           jcr:primaryType: hst:containercomponent
           hst:label: News List Main
           hst:xtype: hst.vbox
+          hippo:identifier: 2334a812-ecb3-48e1-8d61-bba24313b88d
       /newspage:
         jcr:primaryType: hst:containercomponentfolder
         /main:
@@ -43,6 +48,7 @@ definitions:
           jcr:primaryType: hst:containercomponent
           hst:label: News Page Main
           hst:xtype: hst.vbox
+          hippo:identifier: 16feca5c-7121-407e-a243-117a60f6097d
       /contentlist:
         jcr:primaryType: hst:containercomponentfolder
         /main:
@@ -50,6 +56,7 @@ definitions:
           jcr:primaryType: hst:containercomponent
           hst:label: Content List Main
           hst:xtype: hst.vbox
+          hippo:identifier: fab578c4-99ac-4aa3-a4aa-b8219a72852e
       /contentpage:
         jcr:primaryType: hst:containercomponentfolder
         /main:
@@ -57,3 +64,4 @@ definitions:
           jcr:primaryType: hst:containercomponent
           hst:label: Content Page Main
           hst:xtype: hst.vbox
+          hippo:identifier: 2a0c0fde-ce3f-451b-aaa4-c2dc321c506c

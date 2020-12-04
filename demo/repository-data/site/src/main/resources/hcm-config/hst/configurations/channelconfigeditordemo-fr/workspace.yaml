@@ -13,11 +13,13 @@ definitions:
             jcr:primaryType: hst:containercomponent
             hst:label: Top
             hst:xtype: hst.vbox
+            hippo:identifier: 4962445d-5003-4715-bbed-a2ed18b72b68
           /footer:
             .meta:residual-child-node-category: content
             jcr:primaryType: hst:containercomponent
             hst:label: Footer
             hst:xtype: hst.vbox
+            hippo:identifier: 2276fc5d-a1f8-44d4-abd2-9e5b39125ed1
         /homepage:
           jcr:primaryType: hst:containercomponentfolder
           /main:
@@ -25,6 +27,7 @@ definitions:
             jcr:primaryType: hst:containercomponent
             hst:label: Home Page Main
             hst:xtype: hst.vbox
+            hippo:identifier: e768b10d-07c5-4864-8f8b-e2082d468a08
         /pagenotfound:
           jcr:primaryType: hst:containercomponentfolder
           /main:
@@ -32,6 +35,7 @@ definitions:
             jcr:primaryType: hst:containercomponent
             hst:label: Page-Not-Found Main
             hst:xtype: hst.vbox
+            hippo:identifier: 531059dc-7d6c-4c2f-a280-fdc2a04ef612
         /newslist:
           jcr:primaryType: hst:containercomponentfolder
           /main:
@@ -39,6 +43,7 @@ definitions:
             jcr:primaryType: hst:containercomponent
             hst:label: News List Main
             hst:xtype: hst.vbox
+            hippo:identifier: 9cb96ce8-3509-4198-9da6-ee7e84645cb4
         /newspage:
           jcr:primaryType: hst:containercomponentfolder
           /main:
@@ -46,6 +51,7 @@ definitions:
             jcr:primaryType: hst:containercomponent
             hst:label: News Page Main
             hst:xtype: hst.vbox
+            hippo:identifier: 52ff1d41-e014-472d-a23b-956387961508
         /contentlist:
           jcr:primaryType: hst:containercomponentfolder
           /main:
@@ -53,6 +59,7 @@ definitions:
             jcr:primaryType: hst:containercomponent
             hst:label: Content List Main
             hst:xtype: hst.vbox
+            hippo:identifier: 1013ad50-2979-45f4-92d5-c2c4028a81b5
         /contentpage:
           jcr:primaryType: hst:containercomponentfolder
           /main:
@@ -60,6 +67,7 @@ definitions:
             jcr:primaryType: hst:containercomponent
             hst:label: Content Page Main
             hst:xtype: hst.vbox
+            hippo:identifier: e999bb9f-1297-466b-b5b3-11b0c6df9559
       /hst:sitemenus:
         jcr:primaryType: hst:sitemenus
         /main:

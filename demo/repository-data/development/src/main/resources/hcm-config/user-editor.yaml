@@ -16,4 +16,4 @@ definitions:
         .meta:category: system
         .meta:add-new-system-values: true
         type: string
-        value: [xm.config-editor.user]
+        value: [xm.config-editor.current-page.editor, xm.config-editor.user]

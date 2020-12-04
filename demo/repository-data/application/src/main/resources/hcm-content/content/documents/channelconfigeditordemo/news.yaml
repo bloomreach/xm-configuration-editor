@@ -156,10 +156,11 @@
             hippo:values: []
       /the-gastropoda-news:
         jcr:primaryType: hippo:handle
-        jcr:mixinTypes: ['hippo:named', 'mix:referenceable']
+        jcr:mixinTypes: ['hippo:named', 'hippo:versionInfo', 'mix:referenceable']
         jcr:uuid: aeda2bcd-b21d-4ead-a2e6-c64a2ca051c8
         hippo:name: The gastropoda news
-        /the-gastropoda-news:
+        hippo:versionHistory: 6989111c-d93b-4321-9d11-ea0045190d75
+        /the-gastropoda-news[1]:
           jcr:primaryType: channelconfigeditordemo:newsdocument
           jcr:mixinTypes: ['mix:referenceable']
           jcr:uuid: 312e6ece-91c1-4412-a94d-8211cf399b67
@@ -176,7 +177,7 @@
           channelconfigeditordemo:location: Liverpool
           channelconfigeditordemo:source: ''
           channelconfigeditordemo:title: The gastropoda news
-          hippo:availability: [live, preview]
+          hippo:availability: []
           hippostd:holder: admin
           hippostd:state: published
           hippostdpubwf:createdBy: admin
@@ -184,6 +185,66 @@
           hippostdpubwf:lastModificationDate: 2013-11-12T12:52:00+01:00
           hippostdpubwf:lastModifiedBy: admin
           hippostdpubwf:publicationDate: 2013-11-12T12:52:00+01:00
+          hippotranslation:id: 6f3b2586-fbf2-4703-a678-a07a974137f3
+          hippotranslation:locale: en
+          /channelconfigeditordemo:content:
+            jcr:primaryType: hippostd:html
+            hippostd:content: |-
+              <html>
+                        <body>
+
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                        sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                        sunt in culpa qui officia deserunt mollit anim id est laborum </p>
+
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                        sunt in culpa qui officia deserunt mollit anim id est laborum </p>
+
+                        </body>
+                        </html>
+          /channelconfigeditordemo:image:
+            jcr:primaryType: hippogallerypicker:imagelink
+            hippo:docbase: 3c740fcf-8ec5-4f00-a713-ff96caa645c8
+            hippo:facets: []
+            hippo:modes: []
+            hippo:values: []
+        /the-gastropoda-news[2]:
+          jcr:primaryType: channelconfigeditordemo:newsdocument
+          jcr:mixinTypes: ['mix:referenceable', 'mix:versionable']
+          jcr:uuid: 84323310-a8d6-4bc7-8fe4-8a5c60a082ca
+          channelconfigeditordemo:author: Alfred Anonymous
+          channelconfigeditordemo:date: 2020-07-20T09:48:00+02:00
+          channelconfigeditordemo:documenttype: news
+          channelconfigeditordemo:introduction: Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+            qui officia deserunt mollit anim id est laborum
+          channelconfigeditordemo:location: Liverpool
+          channelconfigeditordemo:source: ''
+          channelconfigeditordemo:title: The gastropoda news
+          hippo:availability: [preview]
+          hippostd:state: unpublished
+          hippostdpubwf:createdBy: admin
+          hippostdpubwf:creationDate: 2013-11-12T12:50:00+01:00
+          hippostdpubwf:lastModificationDate: 2013-11-12T12:52:00+01:00
+          hippostdpubwf:lastModifiedBy: admin
           hippotranslation:id: 6f3b2586-fbf2-4703-a678-a07a974137f3
           hippotranslation:locale: en
           /channelconfigeditordemo:content:

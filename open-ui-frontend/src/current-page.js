@@ -8,11 +8,10 @@ import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import IconButton from "@material-ui/core/IconButton";
 import ExpandLessOutlinedIcon from '@material-ui/icons/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
-import UndoOutlinedIcon from '@material-ui/icons/UndoOutlined';
 import {getAllComponents, getPageWithName, getUrl, putPageWithName} from "./config-api";
 import PositionedSnackbar from "./PositionedSnackbar";
 import ComponentTree from "./component-tree";
-import {componentToNode, convertComponentsToTreeDataArray, deepCopy, nodeToComponent} from "./util";
+import {componentToNode, convertComponentsToTreeDataArray, nodeToComponent} from "./util";
 import {ACLConsumer} from "./ACLContext";
 import ImmutableComponentTree from "./immutable-component-tree";
 
@@ -28,7 +27,8 @@ class CurrentPage extends React.Component {
       snackbarOpen: false,
       snackbarMessage: '',
       snackbarSeverity: 'success',
-      treeDataRevisionArray: [],
+      treeChanged: false,
+      // treeDataRevisionArray: [],
       drawerData: {}
     }
 
@@ -58,9 +58,7 @@ class CurrentPage extends React.Component {
 
   updateTreeData (treeData) {
     if (treeData.length > 0) {
-      let treeDataRevisionArray = this.state.treeDataRevisionArray;
-      treeDataRevisionArray.push(deepCopy(treeData[0]));
-      this.setState({treeDataRevisionArray: treeDataRevisionArray});
+      this.setState({treeChanged: true});
     }
     this.setState({treeData});
   }
@@ -92,20 +90,8 @@ class CurrentPage extends React.Component {
             color="inherit"
             aria-label="Save"
             onClick={() => this.handleSave()}
-            disabled={this.state.treeDataRevisionArray.length <= 1}
-          >
+            disabled={!this.state.treeChanged}>
             <SaveOutlinedIcon/>
-          </IconButton>
-          }
-          {permissions?.currentPageEditAllowed &&
-          < IconButton
-            edge="start"
-            color="inherit"
-            aria-label="Undo"
-            disabled={this.state.treeDataRevisionArray.length <= 1}
-            onClick={() => this.handleUndo()}
-          >
-            <UndoOutlinedIcon/>
           </IconButton>
           }
           <IconButton
@@ -124,20 +110,6 @@ class CurrentPage extends React.Component {
           >
             <ExpandMoreOutlinedIcon/>
           </IconButton>
-
-          {/*todo enable when working on items outside of the workspace*/}
-          {/*<FormControlLabel*/}
-          {/*  edge="end"*/}
-          {/*  control={*/}
-          {/*    <Switch*/}
-          {/*      checked={false}*/}
-          {/*      name="developer"*/}
-          {/*      color="primary"*/}
-          {/*      edge="end"*/}
-          {/*    />*/}
-          {/*  }*/}
-          {/*  label="Developer"*/}
-          {/*/>*/}
         </Toolbar>
       }
     </ACLConsumer>
@@ -178,6 +150,7 @@ class CurrentPage extends React.Component {
   }
 
   updateComponentHierarchy (responsePromise) {
+    this.reset();
     responsePromise.then(newPageResponse => {
       const treeData = componentToNode(newPageResponse.data);
       this.updateTreeData([treeData]);
@@ -191,14 +164,15 @@ class CurrentPage extends React.Component {
 
   handleSave () {
     let treeDataToPage = nodeToComponent(this.state.treeData[0]);
-    treeDataToPage.type = "page";
+    if (treeDataToPage.type === null || treeDataToPage.type === undefined) {
+      treeDataToPage.type = "page";
+    }
     const ui = this.ui;
     ui.channel.page.get().then(page => {
       putPageWithName(this.state.baseUrl, page.channel.id, page.path, treeDataToPage)
         .then(response => {
           if (response.status === 201 && response.headers.location) {
             this.updateComponentHierarchy(getUrl(response.headers.location));
-            this.resetRevisionHistory();
             ui.channel.refresh().then(() => {
               console.log('channel refreshed');
             })
@@ -214,8 +188,8 @@ class CurrentPage extends React.Component {
     });
   }
 
-  resetRevisionHistory () {
-    this.setState({treeDataRevisionArray: []}) //reset revision history since save was successful
+  reset () {
+    this.setState({treeChanged: false}); //reset
   }
 
   openSnackbar (message, severity) {
@@ -224,15 +198,6 @@ class CurrentPage extends React.Component {
 
   handleSnackbarClose () {
     this.setState({snackbarOpen: false, snackbarMessage: '', snackbarSeverity: 'success'});
-  }
-
-  handleUndo () {
-    let revisionArray = this.state.treeDataRevisionArray
-    revisionArray.pop(); //get rid of the current state
-    let previousTreeDataState = revisionArray[revisionArray.length - 1];
-    //NEVER update the treeData with the pointer from revisionDataArray directly. Always use a deep copy.
-    this.setState({treeData: [deepCopy(previousTreeDataState)]});
-    this.setState({treeDataRevisionArray: revisionArray});
   }
 
   handleDrawerDataChange (drawerData, treeDataChanged) {

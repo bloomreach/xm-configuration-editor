@@ -1,0 +1,165 @@
+/content/documents/channelconfigeditordemo-fr/read1:
+  jcr:primaryType: hippostd:folder
+  jcr:mixinTypes: ['hippostd:xpagefolder', 'hippotranslation:translated', 'mix:versionable']
+  jcr:uuid: d281f384-a987-4761-a45c-c5fe76c68d95
+  hippostd:channelid: channelconfigeditordemo-fr
+  hippostd:foldertype: [new-translated-folder, new-document]
+  hippotranslation:id: 79a0c4ba-ef34-4daf-a545-4fbb51acd9cc
+  hippotranslation:locale: fr
+  /test123:
+    jcr:primaryType: hippo:handle
+    jcr:mixinTypes: ['hippo:versionInfo', 'mix:referenceable']
+    jcr:uuid: 038155d5-4c1c-4720-a537-1ff93af6a313
+    hippo:versionHistory: d62ebf01-95d3-4972-a999-c8861c0d7908
+    /test123[1]:
+      jcr:primaryType: channelconfigeditordemo:bannerdocument
+      jcr:mixinTypes: ['hst:xpagemixin', 'mix:referenceable']
+      jcr:uuid: fafce212-83bb-49de-9e03-c4cb4bbf966d
+      channelconfigeditordemo:title: dfssfsdfsdfsd
+      hippo:availability: []
+      hippo:related___pathreference: []
+      hippostd:retainable: false
+      hippostd:state: draft
+      hippostdpubwf:createdBy: admin
+      hippostdpubwf:creationDate: 2020-12-04T11:39:54.235+01:00
+      hippostdpubwf:lastModificationDate: 2020-12-04T11:39:54.235+01:00
+      hippostdpubwf:lastModifiedBy: admin
+      hippotranslation:id: 8364d824-d75f-497f-94df-76ca963fcc7d
+      hippotranslation:locale: fr
+      /channelconfigeditordemo:content:
+        jcr:primaryType: hippostd:html
+        hippostd:content: ''
+      /channelconfigeditordemo:image:
+        jcr:primaryType: hippogallerypicker:imagelink
+        hippo:docbase: cafebabe-cafe-babe-cafe-babecafebabe
+        hippo:facets: []
+        hippo:modes: []
+        hippo:values: []
+      /channelconfigeditordemo:link:
+        jcr:primaryType: hippo:mirror
+        hippo:docbase: cafebabe-cafe-babe-cafe-babecafebabe
+    /test123[2]:
+      jcr:primaryType: channelconfigeditordemo:bannerdocument
+      jcr:mixinTypes: ['hst:xpagemixin', 'mix:referenceable', 'mix:versionable']
+      jcr:uuid: d128f2e3-4506-4560-a042-cef1f2e88519
+      channelconfigeditordemo:title: dfssfsdfsdfsd
+      hippo:availability: [preview]
+      hippo:related___pathreference: []
+      hippostd:retainable: false
+      hippostd:state: unpublished
+      hippostdpubwf:createdBy: admin
+      hippostdpubwf:creationDate: 2020-12-04T11:39:54.235+01:00
+      hippostdpubwf:lastModificationDate: 2020-12-04T11:39:56.857+01:00
+      hippostdpubwf:lastModifiedBy: admin
+      hippotranslation:id: 8364d824-d75f-497f-94df-76ca963fcc7d
+      hippotranslation:locale: fr
+      /channelconfigeditordemo:content:
+        jcr:primaryType: hippostd:html
+        hippostd:content: ''
+      /channelconfigeditordemo:image:
+        jcr:primaryType: hippogallerypicker:imagelink
+        hippo:docbase: cafebabe-cafe-babe-cafe-babecafebabe
+        hippo:facets: []
+        hippo:modes: []
+        hippo:values: []
+      /channelconfigeditordemo:link:
+        jcr:primaryType: hippo:mirror
+        hippo:docbase: cafebabe-cafe-babe-cafe-babecafebabe
+      /hst:xpage:
+        jcr:primaryType: hst:xpage
+        jcr:uuid: ee32b139-7324-4f32-9a16-701b7d4f3ff3
+        hst:description: readstructure1
+        hst:pageref: readstructure1
+        /main:
+          jcr:primaryType: hst:component
+          jcr:uuid: e23300ae-63c3-4d17-b277-e4dcfa76740d
+          hst:description: main
+          /a041ea6c-8692-4fdf-abb6-368bc7d9e66a:
+            jcr:primaryType: hst:containercomponent
+            jcr:uuid: f5c2b153-c607-4c58-96a0-283ae9922511
+            hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
+            hst:description: Column
+            hst:lastmodified: 2020-08-08T06:23:11.158+02:00
+            hst:lockedby: admin
+            hst:lockedon: 2020-12-04T11:44:55.117+01:00
+            hst:xtype: hst.vbox
+          /section-white-:
+            jcr:primaryType: hst:component
+            jcr:uuid: 2f7f2a60-68c7-489e-aae3-cae458c354b2
+            hst:description: White Section
+            hst:parameternames: [background-color]
+            hst:parametervalues: [white]
+            /row-:
+              jcr:primaryType: hst:component
+              jcr:uuid: 604ce990-0586-4524-a29b-487b4985a2c5
+              hst:description: Row
+              hst:parameternames: [background-color]
+              hst:parametervalues: [white]
+              /110913ef-37c5-4686-b894-c1e7617fcbd4:
+                jcr:primaryType: hst:containercomponent
+                jcr:uuid: 5d1d915d-fbdc-4df4-905c-ac6dba63fa88
+                hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
+                hst:description: Column
+                hst:lastmodified: 2020-08-08T06:23:11.158+02:00
+                hst:lockedby: admin
+                hst:lockedon: 2020-12-04T11:44:55.126+01:00
+                hst:parameternames: [background-color]
+                hst:parametervalues: [white]
+                hst:xtype: hst.vbox
+              /84e0cfd4-0630-43b4-9449-19c2d5446121:
+                jcr:primaryType: hst:containercomponent
+                jcr:uuid: 729c3755-4d03-4d5d-94c0-67ddb42d060d
+                hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
+                hst:description: Column
+                hst:lastmodified: 2020-08-08T06:23:11.158+02:00
+                hst:lockedby: admin
+                hst:lockedon: 2020-12-04T11:44:55.130+01:00
+                hst:parameternames: [background-color]
+                hst:parametervalues: [white]
+                hst:xtype: hst.vbox
+    /test123[3]:
+      jcr:primaryType: channelconfigeditordemo:bannerdocument
+      jcr:mixinTypes: ['hst:xpagemixin', 'mix:referenceable']
+      jcr:uuid: b1038607-3e9e-447b-96ff-7c86445fdbf9
+      channelconfigeditordemo:title: dfssfsdfsdfsd
+      hippo:availability: [live]
+      hippo:related___pathreference: []
+      hippostd:retainable: false
+      hippostd:state: published
+      hippostdpubwf:createdBy: admin
+      hippostdpubwf:creationDate: 2020-12-04T11:39:54.235+01:00
+      hippostdpubwf:lastModificationDate: 2020-12-04T11:39:56.857+01:00
+      hippostdpubwf:lastModifiedBy: admin
+      hippostdpubwf:publicationDate: 2020-12-04T11:44:24.351+01:00
+      hippotranslation:id: 8364d824-d75f-497f-94df-76ca963fcc7d
+      hippotranslation:locale: fr
+      /channelconfigeditordemo:content:
+        jcr:primaryType: hippostd:html
+        hippostd:content: ''
+      /channelconfigeditordemo:image:
+        jcr:primaryType: hippogallerypicker:imagelink
+        hippo:docbase: cafebabe-cafe-babe-cafe-babecafebabe
+        hippo:facets: []
+        hippo:modes: []
+        hippo:values: []
+      /channelconfigeditordemo:link:
+        jcr:primaryType: hippo:mirror
+        hippo:docbase: cafebabe-cafe-babe-cafe-babecafebabe
+      /hst:xpage:
+        jcr:primaryType: hst:xpage
+        jcr:uuid: 24480c97-830f-4c67-a1ea-1e27c9a5b29b
+        hst:description: readstructure1
+        hst:pageref: readstructure1
+        /main:
+          jcr:primaryType: hst:component
+          jcr:uuid: 4ddc53b2-5229-4c09-968f-23e628516183
+          hst:description: main
+          /aeaa8b58-1aa9-4235-be82-d25e02c2fca3:
+            jcr:primaryType: hst:containercomponent
+            jcr:uuid: 22e18fde-29bf-4c77-927f-acd3625fbae1
+            hippo:identifier: 3db5c4d2-d5d3-4f80-ad4d-2fc34be07ec7
+            hst:description: Column
+            hst:lastmodified: 2020-08-08T06:23:11.158+02:00
+            hst:lockedby: admin
+            hst:lockedon: 2020-12-04T11:44:18.924+01:00
+            hst:xtype: hst.vbox

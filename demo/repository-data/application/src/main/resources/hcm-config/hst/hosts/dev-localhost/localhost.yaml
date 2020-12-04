@@ -2,6 +2,6 @@ definitions:
   config:
     /hst:platform/hst:hosts/dev-localhost/localhost/hst:root:
       hst:responseheaders: ['Access-Control-Allow-Origin: http://localhost:3000',
-        'Access-Control-Allow-Methods: PUT, GET, DELETE', 'Access-Control-Allow-Headers:
-          Content-Type', 'Access-Control-Expose-Headers: Location', 'Access-Control-Allow-Credentials:
-          true']
+        'Access-Control-Allow-Credentials: true', 'Access-Control-Allow-Methods: PUT,
+          GET, DELETE', 'Access-Control-Allow-Headers: Content-Type, Authorization',
+        'Access-Control-Expose-Headers: Location']

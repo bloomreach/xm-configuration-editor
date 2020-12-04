@@ -1,0 +1,7 @@
+definitions:
+  config:
+    /hst:hst/hst:configurations/channelconfigeditordemo-fr/hst:components/col-:
+      jcr:primaryType: hst:containercomponent
+      hippo:identifier: 1a917450-cd5f-49f7-99ac-9158b5ffd40c
+      hst:description: Column
+      hst:xtype: hst.vbox

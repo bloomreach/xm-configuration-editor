@@ -5,3 +5,4 @@ definitions:
       jcr:primaryType: hst:containercomponent
       hst:description: Managed Component
       hst:xtype: hst.vbox
+      hippo:identifier: f0507e7c-32ac-4381-9bc1-e3b8e56f5677

@@ -18,6 +18,17 @@
     </dependency>
     <dependency>
       <groupId>org.onehippo.cms7</groupId>
+      <artifactId>hippo-repository-workflow</artifactId>
+      <version>${hippo.repository.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.onehippo.cms7.hst.components</groupId>
+      <artifactId>hst-core</artifactId>
+      <version>${hippo.hst.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.onehippo.cms7</groupId>
       <artifactId>hippo-repository-jaxrs</artifactId>
       <version>${hippo.repository.version}</version>
       <scope>provided</scope>

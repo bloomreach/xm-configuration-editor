@@ -1,0 +1,5 @@
+/hst:hst/hst:configurations/channelconfigeditordemo/hst:workspace/hst:sitemap/qwerty123456:
+  jcr:primaryType: hst:sitemapitem
+  hst:componentconfigurationid: hst:pages/qwerty123456-contentpage
+  hst:lastmodified: 2020-12-04T14:06:43.470+01:00
+  hst:pagetitle: qwerty123456
