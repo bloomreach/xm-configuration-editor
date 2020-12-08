@@ -35,7 +35,6 @@ import org.hippoecm.hst.configuration.hosting.Mount;
 import org.hippoecm.hst.configuration.site.HstSite;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.exceptions.ClientException;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.helpers.LockHelper;
-import org.hippoecm.hst.pagecomposer.jaxrs.services.util.ContainerUtils;
 import org.hippoecm.hst.platform.model.HstModelRegistry;
 import org.hippoecm.hst.util.HstRequestUtils;
 import org.hippoecm.repository.api.HippoSession;
@@ -55,6 +54,7 @@ import static com.bloomreach.xm.config.api.Builder.buildXComponent;
 import static com.bloomreach.xm.config.api.Builder.buildXPageNode;
 import static com.bloomreach.xm.config.api.Utils.CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR;
 import static com.bloomreach.xm.config.api.Utils.CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER;
+import static com.bloomreach.xm.config.api.Utils.checkoutCorrectBranch;
 import static com.bloomreach.xm.config.api.Utils.closeSession;
 import static com.bloomreach.xm.config.api.Utils.getComponentConfig;
 import static com.bloomreach.xm.config.api.Utils.getHandle;
@@ -65,6 +65,9 @@ import static com.bloomreach.xm.config.api.Utils.getXPageModelFromVariantNode;
 import static com.bloomreach.xm.config.api.Utils.getXPageTemplate;
 import static com.bloomreach.xm.config.api.Utils.getXPageUnpublishedNode;
 import static com.bloomreach.xm.config.api.Utils.isXPage;
+import static org.hippoecm.hst.platform.services.channel.ChannelManagerPrivileges.CHANNEL_WEBMASTER_PRIVILEGE_NAME;
+import static org.hippoecm.hst.platform.services.channel.ChannelManagerPrivileges.XPAGE_REQUIRED_PRIVILEGE_NAME;
+import static org.hippoecm.hst.util.JcrSessionUtils.isInRole;
 
 public class ConfigApiResource {
 
@@ -101,28 +104,27 @@ public class ConfigApiResource {
             throws ChannelNotFoundException, WorkspaceComponentNotFoundException, PageLockedException, UnauthorizedException {
         ensureUserIsAuthorized(request, CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR);
         final Session userSession = getUserSession(request);
-        final Session session = getImpersonatedSession();
 
         if (Page.TypeEnum.XPAGE.getValue().equals(page.getType())) {
             try {
-                final String cmsSessionActiveBranchId = HstRequestUtils.getCmsSessionActiveBranchId(request);
-
                 final Node xPageUnpublishedNode = getXPageUnpublishedNode(channelId, pageName, userSession);
+                final Node xpage = getXPageModelFromVariantNode(xPageUnpublishedNode);
+
+                final HstComponentConfiguration xPageTemplate = getXPageTemplate(getHstSite(channelId), xpage);
+                final String cmsSessionActiveBranchId = HstRequestUtils.getCmsSessionActiveBranchId(request);
                 final Node handle = getHandle(xPageUnpublishedNode);
                 final DocumentWorkflow documentWorkflow = getObtainEditableInstanceWorkflow(userSession, handle.getIdentifier(), cmsSessionActiveBranchId);
-//                todo check why this is failing
-//                documentWorkflow.checkoutBranch(cmsSessionActiveBranchId);
-                final Node xpage = getXPageModelFromVariantNode(xPageUnpublishedNode);
-                final HstComponentConfiguration xPageTemplate = getXPageTemplate(getHstSite(channelId), xpage);
                 Session workflowSession = documentWorkflow.getWorkflowContext().getInternalWorkflowSession();
                 buildXPageNode(workflowSession, xPageTemplate, page, xpage.getPath(), userSession.getUserID());
-                documentWorkflow.saveUnpublished(); //todo check why this is breaking
+
+                documentWorkflow.saveUnpublished();
                 return Response.created(URI.create(String.format("/channels/%s/pages/%s", channelId, pageName))).build();
             } catch (RepositoryException | WorkflowException e) {
                 LOGGER.error(e.getMessage());
                 throw new InternalServerErrorException("Internal server error", e);
             }
         } else {
+            final Session session = getImpersonatedSession();
             final HstSite hstSite = getHstSite(channelId);
             final HstComponentConfiguration componentConfig = getComponentConfig(hstSite, pageName);
             Node configNode = null;
@@ -152,28 +154,38 @@ public class ConfigApiResource {
         ensureUserIsAuthorized(request, CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER);
         final Session userSession = getUserSession(request);
         if (isXPage(channelId, pageName, userSession)) {
-            //works with different channels!
-            final Mount mount = getMount(channelId);
-            // experience page!
-            final Node unpublishedNode = getXPageUnpublishedNode(channelId, pageName, userSession);
-            final Node xPageModelFromVariantNode = getXPageModelFromVariantNode(unpublishedNode);
-            // this is a node of type hst:component, fetch the hst component configuration for it
-            final ExperiencePageService experiencePageService = HippoServiceRegistry.getService(ExperiencePageService.class);
+            try {
+                final Node xPageUnpublishedNode = getXPageUnpublishedNode(channelId, pageName, userSession);
+                final Node handle = getHandle(xPageUnpublishedNode);
 
-            final HstComponentConfiguration config = experiencePageService.loadExperiencePage(xPageModelFromVariantNode, mount.getHstSite(),
-                    this.getClass().getClassLoader());
+                final String cmsSessionActiveBranchId = HstRequestUtils.getCmsSessionActiveBranchId(request);
 
-            final Page page = buildPage(config, systemSession, Page.TypeEnum.XPAGE);
+                final DocumentWorkflow documentWorkflow = getObtainEditableInstanceWorkflow(userSession, handle.getIdentifier(), cmsSessionActiveBranchId);
+                checkoutCorrectBranch(documentWorkflow, cmsSessionActiveBranchId);
 
-            final List<HstComponentConfiguration> immediateChildren = config.getChildren().values().stream()
-                    .filter(childConfig -> childConfig.getCanonicalStoredLocation().contains("hst:xpages"))  //todo do better
-                    .collect(Collectors.toList());
-            immediateChildren.forEach(childConfig -> {
-                final AbstractComponent component = buildXComponent(childConfig, systemSession);
-                page.addComponentsItem(component);
-            });
-            page.setType(Page.TypeEnum.XPAGE);
-            return Response.ok(page).build();
+                final Node xPageModelFromVariantNode = getXPageModelFromVariantNode(xPageUnpublishedNode);
+                // this is a node of type hst:component, fetch the hst component configuration for it
+                final ExperiencePageService experiencePageService = HippoServiceRegistry.getService(ExperiencePageService.class);
+
+                final Mount mount = getMount(channelId);
+                final HstComponentConfiguration config = experiencePageService.loadExperiencePage(xPageModelFromVariantNode, mount.getHstSite(),
+                        this.getClass().getClassLoader());
+
+                final Page page = buildPage(config, systemSession, Page.TypeEnum.XPAGE);
+
+                final List<HstComponentConfiguration> immediateChildren = config.getChildren().values().stream()
+                        .filter(childConfig -> childConfig.getCanonicalStoredLocation().contains("hst:xpages"))  //todo do better
+                        .collect(Collectors.toList());
+                immediateChildren.forEach(childConfig -> {
+                    final AbstractComponent component = buildXComponent(childConfig, systemSession);
+                    page.addComponentsItem(component);
+                });
+                page.setType(Page.TypeEnum.XPAGE);
+                return Response.ok(page).build();
+            } catch (RepositoryException | WorkflowException e) {
+                LOGGER.error("error getting xpage", e);
+                throw new InternalServerErrorException("Internal server error", e);
+            }
         } else {
             final HstComponentConfiguration componentConfig = getComponentConfig(getHstSite(channelId), pageName);
             final Page page = buildPage(componentConfig, systemSession, Page.TypeEnum.PAGE);
@@ -185,6 +197,31 @@ public class ConfigApiResource {
                 page.addComponentsItem(component);
             });
             return Response.ok(page).build();
+        }
+    }
+
+    private boolean userInRole(final Session userSession, String xpageHandle, final HstComponentConfiguration compConfig) {
+        // note that EVEN if the backing JCR node for compConfig is from version history, because we decorate
+        // the JCR Node to HippoBeanFrozenNode in ObjectConverterImpl.getActualNode(), the #getPath is decorated
+        // to always return a workspace path! Hence #getCanonicalStoredLocation gives right location
+        if (compConfig.isExperiencePageComponent()) {
+            // check whether cmsUser has the right role on the xpage component document (aka handle)
+            // note that even if the backing JCR Node from 'getContentBean' is a frozen jcr node, #getParent on
+            // that frozen node will return the workspace handle, see HippoBeanFrozenNodeUtils.getWorkspaceFrozenNode()
+            final String handlePath;
+            handlePath = xpageHandle;
+            if (!compConfig.getCanonicalStoredLocation().startsWith(handlePath)) {
+                if (compConfig.isUnresolvedXpageLayoutContainer()) {
+                    LOGGER.info("Component '{}' for XPage '{}' has been most likely added later on to the XPage Layout, " +
+                            "on usage, the container should be created in the XPage document", compConfig.getCanonicalStoredLocation(), handlePath);
+                } else {
+                    LOGGER.error("Component '{}' for XPage '{}' expected to be a descendant of handle but was not the case, return " +
+                            "false for user in role", compConfig.getCanonicalStoredLocation(), handlePath);
+                }
+            }
+            return isInRole(userSession, handlePath, XPAGE_REQUIRED_PRIVILEGE_NAME);
+        } else {
+            return isInRole(userSession, compConfig.getCanonicalStoredLocation(), CHANNEL_WEBMASTER_PRIVILEGE_NAME);
         }
     }
 

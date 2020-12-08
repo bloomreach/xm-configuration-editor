@@ -63,11 +63,8 @@ public class Builder {
     public static void buildXPageNode(final Session session, final HstComponentConfiguration xpageTemplate, final BasePageComponent component, final String parentNodePath, final String userId) throws RepositoryException {
         //create a temporary storage node which will carry container nodes of the previous page structure.
         final Node storageNode = getTemporaryStorageNode(session);
-        log.info("created temporary storage node" + storageNode.getPath());
         buildXNodeInternal(storageNode, xpageTemplate, session, component, parentNodePath, userId);
-        log.info("removing temporary storage node" + storageNode.getPath());
         storageNode.remove();
-
     }
 
     public static void buildComponentNode(final Session session, final AbstractComponent component, final HstSite hstSite, final String userId) throws RepositoryException {
@@ -104,10 +101,6 @@ public class Builder {
 
 
     private static void buildXNodeInternal(final Node storageNode, final HstComponentConfiguration xpageTemplate, final Session session, final BasePageComponent component, final String parentNodePath, final String userId) throws RepositoryException {
-        log.info("Storage Path: " + storageNode.getPath());
-        log.info("Component Name: " + component.getName());
-        log.info("Parent Node Path " + parentNodePath);
-        log.info("userID " + userId);
         if (component instanceof ManagedComponent) {
             final ManagedComponent managedComponent = (ManagedComponent)component;
             final String newNodePath = parentNodePath + "/" + managedComponent.getName();
@@ -154,7 +147,7 @@ public class Builder {
             //container nodes are to be put back according to the incoming page model structure
             storeContainerNodesTemporarily(pageNode, storageNode);
             //get all containers from the template
-            final List<String> collect = xpageTemplate.getChildren()
+            final List<String> blackListFromRemoval = xpageTemplate.getChildren()
                     .values().stream()
                     .flatMap(componentConfiguration -> componentConfiguration.getChildren().values().stream())
                     .filter(componentConfiguration -> CONTAINER_COMPONENT.equals(componentConfiguration.getComponentType()))
@@ -162,7 +155,7 @@ public class Builder {
                     .collect(Collectors.toList());
             //remove all components but the ones coming from the xpage template
             for (Node childNode : new NodeIterable(pageNode.getNodes())) {
-                if (!collect.contains(childNode.getName())) {
+                if (!blackListFromRemoval.contains(childNode.getName())) {
                     childNode.remove();
                 }
             }

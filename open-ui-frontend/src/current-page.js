@@ -7,6 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import IconButton from "@material-ui/core/IconButton";
 import ExpandLessOutlinedIcon from '@material-ui/icons/ExpandLessOutlined';
+import RefreshOutlinedIcon from '@material-ui/icons/RefreshOutlined';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
 import {getAllComponents, getPageWithName, getUrl, putPageWithName} from "./config-api";
 import PositionedSnackbar from "./PositionedSnackbar";
@@ -39,19 +40,28 @@ class CurrentPage extends React.Component {
   }
 
   handleNavigate = (page) => {
+    console.log('navigate....');
+    this.setState({currentPagePath: page.path, currentChannelId: page.channel.id});
     this.updateTreeData([]);
     this.updateComponentHierarchy(getPageWithName(this.state.baseUrl, page.channel.id, page.path));
+  }
+
+  refresh = () => {
+    console.log('refresh');
+    this.updateTreeData([]);
+    this.updateComponentHierarchy(getPageWithName(this.state.baseUrl, this.state.currentChannelId, this.state.currentPagePath));
   }
 
   componentDidMount () {
     const ui = this.ui;
     this.setState({baseUrl: ui.baseUrl});
+    // ui.channel.on()
     ui.channel.page.on('navigate', this.handleNavigate);
     ui.channel.page.get().then(page => {
       this.handleNavigate(page);
       getAllComponents(ui.baseUrl, page.channel.id).then(result => {
         const treeData = convertComponentsToTreeDataArray(result);
-        this.setState({components: treeData});
+        this.setState({components: treeData, currentPagePath: page.path, currentChannelId: page.channel.id});
       });
     });
   }
@@ -94,6 +104,14 @@ class CurrentPage extends React.Component {
             <SaveOutlinedIcon/>
           </IconButton>
           }
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="Refresh"
+            onClick={() => this.refresh()}
+          >
+            <RefreshOutlinedIcon/>
+          </IconButton>
           <IconButton
             edge="start"
             color="inherit"
@@ -173,6 +191,7 @@ class CurrentPage extends React.Component {
         .then(response => {
           if (response.status === 201 && response.headers.location) {
             this.updateComponentHierarchy(getUrl(response.headers.location));
+
             ui.channel.refresh().then(() => {
               console.log('channel refreshed');
             })

@@ -43,7 +43,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.hippoecm.hst.configuration.HstNodeTypes.NODENAME_HST_XPAGE;
+import static org.hippoecm.repository.api.HippoNodeType.HIPPO_PROPERTY_BRANCH_ID;
+import static org.hippoecm.repository.util.JcrUtils.getStringProperty;
 import static org.hippoecm.repository.util.WorkflowUtils.Variant.UNPUBLISHED;
+import static org.onehippo.repository.branch.BranchConstants.MASTER_BRANCH_ID;
 
 public class Utils {
 
@@ -144,6 +147,15 @@ public class Utils {
                 return node;
             }
             return getHandle(node.getParent());
+        } catch (RepositoryException e) {
+            LOGGER.error("error", e);
+        }
+        return null;
+    }
+
+    public static String getHandlePath(final Node node) {
+        try {
+            return getHandle(node).getPath();
         } catch (RepositoryException e) {
             LOGGER.error("error", e);
         }
@@ -287,6 +299,83 @@ public class Utils {
             }
         }
         return siteMap.getSiteMapItem(path);
+    }
+
+
+    /**
+     * optionally checks out the right branch if the branch to be changed is in version history and not the unpublished
+     * variant
+     * Returns TRUE if a branch was checked out, FALSE if it wasn't needed
+     */
+    public static boolean checkoutCorrectBranch(final DocumentWorkflow documentWorkflow,
+                                                final String selectedBranchId) throws WorkflowException, RepositoryException {
+
+        try {
+
+            if (!Boolean.TRUE.equals(documentWorkflow.hints(selectedBranchId).get("checkoutBranch"))) {
+                // there is only master branch, so no need to check out a branch
+                return false;
+            }
+        } catch (RemoteException | RepositoryException e) {
+            throw new WorkflowException(e.getMessage());
+        }
+
+//        final HttpSession httpSession = contextService.getRequestContext().getServletRequest().getSession();
+//        final CmsSessionContext cmsSessionContext = CmsSessionContext.getContext(httpSession);
+
+        final String targetBranchId = selectedBranchId;
+
+        // validate that the targetBranchId is the SAME as the branch ID belonging to the request identifier node (this
+        // can be a workspace container item or a container item in version history! This check is to avoid that for
+        // some reason, there is a mismatch between the container item branch and the CMS session context branch
+
+        final Optional<Node> unpublished = WorkflowUtils.getDocumentVariantNode(documentWorkflow.getNode(), UNPUBLISHED);
+
+        if (!unpublished.isPresent()) {
+            throw new WorkflowException("Expected unpublished variant to be present");
+        }
+
+        final String currentBranchId = getStringProperty(unpublished.get(), HIPPO_PROPERTY_BRANCH_ID, MASTER_BRANCH_ID);
+
+
+//        final Session workflowSession =  documentWorkflow.getWorkflowContext().getInternalWorkflowSession();
+//        final Node xpageComponent = workflowSession.getNodeByIdentifier(contextService.getRequestConfigIdentifier());
+
+//        if (xpageComponent.isNodeType(NT_FROZENNODE)) {
+//
+//            // FIND OUT whether the FROZEN NODE is also the LATEST version for branch, otherwise there has been made
+//            // changes by someone else *after* the current cms user loaded the page in the CM : Optimistic locking should
+//            // then kick in! TODO cast this behavior in concrete in an integration test
+//            final Document current = documentWorkflow.getBranch(targetBranchId, UNPUBLISHED);
+//            if (!isAncestor(current.getNode(workflowSession), xpageComponent)) {
+//                String msg = String.format("Node '%s' is not the most recent version for '%s' anymore. Someone else might have " +
+//                                "made concurrent changes, page must be reloaded. This is optimistic locking",
+//                        getNodePathQuietly(xpageComponent), targetBranchId);
+//                log.info(msg);
+//                throw new ClientException(msg, ClientError.ITEM_CHANGED);
+//            }
+//
+//
+//            Node documentVariant = xpageComponent;
+//            while (documentVariant.getParent().isNodeType(NT_FROZENNODE)) {
+//                documentVariant = documentVariant.getParent();
+//            }
+//            final String xPageComponentBranchId = getStringProperty(documentVariant, HIPPO_PROPERTY_BRANCH_ID, MASTER_BRANCH_ID);
+//            if (!targetBranchId.equals(xPageComponentBranchId)) {
+//                throw new WorkflowException(String.format("Expected target branch id '%s' to be the same as the branch " +
+//                                "id '%s' to which the XPage component '%s' belongs", targetBranchId, xPageComponentBranchId,
+//                        contextService.getRequestConfigIdentifier()));
+//            }
+//        }
+
+        if (currentBranchId.equals(targetBranchId)) {
+            LOGGER.debug(String.format("target branch '%s' is current unpublished, no need to invoke checkoutBranch workflow",
+                    targetBranchId ));
+            return false;
+        }
+
+        documentWorkflow.checkoutBranch(targetBranchId);
+        return true;
     }
 
 
