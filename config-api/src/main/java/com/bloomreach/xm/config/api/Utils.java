@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+import javax.ws.rs.InternalServerErrorException;
 
 import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
 import com.bloomreach.xm.config.api.exception.WorkspaceComponentNotFoundException;
@@ -124,7 +125,7 @@ public class Utils {
         final DocumentWorkflow documentWorkflow = getDocumentWorkflow(userSession, handleId);
         try {
             if (Boolean.FALSE.equals(documentWorkflow.hints(branchId).get(DocumentWorkflowAction.obtainEditableInstance().getAction()))) {
-                throw new ClientException("Document not editable", ClientError.ITEM_ALREADY_LOCKED);
+                throw new InternalServerErrorException("Current xpage is locked and not editable!");
             }
         } catch (RemoteException e) {
             LOGGER.error("Exception while checking hints", e);
@@ -320,9 +321,6 @@ public class Utils {
             throw new WorkflowException(e.getMessage());
         }
 
-//        final HttpSession httpSession = contextService.getRequestContext().getServletRequest().getSession();
-//        final CmsSessionContext cmsSessionContext = CmsSessionContext.getContext(httpSession);
-
         final String targetBranchId = selectedBranchId;
 
         // validate that the targetBranchId is the SAME as the branch ID belonging to the request identifier node (this
@@ -336,38 +334,6 @@ public class Utils {
         }
 
         final String currentBranchId = getStringProperty(unpublished.get(), HIPPO_PROPERTY_BRANCH_ID, MASTER_BRANCH_ID);
-
-
-//        final Session workflowSession =  documentWorkflow.getWorkflowContext().getInternalWorkflowSession();
-//        final Node xpageComponent = workflowSession.getNodeByIdentifier(contextService.getRequestConfigIdentifier());
-
-//        if (xpageComponent.isNodeType(NT_FROZENNODE)) {
-//
-//            // FIND OUT whether the FROZEN NODE is also the LATEST version for branch, otherwise there has been made
-//            // changes by someone else *after* the current cms user loaded the page in the CM : Optimistic locking should
-//            // then kick in! TODO cast this behavior in concrete in an integration test
-//            final Document current = documentWorkflow.getBranch(targetBranchId, UNPUBLISHED);
-//            if (!isAncestor(current.getNode(workflowSession), xpageComponent)) {
-//                String msg = String.format("Node '%s' is not the most recent version for '%s' anymore. Someone else might have " +
-//                                "made concurrent changes, page must be reloaded. This is optimistic locking",
-//                        getNodePathQuietly(xpageComponent), targetBranchId);
-//                log.info(msg);
-//                throw new ClientException(msg, ClientError.ITEM_CHANGED);
-//            }
-//
-//
-//            Node documentVariant = xpageComponent;
-//            while (documentVariant.getParent().isNodeType(NT_FROZENNODE)) {
-//                documentVariant = documentVariant.getParent();
-//            }
-//            final String xPageComponentBranchId = getStringProperty(documentVariant, HIPPO_PROPERTY_BRANCH_ID, MASTER_BRANCH_ID);
-//            if (!targetBranchId.equals(xPageComponentBranchId)) {
-//                throw new WorkflowException(String.format("Expected target branch id '%s' to be the same as the branch " +
-//                                "id '%s' to which the XPage component '%s' belongs", targetBranchId, xPageComponentBranchId,
-//                        contextService.getRequestConfigIdentifier()));
-//            }
-//        }
-
         if (currentBranchId.equals(targetBranchId)) {
             LOGGER.debug(String.format("target branch '%s' is current unpublished, no need to invoke checkoutBranch workflow",
                     targetBranchId ));
