@@ -30,7 +30,8 @@ class CurrentPage extends React.Component {
       snackbarSeverity: 'success',
       treeChanged: false,
       // treeDataRevisionArray: [],
-      drawerData: {}
+      drawerData: {},
+      refreshDisabled: true
     }
 
     this.expandAll = this.expandAll.bind(this);
@@ -108,6 +109,7 @@ class CurrentPage extends React.Component {
             edge="start"
             color="inherit"
             aria-label="Refresh"
+            disabled={this.state.refreshDisabled}
             onClick={() => this.refresh()}
           >
             <RefreshOutlinedIcon/>
@@ -170,6 +172,7 @@ class CurrentPage extends React.Component {
   updateComponentHierarchy (responsePromise) {
     this.reset();
     responsePromise.then(newPageResponse => {
+      this.setState({refreshDisabled: newPageResponse.data.type !== 'xpage'});
       const treeData = componentToNode(newPageResponse.data);
       this.updateTreeData([treeData]);
       this.openSnackbar("Page hierarchy updated");
@@ -177,6 +180,7 @@ class CurrentPage extends React.Component {
     }).catch(exception => {
       console.log(exception.response.data.errorMessage)
       this.openSnackbar(exception.response.data.errorMessage, 'error');
+      this.setState({refreshDisabled: true})
     });
   }
 
