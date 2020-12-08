@@ -5,9 +5,15 @@ definitions:
       hipposys:active: true
       hipposys:password:
         .meta:category: system
+        type: string
         value: author
       hipposys:passwordlastmodified:
         .meta:category: system
       hipposys:previouspasswords:
         .meta:category: system
       hipposys:securityprovider: internal
+      hipposys:userroles:
+        .meta:category: system
+        .meta:add-new-system-values: true
+        type: string
+        value: [xm.project.editor, xm.config-editor.current-page.editor, xm.channel.webmaster]

@@ -3,7 +3,7 @@ definitions:
     /hst:hst/hst:configurations/channelconfigeditordemo/hst:workspace:
       jcr:primaryType: hst:workspace
       jcr:mixinTypes: ['dxphst:mergeable']
-      dxphst:treehash: 9B1279AB8ED65E918227648995FE3C85
+      dxphst:treehash: 070D712C47D6505F6F9BACA535C8445D
       /hst:abstractpages:
         .meta:residual-child-node-category: content
         jcr:primaryType: hst:pages
