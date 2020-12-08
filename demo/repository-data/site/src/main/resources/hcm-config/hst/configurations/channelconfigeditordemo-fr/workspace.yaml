@@ -3,7 +3,7 @@ definitions:
     /hst:hst/hst:configurations/channelconfigeditordemo-fr/hst:workspace:
       jcr:primaryType: hst:workspace
       jcr:mixinTypes: ['dxphst:mergeable']
-      dxphst:treehash: 25B1609B6A09A3A2B3AAA5BF0022231A
+      dxphst:treehash: 900A798ABC3507A369C6D9768D909A37
       /hst:containers:
         jcr:primaryType: hst:containercomponentfolder
         /base:

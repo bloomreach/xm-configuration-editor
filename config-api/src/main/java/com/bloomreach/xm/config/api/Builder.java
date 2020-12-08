@@ -67,39 +67,6 @@ public class Builder {
         storageNode.remove();
     }
 
-    public static void buildComponentNode(final Session session, final AbstractComponent component, final HstSite hstSite, final String userId) throws RepositoryException {
-        //check if such a component already exists. If so, we have to "update" (recreate with same state) it.
-        final String componentRegistryPath = hstSite.getConfigurationPath() + COMPONENT_REGISTRTY_RELPATH;
-        final Node componentRegistryNode = session.getNode(componentRegistryPath);
-        final Node storageNode = getTemporaryStorageNode(session);
-        for (Node componentNode : new NodeIterable(componentRegistryNode.getNodes())) {
-            if (componentNode.getName().equals(component.getName())) {
-                storeContainerNodesTemporarily(componentNode, storageNode);
-                componentNode.remove();
-            }
-        }
-        if (component instanceof StaticComponent) {
-            final StaticComponent staticComponent = (StaticComponent)component;
-            final Node copiedNode = JcrUtils.copy(session, STATIC_COMPONENT_LOCATION, componentRegistryPath + "/" + staticComponent.getName());
-            setBasePagePropsOnNode(copiedNode, staticComponent);
-            for (AbstractComponent childComp : staticComponent.getComponents()) {
-                buildNodeInternal(storageNode, session, childComp, copiedNode.getPath(), userId);
-            }
-        } else if (component instanceof ManagedComponent) {
-            final ManagedComponent managedComponent = (ManagedComponent)component;
-            final Node managedComponentNode = JcrUtils.copy(session, MANAGED_COMPONENT_LOCATION, componentRegistryPath + "/" + component.getName());
-            setManagedComponentPropsOnNode(managedComponentNode, managedComponent);
-            if (storageNode.hasNode(managedComponent.getName())) {
-                final Node previouslyStoredNode = storageNode.getNode(managedComponent.getName());
-                for (Node containerItemComponentNode : new NodeIterable(previouslyStoredNode.getNodes())) {
-                    JcrUtils.copy(session, containerItemComponentNode.getPath(), managedComponentNode.getPath() + "/" + containerItemComponentNode.getName());
-                }
-            }
-        }
-        storageNode.remove();
-    }
-
-
     private static void buildXNodeInternal(final Node storageNode, final HstComponentConfiguration xpageTemplate, final Session session, final BasePageComponent component, final String parentNodePath, final String userId) throws RepositoryException {
         if (component instanceof ManagedComponent) {
             final ManagedComponent managedComponent = (ManagedComponent)component;
@@ -347,15 +314,6 @@ public class Builder {
         }
         for (Node childNode : new NodeIterable(configNode.getNodes())) {
             storeContainerNodesTemporarily(childNode, storageNode);
-        }
-    }
-
-    private static void storeXContainerNodesTemporarily(final Node configNode, final Node storageNode) throws RepositoryException {
-        if (configNode.getPrimaryNodeType().getName().equals(NODETYPE_HST_CONTAINERCOMPONENT)) {
-            JcrUtils.copy(configNode.getSession(), configNode.getPath(), storageNode.getPath() + "/" + configNode.getProperty("hippo:identifier").getString());
-        }
-        for (Node childNode : new NodeIterable(configNode.getNodes())) {
-            storeXContainerNodesTemporarily(childNode, storageNode);
         }
     }
 
