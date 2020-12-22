@@ -24,8 +24,6 @@ import org.hippoecm.hst.configuration.sitemap.HstSiteMapItem;
 import org.hippoecm.hst.container.RequestContextProvider;
 import org.hippoecm.hst.container.site.CompositeHstSite;
 import org.hippoecm.hst.core.internal.PreviewDecorator;
-import org.hippoecm.hst.pagecomposer.jaxrs.services.exceptions.ClientError;
-import org.hippoecm.hst.pagecomposer.jaxrs.services.exceptions.ClientException;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.experiencepage.XPageUtils;
 import org.hippoecm.hst.platform.model.HstModel;
 import org.hippoecm.hst.platform.model.HstModelRegistry;
@@ -61,8 +59,8 @@ public class Utils {
     public static HstModelRegistry getHstModelRegistry() {
         HstModelRegistry hstModelRegistry = HippoServiceRegistry.getService(HstModelRegistry.class);
         if (hstModelRegistry == null) {
-            LOGGER.info("Cannot create URLs without hstModelRegistry");
-            throw new IllegalStateException("Cannot create URLs without hstModelRegistry");
+            LOGGER.info("Cannot create resolve URL's without hstModelRegistry");
+            throw new IllegalStateException("Cannot create resolve URL's without hstModelRegistry");
         }
         return hstModelRegistry;
     }
@@ -71,7 +69,7 @@ public class Utils {
         try {
             return pageNode.getNode(NODENAME_HST_XPAGE);
         } catch (RepositoryException e) {
-            LOGGER.error("error", e);
+            LOGGER.error("Error while trying to get xpage variant from node", e);
         }
         return null;
     }
@@ -98,7 +96,6 @@ public class Utils {
         final HstModel platformModel = hstModelRegistry.getHstModel(ConfigApiResource.class.getClassLoader());
 
         try {
-            //todo do better
             final ResolvedMountImpl resolvedMount = (ResolvedMountImpl)platformModel.getVirtualHosts().matchMount(mount.getVirtualHost().getName(), mount.getMountPath());
             resolvedMount.setMount(mount);
             final ResolvedSiteMapItemImpl resolvedSiteMapItem = (ResolvedSiteMapItemImpl)resolvedMount.matchSiteMapItem("/" + path);
@@ -149,16 +146,7 @@ public class Utils {
             }
             return getHandle(node.getParent());
         } catch (RepositoryException e) {
-            LOGGER.error("error", e);
-        }
-        return null;
-    }
-
-    public static String getHandlePath(final Node node) {
-        try {
-            return getHandle(node).getPath();
-        } catch (RepositoryException e) {
-            LOGGER.error("error", e);
+            LOGGER.error("Error while trying to get the handle of a document", e);
         }
         return null;
     }
@@ -336,7 +324,7 @@ public class Utils {
         final String currentBranchId = getStringProperty(unpublished.get(), HIPPO_PROPERTY_BRANCH_ID, MASTER_BRANCH_ID);
         if (currentBranchId.equals(targetBranchId)) {
             LOGGER.debug(String.format("target branch '%s' is current unpublished, no need to invoke checkoutBranch workflow",
-                    targetBranchId ));
+                    targetBranchId));
             return false;
         }
 
