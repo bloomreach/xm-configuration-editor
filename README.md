@@ -6,6 +6,15 @@ Although the project has the ambition to edit all hst configuration we currently
 
 The current page feature will allow a CMS user with the appropriate user roles to edit the page model of a landingpage.
 
+
+## Release Notes
+
+| CMS Version  | Plugin Version | Description  |
+|---|---|---|
+|14.2   | 0.1.0  | Initial Release  |
+|14.4   | 0.2.0  | XPage support, note that project will not work well in combination of this plugin. Awaiting https://issues.onehippo.com/browse/CMS-14297  |
+
+
 ## Installation
 
 - In the root pom.xml configure in the properties a version for the plugin and add the bellow dependency in the dependencyManagement section
@@ -79,13 +88,6 @@ xm.config-editor.current-page.editor ideally should be assigned to a user with e
 |xm.config-editor.current-page.viewer   |xm.config-editor.user   |Allows viewing of current page tab   |
 |xm.config-editor.user  |   |Required to see the Channel Config Editor OpenUi Extension   |
 
-
-## Release Notes
-
-| CMS Version  | Plugin Version | Description  |
-|---|---|---|
-|14.2   | 0.1.0  | Initial Release  |
-|14.4   | 0.2.0  | XPage support, note that project will not work well in combination of this plugin. Awaiting https://issues.onehippo.com/browse/CMS-14297  |
 
 
 -----
