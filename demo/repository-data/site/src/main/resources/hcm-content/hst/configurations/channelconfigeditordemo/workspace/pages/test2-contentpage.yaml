@@ -1,0 +1,94 @@
+/hst:hst/hst:configurations/channelconfigeditordemo/hst:workspace/hst:pages/test2-contentpage:
+  jcr:primaryType: hst:component
+  hst:description: Content Page
+  hst:lastmodified: 2020-12-08T14:24:20.908+01:00
+  hst:referencecomponent: hst:abstractpages/base
+  /main-1:
+    jcr:primaryType: hst:component
+    hst:description: main
+    /section-white-1:
+      jcr:primaryType: hst:component
+      hst:description: White Section
+      hst:parameternames: [background-color]
+      hst:parametervalues: [white]
+      /row-1:
+        jcr:primaryType: hst:component
+        hst:description: Row
+        hst:parameternames: [background-color]
+        hst:parametervalues: [white]
+        /ea5278cf-47ab-4377-a7e4-21b9a46944d2:
+          jcr:primaryType: hst:containercomponent
+          hippo:identifier: 9dc16192-d3fb-4d32-8878-f5fa78822be7
+          hst:description: Column
+          hst:lastmodified: 2020-12-08T14:57:23.309+01:00
+          hst:parameternames: [background-color]
+          hst:parametervalues: [white]
+          hst:xtype: hst.vbox
+        /eb28766e-296d-47dc-a900-e9e631a3f2c2:
+          jcr:primaryType: hst:containercomponent
+          hippo:identifier: 9dc16192-d3fb-4d32-8878-f5fa78822be7
+          hst:description: Column
+          hst:lastmodified: 2020-12-08T14:57:23.309+01:00
+          hst:parameternames: [background-color]
+          hst:parametervalues: [white]
+          hst:xtype: hst.vbox
+    /section-grey-1:
+      jcr:primaryType: hst:component
+      hst:description: Grey Section
+      hst:parameternames: [background-color, pageType]
+      hst:parametervalues: [grey, bar]
+      /row-1:
+        jcr:primaryType: hst:component
+        hst:description: Row
+        hst:parameternames: [background-color, pageType]
+        hst:parametervalues: [grey, bar]
+        /9740959b-7602-4132-a72d-0f69f8b5c1f4:
+          jcr:primaryType: hst:containercomponent
+          hippo:identifier: 9dc16192-d3fb-4d32-8878-f5fa78822be7
+          hst:description: Column
+          hst:lastmodified: 2020-12-08T14:57:23.309+01:00
+          hst:parameternames: [background-color, pageType]
+          hst:parametervalues: [grey, bar]
+          hst:xtype: hst.vbox
+          /banner:
+            jcr:primaryType: hst:containeritemcomponent
+            hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
+            hst:iconpath: images/essentials/catalog-component-icons/banner.svg
+            hst:label: Banner
+            hst:parameternames: [document, org.hippoecm.hst.core.component.template]
+            hst:parametervalues: [banners/banner1, 'webfile:/freemarker/hstdefault/essentials-banner.ftl']
+            hst:template: essentials-banner
+        /866d0495-1f39-4a80-88c7-cfb024efca24:
+          jcr:primaryType: hst:containercomponent
+          hippo:identifier: 9dc16192-d3fb-4d32-8878-f5fa78822be7
+          hst:description: Column
+          hst:lastmodified: 2020-12-08T14:57:23.309+01:00
+          hst:parameternames: [background-color, pageType]
+          hst:parametervalues: [grey, bar]
+          hst:xtype: hst.vbox
+    /section-grey-2:
+      jcr:primaryType: hst:component
+      hst:description: Grey Section
+      hst:parameternames: [background-color, pageType]
+      hst:parametervalues: [grey, bar]
+      /row-1:
+        jcr:primaryType: hst:component
+        hst:description: Row
+        hst:parameternames: [background-color, pageType]
+        hst:parametervalues: [grey, bar]
+        /b21f0011-6065-48fc-8bb2-bc2a34312331:
+          jcr:primaryType: hst:containercomponent
+          hippo:identifier: 9dc16192-d3fb-4d32-8878-f5fa78822be7
+          hst:description: Column
+          hst:lastmodified: 2020-12-08T14:57:23.309+01:00
+          hst:parameternames: [background-color, pageType]
+          hst:parametervalues: [grey, bar]
+          hst:xtype: hst.vbox
+        /5beff8a1-f7e3-4276-8bb5-57ffdcb07bbd:
+          jcr:primaryType: hst:containercomponent
+          hippo:identifier: 9dc16192-d3fb-4d32-8878-f5fa78822be7
+          hst:description: Column
+          hst:lastmodified: 2020-12-08T14:57:23.309+01:00
+          hst:parameternames: [background-color, pageType]
+          hst:parametervalues: [grey, bar]
+          hst:xtype: hst.vbox

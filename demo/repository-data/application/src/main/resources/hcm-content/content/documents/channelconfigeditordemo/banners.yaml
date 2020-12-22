@@ -99,22 +99,83 @@
         hippo:docbase: cafebabe-cafe-babe-cafe-babecafebabe
   /banner2:
     jcr:primaryType: hippo:handle
-    jcr:mixinTypes: ['hippo:named', 'mix:referenceable']
+    jcr:mixinTypes: ['hippo:named', 'hippo:versionInfo', 'mix:referenceable']
     jcr:uuid: 9a3f1f5c-5302-43c4-9bec-584e810ffa2f
     hippo:name: banner2
-    /banner2:
+    hippo:versionHistory: 6da15ad4-08f3-4772-8647-248c22b9d2a2
+    /banner2[1]:
       jcr:primaryType: channelconfigeditordemo:bannerdocument
       jcr:mixinTypes: ['mix:referenceable']
       jcr:uuid: 8eba68e6-8fb0-4a78-a9b2-b07bc1f799b9
-      channelconfigeditordemo:title: Sample banner 2
-      hippo:availability: [live, preview]
+      channelconfigeditordemo:title: Sample banner 2 dfsd
+      hippo:availability: [live]
       hippostd:holder: admin
+      hippostd:retainable: false
       hippostd:state: published
       hippostdpubwf:createdBy: admin
       hippostdpubwf:creationDate: 2014-03-20T17:00:00+01:00
-      hippostdpubwf:lastModificationDate: 2014-03-20T17:04:00+01:00
+      hippostdpubwf:lastModificationDate: 2020-12-04T12:33:14.921+01:00
       hippostdpubwf:lastModifiedBy: admin
-      hippostdpubwf:publicationDate: 2014-03-20T17:04:00+01:00
+      hippostdpubwf:publicationDate: 2020-12-04T12:36:24.034+01:00
+      hippotranslation:id: 2444d782-e8dc-4bec-958f-d009ed5821f1
+      hippotranslation:locale: en
+      /channelconfigeditordemo:content:
+        jcr:primaryType: hippostd:html
+        hippostd:content: <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+          ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+          ex ea commodo consequat.</p>
+      /channelconfigeditordemo:image:
+        jcr:primaryType: hippogallerypicker:imagelink
+        hippo:docbase: dc6c2247-d3f4-4be0-976e-749b69927eee
+        hippo:facets: []
+        hippo:modes: []
+        hippo:values: []
+      /channelconfigeditordemo:link:
+        jcr:primaryType: hippo:mirror
+        hippo:docbase: cafebabe-cafe-babe-cafe-babecafebabe
+    /banner2[2]:
+      jcr:primaryType: channelconfigeditordemo:bannerdocument
+      jcr:mixinTypes: ['mix:referenceable', 'mix:versionable']
+      jcr:uuid: eba47bf7-0eed-4fb8-80d4-ddf96be68a78
+      channelconfigeditordemo:title: Sample banner 2 dfsd
+      hippo:availability: [preview]
+      hippostd:retainable: false
+      hippostd:state: unpublished
+      hippostdpubwf:createdBy: admin
+      hippostdpubwf:creationDate: 2014-03-20T17:00:00+01:00
+      hippostdpubwf:lastModificationDate: 2020-12-04T12:33:14.921+01:00
+      hippostdpubwf:lastModifiedBy: admin
+      hippotranslation:id: 2444d782-e8dc-4bec-958f-d009ed5821f1
+      hippotranslation:locale: en
+      /channelconfigeditordemo:content:
+        jcr:primaryType: hippostd:html
+        hippostd:content: <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+          ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+          ex ea commodo consequat.</p>
+      /channelconfigeditordemo:image:
+        jcr:primaryType: hippogallerypicker:imagelink
+        hippo:docbase: dc6c2247-d3f4-4be0-976e-749b69927eee
+        hippo:facets: []
+        hippo:modes: []
+        hippo:values: []
+      /channelconfigeditordemo:link:
+        jcr:primaryType: hippo:mirror
+        hippo:docbase: cafebabe-cafe-babe-cafe-babecafebabe
+    /banner2[3]:
+      jcr:primaryType: channelconfigeditordemo:bannerdocument
+      jcr:mixinTypes: ['mix:referenceable']
+      jcr:uuid: 62ac9216-588b-4982-ac2b-806aa46a42d5
+      channelconfigeditordemo:title: Sample banner 2 dfsd
+      hippo:availability: []
+      hippostd:retainable: false
+      hippostd:state: draft
+      hippostd:transferable: false
+      hippostdpubwf:createdBy: admin
+      hippostdpubwf:creationDate: 2014-03-20T17:00:00+01:00
+      hippostdpubwf:lastModificationDate: 2020-12-04T12:36:24.199+01:00
+      hippostdpubwf:lastModifiedBy: admin
       hippotranslation:id: 2444d782-e8dc-4bec-958f-d009ed5821f1
       hippotranslation:locale: en
       /channelconfigeditordemo:content:

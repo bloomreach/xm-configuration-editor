@@ -8,7 +8,8 @@ export function nodeToComponent (node) {
     parameters: {},
     label: node.label,
     description: node.title,
-    xtype: node.xtype
+    xtype: node.xtype,
+    type: node.type
   }
   node.children && node.children.forEach(c => {
     if (!component.components) {
@@ -30,6 +31,7 @@ export function componentToNode (component, handle) {
   let node = {
     id: `${component.name}-${getId()}`,
     jcrNodeName: component.name,
+    type: component.type,
     title: component.description,
     label: component.label,
     xtype: component.xtype,
@@ -45,7 +47,9 @@ export function componentToNode (component, handle) {
       value: value[1]
     })
   })
-  node.type = component.managed ? 'container' : 'component';
+  if (component.type !== 'xpage') {
+    node.type = component.managed ? 'container' : 'component';
+  }
   return node;
 }
 

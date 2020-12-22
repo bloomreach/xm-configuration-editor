@@ -15,6 +15,7 @@ public class PageConverter extends StdConverter<Map<String, Object>, Page> {
         page.setDescription((String) value.get("description"));
         page.setLabel((String) value.get("label"));
         page.setParameters((Map<String, String>) value.get("parameters"));
+        page.setType((String) value.get("type"));
         if (value.containsKey("components")) {
             ((ArrayList<Map<String, Object>>) value.get("components")).forEach(child -> {
                 page.addComponentsItem(Builder.buildComponent(child));

@@ -41,3 +41,8 @@ definitions:
           jcr:primaryType: hst:sitemapitem
           hst:componentconfigurationid: hst:pages/contentlist
           hst:relativecontentpath: ${parent}/${1}
+      /xpage:
+        jcr:primaryType: hst:sitemapitem
+        /_any_:
+          jcr:primaryType: hst:sitemapitem
+          hst:relativecontentpath: read1/${1}

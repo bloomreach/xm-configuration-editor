@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
@@ -12,7 +11,6 @@ import javax.jcr.Session;
 import javax.jcr.SimpleCredentials;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.PUT;
@@ -31,90 +29,200 @@ import com.bloomreach.xm.config.api.model.AbstractComponent;
 import com.bloomreach.xm.config.api.model.ConfigApiPermissions;
 import com.bloomreach.xm.config.api.model.Page;
 
-import org.apache.commons.lang.StringUtils;
 import org.hippoecm.hst.configuration.components.HstComponentConfiguration;
+import org.hippoecm.hst.configuration.experiencepage.ExperiencePageService;
 import org.hippoecm.hst.configuration.hosting.Mount;
 import org.hippoecm.hst.configuration.site.HstSite;
-import org.hippoecm.hst.container.RequestContextProvider;
-import org.hippoecm.hst.container.site.CompositeHstSite;
-import org.hippoecm.hst.core.internal.PreviewDecorator;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.exceptions.ClientException;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.helpers.LockHelper;
-import org.hippoecm.hst.platform.model.HstModel;
 import org.hippoecm.hst.platform.model.HstModelRegistry;
-import org.hippoecm.hst.site.HstServices;
+import org.hippoecm.hst.util.HstRequestUtils;
 import org.hippoecm.repository.api.HippoSession;
+import org.hippoecm.repository.api.WorkflowException;
 import org.hippoecm.repository.util.JcrUtils;
 import org.onehippo.cms7.services.HippoServiceRegistry;
 import org.onehippo.cms7.services.cmscontext.CmsSessionContext;
-import org.onehippo.cms7.services.hst.Channel;
 import org.onehippo.cms7.utilities.servlet.HttpSessionBoundJcrSessionHolder;
+import org.onehippo.repository.documentworkflow.DocumentWorkflow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.bloomreach.xm.config.api.Builder.buildComponent;
-import static com.bloomreach.xm.config.api.Builder.buildComponentNode;
 import static com.bloomreach.xm.config.api.Builder.buildPage;
 import static com.bloomreach.xm.config.api.Builder.buildPageNode;
+import static com.bloomreach.xm.config.api.Builder.buildXComponent;
+import static com.bloomreach.xm.config.api.Builder.buildXPageNode;
+import static com.bloomreach.xm.config.api.Utils.CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR;
+import static com.bloomreach.xm.config.api.Utils.CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER;
+import static com.bloomreach.xm.config.api.Utils.checkoutCorrectBranch;
+import static com.bloomreach.xm.config.api.Utils.closeSession;
+import static com.bloomreach.xm.config.api.Utils.getComponentConfig;
+import static com.bloomreach.xm.config.api.Utils.getHandle;
+import static com.bloomreach.xm.config.api.Utils.getHstSite;
+import static com.bloomreach.xm.config.api.Utils.getMount;
+import static com.bloomreach.xm.config.api.Utils.getObtainEditableInstanceWorkflow;
+import static com.bloomreach.xm.config.api.Utils.getXPageModelFromVariantNode;
+import static com.bloomreach.xm.config.api.Utils.getXPageTemplate;
+import static com.bloomreach.xm.config.api.Utils.getXPageUnpublishedNode;
+import static com.bloomreach.xm.config.api.Utils.isXPage;
+import static org.hippoecm.hst.platform.services.channel.ChannelManagerPrivileges.CHANNEL_WEBMASTER_PRIVILEGE_NAME;
+import static org.hippoecm.hst.platform.services.channel.ChannelManagerPrivileges.XPAGE_REQUIRED_PRIVILEGE_NAME;
+import static org.hippoecm.hst.util.JcrSessionUtils.isInRole;
 
 public class ConfigApiResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfigApiResource.class);
     private static final String SYSTEM_USER = "system";
-    private static final String CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER = "xm.config-editor.current-page.viewer";
-    private static final String CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR = "xm.config-editor.current-page.editor";
+
     private final Session systemSession;
     private final LockHelper lockHelper;
+    private HstModelRegistry hstModelRegistry;
 
     public ConfigApiResource(final Session session) {
         this.systemSession = session;
         this.lockHelper = new LockHelper();
     }
 
-    @Path("/channels/{channel_id}/pages/{page_name}")
+    /**
+     * @return request-scoped {@link Session} session with system privileges
+     * @throws InternalServerErrorException
+     */
+    private Session getImpersonatedSession() throws InternalServerErrorException {
+        try {
+            return systemSession.impersonate(new SimpleCredentials(SYSTEM_USER, new char[]{}));
+        } catch (RepositoryException ex) {
+            LOGGER.error(ex.getMessage());
+            throw new InternalServerErrorException("Internal server error", ex);
+        }
+    }
+
+
+    @Path("/channels/{channel_id}/pages/{page_name:.*}")
     @PUT
     @Produces({MediaType.APPLICATION_JSON})
     public Response putPageWithName(@Context HttpServletRequest request, @PathParam("channel_id") String channelId, @PathParam("page_name") String pageName, final Page page)
             throws ChannelNotFoundException, WorkspaceComponentNotFoundException, PageLockedException, UnauthorizedException {
         ensureUserIsAuthorized(request, CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR);
-        final Session session = getImpersonatedSession();
         final Session userSession = getUserSession(request);
-        final HstSite hstSite = getHstSite(channelId);
-        final HstComponentConfiguration componentConfig = getComponentConfig(hstSite, pageName);
-        Node configNode = null;
-        try {
-            configNode = JcrUtils.getNodeIfExists(componentConfig.getCanonicalStoredLocation(), session);
-            lockHelper.acquireLock(configNode, userSession.getUserID(), 0);
-            buildPageNode(session, page, componentConfig.getCanonicalStoredLocation(), userSession.getUserID());
-            session.save();
-        } catch (ClientException ex) {
-            LOGGER.error(ex.getMessage());
-            throw new PageLockedException("Cannot update page hierarchy as it's locked by " + ex.getParameterMap().get("lockedBy"));
-        } catch (RepositoryException ex) {
-            LOGGER.error(ex.getMessage());
-            unlockQuietly(configNode); //we only want to unlock here.Publishing changes in EM will release the lock
-            throw new InternalServerErrorException("Internal server error", ex);
-        } finally {
-            closeSession(session);
+
+        if (Page.TypeEnum.XPAGE.getValue().equals(page.getType())) {
+            try {
+                final Node xPageUnpublishedNode = getXPageUnpublishedNode(channelId, pageName, userSession);
+                final Node xpage = getXPageModelFromVariantNode(xPageUnpublishedNode);
+
+                final HstComponentConfiguration xPageTemplate = getXPageTemplate(getHstSite(channelId), xpage);
+                final String cmsSessionActiveBranchId = HstRequestUtils.getCmsSessionActiveBranchId(request);
+                final Node handle = getHandle(xPageUnpublishedNode);
+                final DocumentWorkflow documentWorkflow = getObtainEditableInstanceWorkflow(userSession, handle.getIdentifier(), cmsSessionActiveBranchId);
+                Session workflowSession = documentWorkflow.getWorkflowContext().getInternalWorkflowSession();
+                buildXPageNode(workflowSession, xPageTemplate, page, xpage.getPath(), userSession.getUserID());
+
+                documentWorkflow.saveUnpublished();
+                return Response.created(URI.create(String.format("/channels/%s/pages/%s", channelId, pageName))).build();
+            } catch (RepositoryException | WorkflowException e) {
+                LOGGER.error(e.getMessage());
+                throw new InternalServerErrorException("Internal server error", e);
+            }
+        } else {
+            final Session session = getImpersonatedSession();
+            final HstSite hstSite = getHstSite(channelId);
+            final HstComponentConfiguration componentConfig = getComponentConfig(hstSite, pageName);
+            Node configNode = null;
+            try {
+                configNode = JcrUtils.getNodeIfExists(componentConfig.getCanonicalStoredLocation(), session);
+                lockHelper.acquireLock(configNode, userSession.getUserID(), 0);
+                buildPageNode(session, page, componentConfig.getCanonicalStoredLocation(), userSession.getUserID());
+                session.save();
+            } catch (ClientException ex) {
+                LOGGER.error(ex.getMessage());
+                throw new PageLockedException("Cannot update page hierarchy as it's locked by " + ex.getParameterMap().get("lockedBy"));
+            } catch (RepositoryException ex) {
+                LOGGER.error(ex.getMessage());
+                unlockQuietly(configNode); //we only want to unlock here.Publishing changes in EM will release the lock
+                throw new InternalServerErrorException("Internal server error", ex);
+            } finally {
+                closeSession(session);
+            }
+            return Response.created(URI.create(String.format("/channels/%s/pages/%s", channelId, pageName))).build();
         }
-        return Response.created(URI.create(String.format("/channels/%s/pages/%s", channelId, pageName))).build();
     }
 
-    @Path("/channels/{channel_id}/pages/{page_name}")
+    @Path("/channels/{channel_id}/pages/{page_name:.*}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getPageByName(@Context HttpServletRequest request, @PathParam("channel_id") String channelId, @PathParam("page_name") String pageName) throws ChannelNotFoundException, WorkspaceComponentNotFoundException, UnauthorizedException {
         ensureUserIsAuthorized(request, CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER);
-        final HstComponentConfiguration componentConfig = getComponentConfig(getHstSite(channelId), pageName);
-        final Page page = buildPage(componentConfig, systemSession);
-        final List<HstComponentConfiguration> immediateChildren = componentConfig.getChildren().values().stream()
-                .filter(childConfig -> childConfig.getCanonicalStoredLocation().contains(componentConfig.getCanonicalStoredLocation()))
-                .collect(Collectors.toList());
-        immediateChildren.forEach(childConfig -> {
-            final AbstractComponent component = buildComponent(childConfig, systemSession);
-            page.addComponentsItem(component);
-        });
-        return Response.ok(page).build();
+        final Session userSession = getUserSession(request);
+        if (isXPage(channelId, pageName, userSession)) {
+            try {
+                final Node xPageUnpublishedNode = getXPageUnpublishedNode(channelId, pageName, userSession);
+                final Node handle = getHandle(xPageUnpublishedNode);
+
+                final String cmsSessionActiveBranchId = HstRequestUtils.getCmsSessionActiveBranchId(request);
+
+                final DocumentWorkflow documentWorkflow = getObtainEditableInstanceWorkflow(userSession, handle.getIdentifier(), cmsSessionActiveBranchId);
+                checkoutCorrectBranch(documentWorkflow, cmsSessionActiveBranchId);
+
+                final Node xPageModelFromVariantNode = getXPageModelFromVariantNode(xPageUnpublishedNode);
+                // this is a node of type hst:component, fetch the hst component configuration for it
+                final ExperiencePageService experiencePageService = HippoServiceRegistry.getService(ExperiencePageService.class);
+
+                final Mount mount = getMount(channelId);
+                final HstComponentConfiguration config = experiencePageService.loadExperiencePage(xPageModelFromVariantNode, mount.getHstSite(),
+                        this.getClass().getClassLoader());
+
+                final Page page = buildPage(config, systemSession, Page.TypeEnum.XPAGE);
+
+                final List<HstComponentConfiguration> immediateChildren = config.getChildren().values().stream()
+                        .filter(childConfig -> childConfig.getCanonicalStoredLocation().contains("hst:xpages"))  //todo do better
+                        .collect(Collectors.toList());
+                immediateChildren.forEach(childConfig -> {
+                    final AbstractComponent component = buildXComponent(childConfig, systemSession);
+                    page.addComponentsItem(component);
+                });
+                page.setType(Page.TypeEnum.XPAGE);
+                return Response.ok(page).build();
+            } catch (RepositoryException | WorkflowException e) {
+                LOGGER.error("error getting xpage", e);
+                throw new InternalServerErrorException("Internal server error", e);
+            }
+        } else {
+            final HstComponentConfiguration componentConfig = getComponentConfig(getHstSite(channelId), pageName);
+            final Page page = buildPage(componentConfig, systemSession, Page.TypeEnum.PAGE);
+            final List<HstComponentConfiguration> immediateChildren = componentConfig.getChildren().values().stream()
+                    .filter(childConfig -> childConfig.getCanonicalStoredLocation().contains(componentConfig.getCanonicalStoredLocation()))
+                    .collect(Collectors.toList());
+            immediateChildren.forEach(childConfig -> {
+                final AbstractComponent component = buildComponent(childConfig, systemSession);
+                page.addComponentsItem(component);
+            });
+            return Response.ok(page).build();
+        }
+    }
+
+    private boolean userInRole(final Session userSession, String xpageHandle, final HstComponentConfiguration compConfig) {
+        // note that EVEN if the backing JCR node for compConfig is from version history, because we decorate
+        // the JCR Node to HippoBeanFrozenNode in ObjectConverterImpl.getActualNode(), the #getPath is decorated
+        // to always return a workspace path! Hence #getCanonicalStoredLocation gives right location
+        if (compConfig.isExperiencePageComponent()) {
+            // check whether cmsUser has the right role on the xpage component document (aka handle)
+            // note that even if the backing JCR Node from 'getContentBean' is a frozen jcr node, #getParent on
+            // that frozen node will return the workspace handle, see HippoBeanFrozenNodeUtils.getWorkspaceFrozenNode()
+            final String handlePath;
+            handlePath = xpageHandle;
+            if (!compConfig.getCanonicalStoredLocation().startsWith(handlePath)) {
+                if (compConfig.isUnresolvedXpageLayoutContainer()) {
+                    LOGGER.info("Component '{}' for XPage '{}' has been most likely added later on to the XPage Layout, " +
+                            "on usage, the container should be created in the XPage document", compConfig.getCanonicalStoredLocation(), handlePath);
+                } else {
+                    LOGGER.error("Component '{}' for XPage '{}' expected to be a descendant of handle but was not the case, return " +
+                            "false for user in role", compConfig.getCanonicalStoredLocation(), handlePath);
+                }
+            }
+            return isInRole(userSession, handlePath, XPAGE_REQUIRED_PRIVILEGE_NAME);
+        } else {
+            return isInRole(userSession, compConfig.getCanonicalStoredLocation(), CHANNEL_WEBMASTER_PRIVILEGE_NAME);
+        }
     }
 
     @Path("/channels/{channel_id}/components")
@@ -123,7 +231,7 @@ public class ConfigApiResource {
     public Response getAllComponents(@PathParam("channel_id") String channelId) throws ChannelNotFoundException {
         final Map<String, HstComponentConfiguration> componentConfigurations = getHstSite(channelId).getComponentsConfiguration().getComponentConfigurations();
         final List<AbstractComponent> components = componentConfigurations.values().stream()
-                .filter(this::isFirstLevelChildOfHstComponents)
+                .filter(Utils::isFirstLevelChildOfHstComponents)
                 .map(componentConfig -> Builder.buildComponent(componentConfig, systemSession))
                 .collect(Collectors.toList());
         return Response.ok(components).build();
@@ -134,42 +242,6 @@ public class ConfigApiResource {
     @Produces({MediaType.APPLICATION_JSON})
     public Response hasPermission(@Context final HttpServletRequest request) throws InternalServerErrorException {
         return Response.ok(getConfigApiPermissions(request)).build();
-    }
-
-    private void ensureUserIsAuthorized(final HttpServletRequest request, final String requiredUserRole) throws UnauthorizedException {
-        final HippoSession userSession = (HippoSession)getUserSession(request);
-        if (!userSession.isUserInRole(requiredUserRole)) {
-            throw new UnauthorizedException(String.format("User %s does not have the (implied) userrole: %s", userSession.getUserID(), requiredUserRole));
-        }
-    }
-
-    private ConfigApiPermissions getConfigApiPermissions(final HttpServletRequest request) {
-        final HippoSession userSession = (HippoSession)getUserSession(request);
-        return new ConfigApiPermissions(
-                userSession.isUserInRole(CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER),
-                userSession.isUserInRole(CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR));
-    }
-
-    /**
-     * Unlocks a given hst component and it's descendents
-     *
-     * @param configNode page node to be unlocked quietly
-     */
-    private void unlockQuietly(final Node configNode) {
-        try {
-            if (configNode != null) {
-                lockHelper.unlock(configNode);
-                configNode.getSession().save();
-            }
-        } catch (RepositoryException ex) {
-            LOGGER.error(ex.getMessage());
-        }
-    }
-
-    private void closeSession(final Session session) {
-        if (session != null && session.isLive()) {
-            session.logout();
-        }
     }
 
     /**
@@ -189,84 +261,34 @@ public class ConfigApiResource {
         }
     }
 
-    private HstComponentConfiguration getComponentConfig(final HstSite hstSite, final String pageName) throws WorkspaceComponentNotFoundException, ChannelNotFoundException {
-        final String componentConfigurationId = hstSite.getSiteMap().getSiteMapItem(pageName).getComponentConfigurationId();
-        final HstComponentConfiguration componentConfig = hstSite.getComponentsConfiguration().getComponentConfiguration(componentConfigurationId);
-        if (componentConfig == null || !isWorkspaceComponent(componentConfig)) {
-            throw new WorkspaceComponentNotFoundException("Could not find workspace hst component for page: " + pageName);
+    private void ensureUserIsAuthorized(final HttpServletRequest request, final String requiredUserRole) throws UnauthorizedException {
+        final HippoSession userSession = (HippoSession)getUserSession(request);
+        if (!userSession.isUserInRole(requiredUserRole)) {
+            throw new UnauthorizedException(String.format("User %s does not have the (implied) userrole: %s", userSession.getUserID(), requiredUserRole));
         }
-        return componentConfig;
     }
 
     /**
-     * @param componentConfig Hst Component config to check
-     * @return true if given hst component config is the immediate child of hst:components node
+     * Unlocks a given hst component and it's descendents
+     *
+     * @param configNode page node to be unlocked quietly
      */
-    private boolean isFirstLevelChildOfHstComponents(final HstComponentConfiguration componentConfig) {
-        return componentConfig.getId().startsWith("hst:components/") && componentConfig.getId().chars().filter(ch -> ch == '/').count() == 1;
-    }
-
-    private HstSite getHstSite(final String channelId) throws ChannelNotFoundException {
-        final HstModelRegistry service = HippoServiceRegistry.getService(HstModelRegistry.class);
-        String branchId = null;
-        HstModel hstModel = null;
-        for (HstModel model : service.getHstModels()) {
-            final Channel channel = model.getVirtualHosts().getChannelById(getVirtualHostGroupName(), channelId);
-            if (channel != null) {
-                hstModel = model;
-                branchId = channel.getBranchId();
-                break;
-            }
-        }
-        if (hstModel == null) {
-            throw new ChannelNotFoundException("Channel with id: " + channelId + " not found");
-        }
-
-        final String finalBranchId = branchId;
-        if (finalBranchId != null) {
-            String masterChannelId = StringUtils.remove(channelId, branchId + "-");
-            LOGGER.debug("fetching hstSite for project branch: {}", finalBranchId);
-            return getHstSiteStream(hstModel, masterChannelId)
-                    .map(hstSite -> ((CompositeHstSite)hstSite).getBranches().get(finalBranchId))
-                    .findFirst()
-                    .orElseThrow(() -> new ChannelNotFoundException("Channel with id: " + channelId + " not found"));
-        } else {
-            return getHstSiteStream(hstModel, channelId)
-                    .findFirst()
-                    .orElseThrow(() -> new ChannelNotFoundException("Channel with id: " + channelId + " not found"));
-        }
-    }
-
-    private Stream<HstSite> getHstSiteStream(final HstModel hstModel, final String masterChannelId) {
-        final PreviewDecorator pd = HstServices.getComponentManager().getComponent(PreviewDecorator.class);
-        return pd.decorateVirtualHostsAsPreview(hstModel.getVirtualHosts()).getMountsByHostGroup(getVirtualHostGroupName()).stream()
-                .filter(m -> m.getChannel() != null && m.getChannel().getId().equals(masterChannelId))
-                .map(Mount::getHstSite);
-    }
-
-    /**
-     * @return The virtual host name of the hst platform which should be the same as the browsed channels'
-     * virtual host group
-     */
-    private String getVirtualHostGroupName() {
-        return RequestContextProvider.get().getResolvedMount().getMount().getVirtualHost().getHostGroupName();
-    }
-
-    /**
-     * @return request-scoped {@link Session} session with system privileges
-     * @throws InternalServerErrorException
-     */
-    private Session getImpersonatedSession() throws InternalServerErrorException {
+    private void unlockQuietly(final Node configNode) {
         try {
-            return systemSession.impersonate(new SimpleCredentials(SYSTEM_USER, new char[]{}));
+            if (configNode != null) {
+                lockHelper.unlock(configNode);
+                configNode.getSession().save();
+            }
         } catch (RepositoryException ex) {
             LOGGER.error(ex.getMessage());
-            throw new InternalServerErrorException("Internal server error", ex);
         }
     }
 
-    private boolean isWorkspaceComponent(final HstComponentConfiguration componentConfiguration) {
-        return componentConfiguration.getCanonicalStoredLocation().contains("/hst:workspace");
+    private ConfigApiPermissions getConfigApiPermissions(final HttpServletRequest request) {
+        final HippoSession userSession = (HippoSession)getUserSession(request);
+        return new ConfigApiPermissions(
+                userSession.isUserInRole(CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER),
+                userSession.isUserInRole(CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR));
     }
 
 }

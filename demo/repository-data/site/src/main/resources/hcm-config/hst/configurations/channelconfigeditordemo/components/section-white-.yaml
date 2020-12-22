@@ -12,7 +12,9 @@ definitions:
           jcr:primaryType: hst:containercomponent
           hst:description: Column
           hst:xtype: hst.vbox
+          hippo:identifier: 65113158-280a-4000-a2e4-6534104993ab
         /col-2:
           jcr:primaryType: hst:containercomponent
           hst:description: Column
           hst:xtype: hst.vbox
+          hippo:identifier: b19a0882-76d7-4d73-966b-a7b88b67c64b

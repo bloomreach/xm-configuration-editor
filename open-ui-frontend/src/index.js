@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.getElementById('root')
     );
   } catch (error) {
-    console.log(error);
     console.error('Failed to register extension:', error.message);
     console.error('- error code:', error.code);
     ReactDOM.render(<Fallback/>, document.getElementById('root'));

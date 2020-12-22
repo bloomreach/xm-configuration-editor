@@ -1,0 +1,29 @@
+{
+  "name": "contentpage",
+  "label": "contentpage",
+  "description": "contentpage",
+  "parameters": {},
+  "type": "xpage",
+  "components": [
+    {
+      "name": "main",
+      "label": null,
+      "description": "main",
+      "parameters": {},
+      "xtype": null,
+      "managed": false,
+      "definition": null,
+      "components": [
+        {
+          "name": "container",
+          "label": null,
+          "description": "container",
+          "parameters": {},
+          "xtype": null,
+          "managed": true
+        }
+      ]
+    }
+  ],
+  "extends": null
+}

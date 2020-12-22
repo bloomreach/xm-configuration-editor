@@ -1,0 +1,5 @@
+/hst:hst/hst:configurations/channelconfigeditordemo/hst:workspace/hst:sitemap/test2:
+  jcr:primaryType: hst:sitemapitem
+  hst:componentconfigurationid: hst:pages/test2-contentpage
+  hst:lastmodified: 2020-12-08T14:24:20.908+01:00
+  hst:pagetitle: test2

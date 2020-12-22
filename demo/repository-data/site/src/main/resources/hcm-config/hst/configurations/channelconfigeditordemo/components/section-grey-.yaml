@@ -3,8 +3,8 @@ definitions:
     /hst:hst/hst:configurations/channelconfigeditordemo/hst:components/section-grey-:
       jcr:primaryType: hst:component
       hst:description: Grey Section
-      hst:parameternames: [background-color]
-      hst:parametervalues: [grey]
+      hst:parameternames: [background-color, pageType]
+      hst:parametervalues: [grey, bar]
       /row-:
         jcr:primaryType: hst:component
         hst:description: Row
@@ -12,7 +12,9 @@ definitions:
           jcr:primaryType: hst:containercomponent
           hst:description: Column
           hst:xtype: hst.vbox
+          hippo:identifier: 737d8017-2a95-455e-bc80-d5591b3b7be7
         /col-2:
           jcr:primaryType: hst:containercomponent
           hst:description: Column
           hst:xtype: hst.vbox
+          hippo:identifier: 88c6982a-d668-4ad1-85c6-8b8eb1d3074c

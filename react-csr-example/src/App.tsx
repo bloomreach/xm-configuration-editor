@@ -23,10 +23,11 @@ import {Static} from "./components/Static";
 import {WhiteSection} from "./components/WhiteSection";
 import {GreySection} from "./components/GreySection";
 import {Row} from "./components/Row";
-import {TYPE_CONTAINER_BOX, TYPE_CONTAINER_INLINE} from '@bloomreach/spa-sdk';
+import {TYPE_CONTAINER_BOX, TYPE_CONTAINER_INLINE, TYPE_CONTAINER_NO_MARKUP} from '@bloomreach/spa-sdk';
 import Vbox from './util/vbox';
 import VSpan from "./util/vspan";
 import {Section} from "./components/Section";
+import Nomarkup from "./util/nomarkup";
 
 export default function App (props: RouteComponentProps) {
   const configuration = {
@@ -42,23 +43,28 @@ export default function App (props: RouteComponentProps) {
     Content,
     'News List': NewsList,
     'row-x': Static,
-    'section-x': Section,
+    'section-*': Section,
+    'section-': Section,
     'section-1': Section,
     'section-2': Section,
     'section-3': Section,
+    'row-': Row,
     'row-1': Row,
     'row-2': Row,
     'row-3': Row,
     'row-4': Row,
     'row-5': Row,
     'row-6': Row,
+    'section-white-': WhiteSection,
     'section-white-1': WhiteSection,
     'section-white-2': WhiteSection,
     'section-white-3': WhiteSection,
+    'section-grey-': GreySection,
     'section-grey-1': GreySection,
     'section-grey-2': GreySection,
     'section-grey-3': GreySection,
     [TYPE_CONTAINER_BOX]: Vbox,
+    // [TYPE_CONTAINER_NO_MARKUP]: Nomarkup,
     [TYPE_CONTAINER_INLINE]: VSpan,
   };
 
@@ -86,6 +92,7 @@ export default function App (props: RouteComponentProps) {
         <BrComponent path="top"/>
       </section>
       <section className="container flex-fill pt-3">
+        <BrComponent path="main"/>
         <BrComponent path="main-1"/>
       </section>
       <footer className="bg-dark text-light py-3">

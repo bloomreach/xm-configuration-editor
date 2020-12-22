@@ -40,12 +40,7 @@ class ComponentTree extends React.Component {
   }
 
   onMove (treeData, node, nextParentNode, prevPath, prevTreeIndex, nextPath, nextTreeIndex) {
-    // console.log(node);
-    // console.log(nextParentNode);
-    // console.log(prevPath);
-    // console.log(prevTreeIndex);
-    // console.log(nextPath);
-    // console.log(nextTreeIndex);
+
   }
 
   getMenuItemForManageableComponent (componentTitle, rowInfo, popupState, key, newNode) {
@@ -315,14 +310,16 @@ class ComponentTree extends React.Component {
     updateNodeIds(copyOfNewNode);
 
     const getNodeKey = ({node}) => node.id;
-    this.props.onTreeDataChange(addNodeUnderParent({
+    this.props.onTreeDataChange(
+      addNodeUnderParent({
       treeData: this.props.treeData,
       parentKey: rowInfo.node.id,
       expandParent: true,
       getNodeKey,
       newNode: copyOfNewNode,
       addAsFirstChild: this.state.addAsFirstChild,
-    }).treeData)
+    }
+    ).treeData)
     popupState.close();
   }
 

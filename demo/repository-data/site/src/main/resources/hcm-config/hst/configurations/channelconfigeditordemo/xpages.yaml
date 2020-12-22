@@ -1,0 +1,34 @@
+definitions:
+  config:
+    /hst:hst/hst:configurations/channelconfigeditordemo/hst:xpages:
+      jcr:primaryType: hst:xpages
+      /contentpage:
+        jcr:primaryType: hst:xpage
+        hst:referencecomponent: hst:abstractpages/base
+        hst:label: Content Page
+        /main:
+          jcr:primaryType: hst:component
+          /container:
+            jcr:primaryType: hst:containercomponent
+            hippo:identifier: e0b622cf-7bc7-44bb-881a-3de929017cb3
+      /qwerty:
+        jcr:primaryType: hst:xpage
+        hst:label: Qwerty Page
+        hst:referencecomponent: hst:abstractpages/base
+        /main:
+          jcr:primaryType: hst:component
+      /dynamicpage:
+        jcr:primaryType: hst:xpage
+        hst:label: Dynamic Page
+        hst:referencecomponent: hst:abstractpages/base
+        /main:
+          jcr:primaryType: hst:component
+      /readstructure1:
+        jcr:primaryType: hst:xpage
+        hst:label: Read1
+        hst:referencecomponent: hst:abstractpages/base
+        /main:
+          jcr:primaryType: hst:component
+          /container:
+            jcr:primaryType: hst:containercomponent
+            hippo:identifier: e0b622cf-7bc7-44bb-881a-3de929017cb3

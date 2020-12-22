@@ -156,8 +156,10 @@ class ImmutableComponentTree extends React.Component {
                     treeData={this.props.treeData}
                     getNodeKey={({node}) => node.id}
                     canDrag={false}
-                    canDrop={({nextParent}) => {return false}}
-                    onChange={treeData => console.log(treeData)}
+                    canDrop={() => {
+                      return false
+                    }}
+                    onChange={treeData => console.info(treeData)}
                     nodeContentRenderer={NodeRendererDefault}
                     generateNodeProps={rowInfo => ({
                       rowLabelClickEventHandler: (event) => this.handleNodeClick(rowInfo)
