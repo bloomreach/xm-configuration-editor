@@ -41,14 +41,12 @@ class CurrentPage extends React.Component {
   }
 
   handleNavigate = (page) => {
-    console.log('navigate....');
     this.setState({currentPagePath: page.path, currentChannelId: page.channel.id});
     this.updateTreeData([]);
     this.updateComponentHierarchy(getPageWithName(this.state.baseUrl, page.channel.id, page.path));
   }
 
   refresh = () => {
-    console.log('refresh');
     this.updateTreeData([]);
     this.updateComponentHierarchy(getPageWithName(this.state.baseUrl, this.state.currentChannelId, this.state.currentPagePath));
   }
@@ -56,7 +54,6 @@ class CurrentPage extends React.Component {
   componentDidMount () {
     const ui = this.ui;
     this.setState({baseUrl: ui.baseUrl});
-    // ui.channel.on()
     ui.channel.page.on('navigate', this.handleNavigate);
     ui.channel.page.get().then(page => {
       this.handleNavigate(page);
@@ -65,6 +62,12 @@ class CurrentPage extends React.Component {
         this.setState({components: treeData, currentPagePath: page.path, currentChannelId: page.channel.id});
       });
     });
+    // ui.channel.refresh().then(() => {
+    //   console.info('channel refreshed');
+    // })
+    // ui.channel.page.refresh().then(() => {
+    //   console.info('page refreshed');
+    // });
   }
 
   updateTreeData (treeData) {
@@ -178,7 +181,7 @@ class CurrentPage extends React.Component {
       this.openSnackbar("Page hierarchy updated");
       return newPageResponse.data
     }).catch(exception => {
-      console.log(exception.response.data.errorMessage)
+      console.error(exception.response.data.errorMessage)
       this.openSnackbar(exception.response.data.errorMessage, 'error');
       this.setState({refreshDisabled: true})
     });
@@ -195,17 +198,10 @@ class CurrentPage extends React.Component {
         .then(response => {
           if (response.status === 201 && response.headers.location) {
             this.updateComponentHierarchy(getUrl(response.headers.location));
-
-            ui.channel.refresh().then(() => {
-              console.log('channel refreshed');
-            })
-            ui.channel.page.refresh().then(() => {
-              console.log('page refreshed');
-            });
           }
           return response.data
         }).catch(exception => {
-        console.log(exception.response.data.errorMessage);
+        console.error(exception.response.data.errorMessage);
         this.openSnackbar(exception.response.data.errorMessage, 'error');
       });
     });

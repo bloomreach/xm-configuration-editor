@@ -40,12 +40,7 @@ class ComponentTree extends React.Component {
   }
 
   onMove (treeData, node, nextParentNode, prevPath, prevTreeIndex, nextPath, nextTreeIndex) {
-    // console.log(node);
-    // console.log(nextParentNode);
-    // console.log(prevPath);
-    // console.log(prevTreeIndex);
-    // console.log(nextPath);
-    // console.log(nextTreeIndex);
+
   }
 
   getMenuItemForManageableComponent (componentTitle, rowInfo, popupState, key, newNode) {

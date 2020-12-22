@@ -79,7 +79,7 @@ class Components extends React.Component {
         };
       });
     }).catch(reason => {
-      console.log('something went wrong deleting the component' + item.name, reason);
+      console.error('something went wrong deleting the component' + item.name, reason);
     })
   }
 
@@ -158,9 +158,9 @@ class Components extends React.Component {
     let node = item.treeData[0];
     let component = nodeToComponent(node);
     putComponentWithName(this.state.baseUrl, this.state.channelId, component.name, component).then(response => {
-      console.log(response.data);
+      console.info(response.data);
     }).catch(exception => {
-      console.log(exception.response.data.errorMessage);
+      console.error(exception.response.data.errorMessage);
       this.openSnackbar(exception.response.data.errorMessage, 'error');
     });
   }
@@ -193,27 +193,6 @@ class Components extends React.Component {
             }
             label="Developer"
           />
-          {/*todo should have short cut component creation*/}
-          {/*<IconButton aria-label="Add Manageable Component">*/}
-          {/*  <Badge anchorOrigin={{*/}
-          {/*    vertical: 'top',*/}
-          {/*    horizontal: 'right',*/}
-          {/*  }}*/}
-          {/*         badgeContent={'+'}*/}
-          {/*         color="primary">*/}
-          {/*    <Icon className="fa fa-columns"/>*/}
-          {/*  </Badge>*/}
-          {/*</IconButton>*/}
-          {/*<IconButton aria-label="Add Static Component">*/}
-          {/*  <Badge*/}
-          {/*    anchorOrigin={{*/}
-          {/*      vertical: 'top',*/}
-          {/*      horizontal: 'right',*/}
-          {/*    }}*/}
-          {/*    badgeContent={'+'} color="primary">*/}
-          {/*    <Icon className="fa fa-puzzle-piece"/>*/}
-          {/*  </Badge>*/}
-          {/*</IconButton>*/}
         </Toolbar>
       </AppBar>
       <Dialog open={open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
