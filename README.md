@@ -12,7 +12,7 @@ The current page feature will allow a CMS user with the appropriate user roles t
 | CMS Version  | Plugin Version | Description  |
 |---|---|---|
 |14.2   | 0.1.0  | Initial Release  |
-|14.4   | 0.2.0  | XPage support, note that project will not work well in combination of this plugin. Awaiting https://issues.onehippo.com/browse/CMS-14297  |
+|14.4   | 0.2.0  | XPage support, note that the "projects" feature will not work well in combination of this plugin. Awaiting https://issues.onehippo.com/browse/CMS-14297  |
 
 
 ## Installation
