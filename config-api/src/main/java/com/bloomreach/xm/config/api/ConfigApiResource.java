@@ -76,7 +76,6 @@ public class ConfigApiResource {
 
     private final Session systemSession;
     private final LockHelper lockHelper;
-    private HstModelRegistry hstModelRegistry;
 
     public ConfigApiResource(final Session session) {
         this.systemSession = session;
@@ -197,31 +196,6 @@ public class ConfigApiResource {
                 page.addComponentsItem(component);
             });
             return Response.ok(page).build();
-        }
-    }
-
-    private boolean userInRole(final Session userSession, String xpageHandle, final HstComponentConfiguration compConfig) {
-        // note that EVEN if the backing JCR node for compConfig is from version history, because we decorate
-        // the JCR Node to HippoBeanFrozenNode in ObjectConverterImpl.getActualNode(), the #getPath is decorated
-        // to always return a workspace path! Hence #getCanonicalStoredLocation gives right location
-        if (compConfig.isExperiencePageComponent()) {
-            // check whether cmsUser has the right role on the xpage component document (aka handle)
-            // note that even if the backing JCR Node from 'getContentBean' is a frozen jcr node, #getParent on
-            // that frozen node will return the workspace handle, see HippoBeanFrozenNodeUtils.getWorkspaceFrozenNode()
-            final String handlePath;
-            handlePath = xpageHandle;
-            if (!compConfig.getCanonicalStoredLocation().startsWith(handlePath)) {
-                if (compConfig.isUnresolvedXpageLayoutContainer()) {
-                    LOGGER.info("Component '{}' for XPage '{}' has been most likely added later on to the XPage Layout, " +
-                            "on usage, the container should be created in the XPage document", compConfig.getCanonicalStoredLocation(), handlePath);
-                } else {
-                    LOGGER.error("Component '{}' for XPage '{}' expected to be a descendant of handle but was not the case, return " +
-                            "false for user in role", compConfig.getCanonicalStoredLocation(), handlePath);
-                }
-            }
-            return isInRole(userSession, handlePath, XPAGE_REQUIRED_PRIVILEGE_NAME);
-        } else {
-            return isInRole(userSession, compConfig.getCanonicalStoredLocation(), CHANNEL_WEBMASTER_PRIVILEGE_NAME);
         }
     }
 
