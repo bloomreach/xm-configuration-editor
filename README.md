@@ -71,6 +71,8 @@ Also see the demo video:
 
 ## Authorization
 
+xm.config-editor.current-page.editor ideally should be assigned to a user with editor and webmaster privileges
+
 | Userrole  |Implied Userrole  | Description  |
 |---|---|---|
 |xm.config-editor.current-page.editor   |xm.config-editor.current-page.viewer   | Allows editing of current page structure via "save" button  |
@@ -83,6 +85,7 @@ Also see the demo video:
 | CMS Version  | Plugin Version | Description  |
 |---|---|---|
 |14.2   | 0.1.0  | Initial Release  |
+|14.4   | 0.2.0  | XPage support, note that project will not work well in combination of this plugin. Awaiting https://issues.onehippo.com/browse/CMS-14297  |
 
 
 -----
