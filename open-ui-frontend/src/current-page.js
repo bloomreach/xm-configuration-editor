@@ -205,6 +205,12 @@ class CurrentPage extends React.Component {
         this.openSnackbar(exception.response.data.errorMessage, 'error');
       });
     });
+    ui.channel.refresh().then(() => {
+      console.info('channel refreshed');
+    })
+    ui.channel.page.refresh().then(() => {
+      console.info('page refreshed');
+    });
   }
 
   reset () {

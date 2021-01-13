@@ -4,6 +4,9 @@ import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.jcr.Node;
@@ -13,6 +16,11 @@ import javax.ws.rs.InternalServerErrorException;
 
 import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
 import com.bloomreach.xm.config.api.exception.WorkspaceComponentNotFoundException;
+import com.bloomreach.xm.config.api.v2.model.AbstractComponent;
+import com.bloomreach.xm.config.api.v2.model.ManagedComponent;
+import com.bloomreach.xm.config.api.v2.model.Page;
+import com.bloomreach.xm.config.api.v2.model.StaticComponent;
+import com.google.common.base.Predicates;
 
 import org.apache.commons.lang.StringUtils;
 import org.hippoecm.hst.configuration.HstNodeTypes;
@@ -25,6 +33,7 @@ import org.hippoecm.hst.container.RequestContextProvider;
 import org.hippoecm.hst.container.site.CompositeHstSite;
 import org.hippoecm.hst.core.internal.PreviewDecorator;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.experiencepage.XPageUtils;
+import org.hippoecm.hst.platform.configuration.components.HstComponentConfigurationService;
 import org.hippoecm.hst.platform.model.HstModel;
 import org.hippoecm.hst.platform.model.HstModelRegistry;
 import org.hippoecm.hst.site.HstServices;
@@ -34,6 +43,7 @@ import org.hippoecm.repository.api.DocumentWorkflowAction;
 import org.hippoecm.repository.api.HippoWorkspace;
 import org.hippoecm.repository.api.WorkflowException;
 import org.hippoecm.repository.api.WorkflowManager;
+import org.hippoecm.repository.util.JcrUtils;
 import org.hippoecm.repository.util.WorkflowUtils;
 import org.onehippo.cms7.services.HippoServiceRegistry;
 import org.onehippo.cms7.services.hst.Channel;
@@ -41,7 +51,9 @@ import org.onehippo.repository.documentworkflow.DocumentWorkflow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.bloomreach.xm.config.api.v2.model.Page.PageType.ABSTRACT;
 import static org.hippoecm.hst.configuration.HstNodeTypes.NODENAME_HST_XPAGE;
+import static org.hippoecm.hst.configuration.components.HstComponentConfiguration.Type.CONTAINER_COMPONENT;
 import static org.hippoecm.repository.api.HippoNodeType.HIPPO_PROPERTY_BRANCH_ID;
 import static org.hippoecm.repository.util.JcrUtils.getStringProperty;
 import static org.hippoecm.repository.util.WorkflowUtils.Variant.UNPUBLISHED;
@@ -51,6 +63,7 @@ public class Utils {
 
     public static final String CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER = "xm.config-editor.current-page.viewer";
     public static final String CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR = "xm.config-editor.current-page.editor";
+    public static final String PROP_DESC = "hst:description";
     private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
 
     private Utils() {
@@ -100,10 +113,13 @@ public class Utils {
             resolvedMount.setMount(mount);
             final ResolvedSiteMapItemImpl resolvedSiteMapItem = (ResolvedSiteMapItemImpl)resolvedMount.matchSiteMapItem("/" + path);
 
-            final String contentRoot = mount.getHstSite().getChannel().getContentRoot();
-            return userSession.getNode(contentRoot).getNode(resolvedSiteMapItem.getRelativeContentPath());
-        } catch (RepositoryException e) {
-            LOGGER.error("Error while trying to access jcr {} ", e);
+            final Optional<String> relativeContentPath = Optional.ofNullable(resolvedSiteMapItem.getRelativeContentPath());
+
+            if (relativeContentPath.isPresent()) {
+                final String contentRoot = mount.getHstSite().getChannel().getContentRoot();
+                return userSession.getNode(contentRoot).getNode(resolvedSiteMapItem.getRelativeContentPath());
+            }
+        } catch (RepositoryException ignore) {
         }
         return null;
     }
@@ -150,7 +166,6 @@ public class Utils {
         }
         return null;
     }
-
 
     public static void closeSession(final Session session) {
         if (session != null && session.isLive()) {
@@ -262,7 +277,7 @@ public class Utils {
     }
 
     public static HstComponentConfiguration getXPageTemplate(final HstSite hstSite, final Node xpageNode) throws RepositoryException {
-        if (xpageNode.isNodeType("hst:xpage") && xpageNode.hasProperty(HstNodeTypes.XPAGE_PROPERTY_PAGEREF)) {
+        if (xpageNode.isNodeType(NODENAME_HST_XPAGE) && xpageNode.hasProperty(HstNodeTypes.XPAGE_PROPERTY_PAGEREF)) {
             return getXPageTemplate(hstSite, xpageNode.getProperty(HstNodeTypes.XPAGE_PROPERTY_PAGEREF).getString());
         }
         return null;
@@ -289,7 +304,6 @@ public class Utils {
         }
         return siteMap.getSiteMapItem(path);
     }
-
 
     /**
      * optionally checks out the right branch if the branch to be changed is in version history and not the unpublished
@@ -330,6 +344,65 @@ public class Utils {
 
         documentWorkflow.checkoutBranch(targetBranchId);
         return true;
+    }
+
+    /**
+     * @param componentConfig PaaS component to read the hst:descrtiption property from.
+     * @param session         for lookup of the hst:descrtiption property. This field is not part of the api
+     */
+    public static String getDescription(final HstComponentConfiguration componentConfig, final Session session) {
+        try {
+            final Node configNode = JcrUtils.getNodeIfExists(componentConfig.getCanonicalStoredLocation(), session);
+            if (configNode != null && configNode.hasProperty(PROP_DESC)) {
+                return configNode.getProperty(PROP_DESC).getString();
+            }
+        } catch (RepositoryException ignored) {
+        }
+        return null;
+    }
+
+    public static Function<HstComponentConfiguration, AbstractComponent> configToComponentMapper(Session session) {
+        return componentConfiguration -> {
+            AbstractComponent.AbstractComponentBuilder<?, ?> builder = null;
+
+            if (componentConfiguration.getComponentType().equals(HstComponentConfiguration.Type.COMPONENT)) {
+                builder = StaticComponent.builder();
+                ((StaticComponent.StaticComponentBuilder)builder).components(getComponents(componentConfiguration, ABSTRACT, session))
+                        .type(AbstractComponent.TypeEnum.STATIC);
+
+            } else if (componentConfiguration.getComponentType().equals(CONTAINER_COMPONENT)) {
+                builder = ManagedComponent.builder()
+                        .label(componentConfiguration.getLabel())
+                        .type(AbstractComponent.TypeEnum.MANAGED);
+            }
+
+            AbstractComponent component = builder
+                    .name(componentConfiguration.getName())
+                    .description(getDescription(componentConfiguration, session))
+                    .parameters(componentConfiguration.getParameters())
+                    .xtype(AbstractComponent.XtypeEnum.fromValue(componentConfiguration.getXType()))
+                    .build();
+
+            return component;
+        };
+    }
+
+    public static List<AbstractComponent> getComponents(final HstComponentConfiguration config, final Page.PageType type, final Session session) {
+        Predicate<HstComponentConfiguration> filter = Predicates.alwaysTrue();
+        switch (type) {
+            case PAGE:
+                filter = componentConfiguration -> componentConfiguration.getCanonicalStoredLocation().contains(componentConfiguration.getParent().getCanonicalStoredLocation());
+                break;
+            case XPAGE:
+                filter = componentConfiguration -> ((HstComponentConfigurationService)componentConfiguration).isXpageLayoutComponent() || componentConfiguration.isExperiencePageComponent();
+                break;
+        }
+
+        List<AbstractComponent> components = config.getChildren().values().stream()
+                .filter(filter)
+                .map(configToComponentMapper(session)).collect(Collectors.toList());
+
+        return components;
     }
 
 

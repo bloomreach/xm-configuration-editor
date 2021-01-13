@@ -9,7 +9,17 @@
 
   <artifactId>brxm-configuration-editor-api</artifactId>
 
+  <properties>
+    <lombok.version>1.18.12</lombok.version>
+  </properties>
+
   <dependencies>
+    <dependency>
+      <groupId>org.onehippo.cms7.hst.components</groupId>
+      <artifactId>hst-platform</artifactId>
+      <version>${hippo.repository.version}</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>org.onehippo.cms7</groupId>
       <artifactId>hippo-services</artifactId>
@@ -32,6 +42,11 @@
       <artifactId>hippo-repository-jaxrs</artifactId>
       <version>${hippo.repository.version}</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.cxf</groupId>

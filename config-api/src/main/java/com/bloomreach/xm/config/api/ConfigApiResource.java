@@ -170,6 +170,8 @@ public class ConfigApiResource {
                 final HstComponentConfiguration config = experiencePageService.loadExperiencePage(xPageModelFromVariantNode, mount.getHstSite(),
                         this.getClass().getClassLoader());
 
+
+
                 final Page page = buildPage(config, systemSession, Page.TypeEnum.XPAGE);
 
                 final List<HstComponentConfiguration> immediateChildren = config.getChildren().values().stream()
