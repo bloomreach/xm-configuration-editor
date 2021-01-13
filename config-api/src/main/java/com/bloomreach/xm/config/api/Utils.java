@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+import javax.jcr.SimpleCredentials;
 import javax.ws.rs.InternalServerErrorException;
 
 import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
@@ -20,6 +21,7 @@ import com.bloomreach.xm.config.api.v2.model.AbstractComponent;
 import com.bloomreach.xm.config.api.v2.model.ManagedComponent;
 import com.bloomreach.xm.config.api.v2.model.Page;
 import com.bloomreach.xm.config.api.v2.model.StaticComponent;
+import com.bloomreach.xm.config.api.v2.rest.ChannelCurrentPageOperationsApiServiceImpl;
 import com.google.common.base.Predicates;
 
 import org.apache.commons.lang.StringUtils;
@@ -64,6 +66,7 @@ public class Utils {
     public static final String CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER = "xm.config-editor.current-page.viewer";
     public static final String CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR = "xm.config-editor.current-page.editor";
     public static final String PROP_DESC = "hst:description";
+    private static final String SYSTEM_USER = "system";
     private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
 
     private Utils() {
@@ -106,7 +109,7 @@ public class Utils {
         final HstModelRegistry hstModelRegistry = getHstModelRegistry();
 
         final Mount mount = getMount(channelId);
-        final HstModel platformModel = hstModelRegistry.getHstModel(ConfigApiResource.class.getClassLoader());
+        final HstModel platformModel = hstModelRegistry.getHstModel(ChannelCurrentPageOperationsApiServiceImpl.class.getClassLoader());
 
         try {
             final ResolvedMountImpl resolvedMount = (ResolvedMountImpl)platformModel.getVirtualHosts().matchMount(mount.getVirtualHost().getName(), mount.getMountPath());
@@ -405,5 +408,17 @@ public class Utils {
         return components;
     }
 
+    /**
+     * @return request-scoped {@link Session} session with system privileges
+     * @throws InternalServerErrorException
+     */
+    public static Session getImpersonatedSession(final Session systemSession) throws InternalServerErrorException {
+        try {
+            return systemSession.impersonate(new SimpleCredentials(SYSTEM_USER, new char[]{}));
+        } catch (RepositoryException ex) {
+            LOGGER.error(ex.getMessage());
+            throw new InternalServerErrorException("Internal server error", ex);
+        }
+    }
 
 }

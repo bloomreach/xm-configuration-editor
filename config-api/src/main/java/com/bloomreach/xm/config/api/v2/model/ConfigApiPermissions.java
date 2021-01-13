@@ -1,4 +1,4 @@
-package com.bloomreach.xm.config.api.model;
+package com.bloomreach.xm.config.api.v2.model;
 
 public class ConfigApiPermissions {
 

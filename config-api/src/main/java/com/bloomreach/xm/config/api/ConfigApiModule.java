@@ -1,7 +1,7 @@
 package com.bloomreach.xm.config.api;
 
 import com.bloomreach.xm.config.api.exception.*;
-import com.bloomreach.xm.config.api.v2.rest.ChannelPageOperationsApiServiceImpl;
+import com.bloomreach.xm.config.api.v2.rest.ChannelCurrentPageOperationsApiServiceImpl;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import org.onehippo.repository.jaxrs.CXFRepositoryJaxrsEndpoint;
 import org.onehippo.repository.jaxrs.RepositoryJaxrsService;
@@ -25,8 +25,7 @@ public class ConfigApiModule extends AbstractReconfigurableDaemonModule {
         RepositoryJaxrsService.addEndpoint(
                 new CXFRepositoryJaxrsEndpoint(ENDPOINT)
                         .invoker(new ManagedUserSessionInvoker(session))
-                        .singleton(new ConfigApiResource(session))
-                        .singleton(new ChannelPageOperationsApiServiceImpl(session))
+                        .singleton(new ChannelCurrentPageOperationsApiServiceImpl(session))
                         .singleton(new JacksonJsonProvider())
                         //exception mappers
                         .singleton(new ChannelNotFoundExceptionMapper())

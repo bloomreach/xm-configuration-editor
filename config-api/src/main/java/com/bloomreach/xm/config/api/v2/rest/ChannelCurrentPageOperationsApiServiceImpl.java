@@ -19,12 +19,11 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.bloomreach.xm.config.api.ConfigApiResource;
 import com.bloomreach.xm.config.api.Utils;
 import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
 import com.bloomreach.xm.config.api.exception.UnauthorizedException;
 import com.bloomreach.xm.config.api.exception.WorkspaceComponentNotFoundException;
-import com.bloomreach.xm.config.api.model.ConfigApiPermissions;
+import com.bloomreach.xm.config.api.v2.model.ConfigApiPermissions;
 import com.bloomreach.xm.config.api.v2.dao.PageDao;
 import com.bloomreach.xm.config.api.v2.model.AbstractComponent;
 import com.bloomreach.xm.config.api.v2.model.Page;
@@ -44,49 +43,36 @@ import static com.bloomreach.xm.config.api.Utils.getHstSite;
 import static com.bloomreach.xm.config.api.Utils.isXPage;
 
 
-public class ChannelPageOperationsApiServiceImpl implements ChannelPageOperationsApi {
+public class ChannelCurrentPageOperationsApiServiceImpl implements ChannelCurrentPageOperationsApi {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ChannelPageOperationsApiServiceImpl.class);
-    private static final String SYSTEM_USER = "system";
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChannelCurrentPageOperationsApiServiceImpl.class);
+
 
     private final Session systemSession;
     private final LockHelper lockHelper;
     private final PageDao pageDao;
 
-    public ChannelPageOperationsApiServiceImpl(final Session session) {
+    public ChannelCurrentPageOperationsApiServiceImpl(final Session session) {
         this.systemSession = session;
         this.lockHelper = new LockHelper();
         this.pageDao = new PageDao();
     }
 
     /**
-     * @return request-scoped {@link Session} session with system privileges
-     * @throws InternalServerErrorException
-     */
-    private Session getImpersonatedSession() throws InternalServerErrorException {
-        try {
-            return systemSession.impersonate(new SimpleCredentials(SYSTEM_USER, new char[]{}));
-        } catch (RepositoryException ex) {
-            LOGGER.error(ex.getMessage());
-            throw new InternalServerErrorException("Internal server error", ex);
-        }
-    }
-
-    /**
      * Get a channel page
      */
-    public Page getChannelPage(HttpServletRequest request, String channelId, String pageName, Boolean resolved) throws ChannelNotFoundException, WorkspaceComponentNotFoundException, UnauthorizedException {
+    public Page getChannelPage(HttpServletRequest request, String channelId, String pagePath) throws ChannelNotFoundException, WorkspaceComponentNotFoundException, UnauthorizedException {
         ensureUserIsAuthorized(request, CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER);
         final Session userSession = getUserSession(request);
-        final boolean isXPage = isXPage(channelId, pageName, userSession);
-        Page page = this.pageDao.getPage(isXPage, request, channelId, pageName, userSession);
+        final boolean isXPage = isXPage(channelId, pagePath, userSession);
+        Page page = this.pageDao.getPage(isXPage, request, channelId, pagePath, userSession);
         return page;
     }
 
     /**
      * Create or update a channel page
      */
-    public Page putChannelPage(@Context HttpServletRequest request, String channelId, String pageName, Page body) {
+    public Page putChannelPage(@Context HttpServletRequest request, String channelId, String pagePath, Page body) {
         // TODO: Implement...
 
         return null;
@@ -128,7 +114,7 @@ public class ChannelPageOperationsApiServiceImpl implements ChannelPageOperation
         final CmsSessionContext cmsSessionContext = CmsSessionContext.getContext(httpSession);
         final SimpleCredentials credentials = cmsSessionContext.getRepositoryCredentials();
         try {
-            return HttpSessionBoundJcrSessionHolder.getOrCreateJcrSession(ConfigApiResource.class.getName() + ".session",
+            return HttpSessionBoundJcrSessionHolder.getOrCreateJcrSession(ChannelCurrentPageOperationsApiServiceImpl.class.getName() + ".session",
                     httpSession, credentials, systemSession.getRepository()::login);
         } catch (RepositoryException e) {
             LOGGER.error("Repo exception", e);

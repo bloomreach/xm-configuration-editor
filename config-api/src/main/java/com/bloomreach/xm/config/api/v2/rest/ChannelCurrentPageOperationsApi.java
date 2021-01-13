@@ -29,30 +29,30 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @Path("/v2")
-public interface ChannelPageOperationsApi {
+public interface ChannelCurrentPageOperationsApi {
 
 
     /**
      * Get a channel page
      */
     @GET
-    @Path("/channels/{channel_id}/pages/{page_name:.*}")
+    @Path("/channels/{channel_id}/page/{page_path:.*}")
     @Produces({"application/json"})
-    @Operation(summary = "Get a channel page", tags = {"Channel Page Operations"})
+    @Operation(summary = "Get a channel page", tags = {"Channel Current Page Operations"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Page.class)))})
-    Page getChannelPage(@Context HttpServletRequest request, @PathParam("channel_id") String channelId, @PathParam("page_name") String pageName, @QueryParam("resolved") @DefaultValue("false") Boolean resolved) throws ChannelNotFoundException, WorkspaceComponentNotFoundException, UnauthorizedException;
+    Page getChannelPage(@Context HttpServletRequest request, @PathParam("channel_id") String channelId, @PathParam("page_path") String pagePath) throws ChannelNotFoundException, WorkspaceComponentNotFoundException, UnauthorizedException;
 
 
     /**
      * Update a channel page
      */
     @PUT
-    @Path("/channels/{channel_id}/pages/{page_name:.*}")
+    @Path("/channels/{channel_id}/pages/{page_path:.*}")
     @Consumes({"application/json"})
     @Produces({"application/json"})
-    @Operation(summary = "Create or update a channel page", tags = {"Channel Page Operations"})
+    @Operation(summary = "Create or update a channel page", tags = {"Channel Current Page Operations"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "OK", content = @Content(schema = @Schema(implementation = Page.class)))})
-    Page putChannelPage(@Context HttpServletRequest request, @PathParam("channel_id") String channelId, @PathParam("page_name") String pageName, @Valid Page body);
+    Page putChannelPage(@Context HttpServletRequest request, @PathParam("channel_id") String channelId, @PathParam("page_path") String pagePath, @Valid Page body);
 }
