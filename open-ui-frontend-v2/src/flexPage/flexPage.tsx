@@ -8,6 +8,8 @@ import {ChannelFlexPageOperationsApi, ChannelOtherOperationsApi} from "../api";
 import {AbstractComponent, Page} from "../api/models";
 import {convertPageToTreeModel, getPageNameFromPagePath, TreeModel} from "./page-util";
 import PageEditor from "./PageEditor";
+import PositionedSnackbar from "../common/PositionedSnackbar";
+import {Color} from "@material-ui/lab";
 
 type FlexPageState = {
   channelId?: string
@@ -16,6 +18,9 @@ type FlexPageState = {
   components?: Array<AbstractComponent>
   treeModel?: TreeModel
   saveDisabled: boolean
+  snackbarOpen: boolean
+  snackbarMessage: string
+  snackbarSeverity: Color
 }
 type FlexPageProps = {
   ui: UiScope
@@ -40,7 +45,10 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
     }, basePath);
 
     this.state = {
-      saveDisabled: true
+      saveDisabled: true,
+      snackbarOpen: false,
+      snackbarSeverity: 'success',
+      snackbarMessage: ''
     }
   }
 
@@ -52,7 +60,6 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
   }
 
   updatePage (page: PageProperties) {
-    console.log('update page...', page);
     const channelId = page.channel.id;
     const path = getPageNameFromPagePath(page.path);
     this.pageOperationsApi.getChannelPage(channelId, path).then(response =>
@@ -61,9 +68,9 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
         channelId: channelId,
         path: path,
         saveDisabled: true
-      })
+      }, () => this.state.treeModel ? this.logSnackBar('Flex Page updated') : this.logSnackBarError('No Flex Page Found'))
     ).catch(reason => {
-      console.log('something went wrong...', reason);
+      this.logSnackBarError(reason.response.data?.errorMessage);
     });
     this.otherOperationsApi.getAllComponents(channelId).then(response => this.setState({components: response.data}));
   }
@@ -75,7 +82,7 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
 
   render () {
     return <>
-      <AppBar position="sticky" variant={'outlined'} color={'default'}  >
+      <AppBar position="sticky" variant={'outlined'} color={'default'}>
         <Toolbar variant={'dense'}>
             <Button
               disabled={this.state.saveDisabled}
@@ -92,7 +99,17 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
       {this.state.treeModel &&
       <PageEditor key={this.state.treeModel?.id} treeModel={this.state.treeModel} onPageModelChange={page => this.onPageModelChange(page)} components={this.state.components}/>
       }
+      <PositionedSnackbar open={this.state.snackbarOpen} message={this.state.snackbarMessage}
+                           severity={this.state.snackbarSeverity} onClose={() => this.setState({snackbarOpen: false})}/>
     </>
+  }
+
+  logSnackBar (message: string) {
+    this.setState({snackbarOpen: true, snackbarMessage: message, snackbarSeverity: 'success'});
+  }
+
+  logSnackBarError (message: string) {
+    this.setState({snackbarOpen: true, snackbarMessage: message, snackbarSeverity: 'error'});
   }
 
   private savePage () {
