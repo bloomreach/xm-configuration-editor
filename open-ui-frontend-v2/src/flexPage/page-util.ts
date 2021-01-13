@@ -11,6 +11,7 @@ export interface ComponentTreeItem extends TreeItem {
 }
 
 export interface TreeModel {
+  id: Readonly<string>,
   page: Readonly<Page>,
   treeData: ComponentTreeItem[]
 }
@@ -220,22 +221,15 @@ const pageSchema = {
   }
 };
 
-export function convertPagesToTreeModelArray (pages: Array<Page>) {
-  const trees: Array<TreeModel> = [];
-  if (isNotEmptyOrNull(pages)) {
-    pages.forEach(page => {
-      trees.push({
-          page: page,
-          treeData: [componentToNode(page)]
-        }
-      )
-    })
-  }
-  return trees;
+
+export function getPageNameFromPagePath (pagePath: string) {
+  return pagePath === "/" || !pagePath ? "/root" : pagePath
 }
 
 export function convertPageToTreeModel (page: Page) : TreeModel {
+  console.log('converting page to tree model', page)
   return {
+    id: getId(),
     page: page,
     treeData: [componentToNode(page)]
   } as TreeModel

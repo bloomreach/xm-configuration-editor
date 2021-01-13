@@ -32,6 +32,7 @@ type PageEditorState = {
 type PageEditorProps = {
   treeModel: TreeModel
   onPageModelChange: (page: Page) => void
+  components?: ReadonlyArray<AbstractComponent>
 }
 
 class PageEditor extends React.Component<PageEditorProps, PageEditorState> {
