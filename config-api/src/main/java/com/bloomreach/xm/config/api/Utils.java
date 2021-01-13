@@ -13,15 +13,20 @@ import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.SimpleCredentials;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.InternalServerErrorException;
 
 import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
+import com.bloomreach.xm.config.api.exception.UnauthorizedException;
 import com.bloomreach.xm.config.api.exception.WorkspaceComponentNotFoundException;
 import com.bloomreach.xm.config.api.v2.model.AbstractComponent;
+import com.bloomreach.xm.config.api.v2.model.ConfigApiPermissions;
 import com.bloomreach.xm.config.api.v2.model.ManagedComponent;
 import com.bloomreach.xm.config.api.v2.model.Page;
 import com.bloomreach.xm.config.api.v2.model.StaticComponent;
-import com.bloomreach.xm.config.api.v2.rest.ChannelCurrentPageOperationsApiServiceImpl;
+import com.bloomreach.xm.config.api.v2.rest.ChannelFlexPageOperationsApiServiceImpl;
+import com.bloomreach.xm.config.api.v2.rest.ChannelOtherOperationsApiServiceImpl;
 import com.google.common.base.Predicates;
 
 import org.apache.commons.lang.StringUtils;
@@ -42,13 +47,16 @@ import org.hippoecm.hst.site.HstServices;
 import org.hippoecm.hst.site.request.ResolvedMountImpl;
 import org.hippoecm.hst.site.request.ResolvedSiteMapItemImpl;
 import org.hippoecm.repository.api.DocumentWorkflowAction;
+import org.hippoecm.repository.api.HippoSession;
 import org.hippoecm.repository.api.HippoWorkspace;
 import org.hippoecm.repository.api.WorkflowException;
 import org.hippoecm.repository.api.WorkflowManager;
 import org.hippoecm.repository.util.JcrUtils;
 import org.hippoecm.repository.util.WorkflowUtils;
 import org.onehippo.cms7.services.HippoServiceRegistry;
+import org.onehippo.cms7.services.cmscontext.CmsSessionContext;
 import org.onehippo.cms7.services.hst.Channel;
+import org.onehippo.cms7.utilities.servlet.HttpSessionBoundJcrSessionHolder;
 import org.onehippo.repository.documentworkflow.DocumentWorkflow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +73,7 @@ public class Utils {
 
     public static final String CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER = "xm.config-editor.current-page.viewer";
     public static final String CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR = "xm.config-editor.current-page.editor";
-    public static final String PROP_DESC = "hst:description";
+    private static final String PROP_DESC = "hst:description";
     private static final String SYSTEM_USER = "system";
     private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
 
@@ -109,7 +117,7 @@ public class Utils {
         final HstModelRegistry hstModelRegistry = getHstModelRegistry();
 
         final Mount mount = getMount(channelId);
-        final HstModel platformModel = hstModelRegistry.getHstModel(ChannelCurrentPageOperationsApiServiceImpl.class.getClassLoader());
+        final HstModel platformModel = hstModelRegistry.getHstModel(ChannelFlexPageOperationsApiServiceImpl.class.getClassLoader());
 
         try {
             final ResolvedMountImpl resolvedMount = (ResolvedMountImpl)platformModel.getVirtualHosts().matchMount(mount.getVirtualHost().getName(), mount.getMountPath());
@@ -418,6 +426,37 @@ public class Utils {
         } catch (RepositoryException ex) {
             LOGGER.error(ex.getMessage());
             throw new InternalServerErrorException("Internal server error", ex);
+        }
+    }
+
+    /**
+     * @param httpServletRequest belonging to the config api call
+     * @return Session of the user who logged into the CMS. No need to log this session out.
+     */
+    public static Session getUserSession(final HttpServletRequest httpServletRequest, final Session systemSession) {
+        final HttpSession httpSession = httpServletRequest.getSession(false);
+        final CmsSessionContext cmsSessionContext = CmsSessionContext.getContext(httpSession);
+        final SimpleCredentials credentials = cmsSessionContext.getRepositoryCredentials();
+        try {
+            return HttpSessionBoundJcrSessionHolder.getOrCreateJcrSession(ChannelOtherOperationsApiServiceImpl.class.getName() + ".session",
+                    httpSession, credentials, systemSession.getRepository()::login);
+        } catch (RepositoryException e) {
+            LOGGER.error("Repo exception", e);
+            throw new InternalServerErrorException("Error on getting user session");
+        }
+    }
+
+    public static ConfigApiPermissions getConfigApiPermissions(final HttpServletRequest request, final Session systemSession) {
+        final HippoSession userSession = (HippoSession)getUserSession(request, systemSession);
+        return new ConfigApiPermissions(
+                userSession.isUserInRole(CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER),
+                userSession.isUserInRole(CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR));
+    }
+
+    public static void ensureUserIsAuthorized(final HttpServletRequest request, final String requiredUserRole, final Session systemSession) throws UnauthorizedException {
+        final HippoSession userSession = (HippoSession)getUserSession(request, systemSession);
+        if (!userSession.isUserInRole(requiredUserRole)) {
+            throw new UnauthorizedException(String.format("User %s does not have the (implied) userrole: %s", userSession.getUserID(), requiredUserRole));
         }
     }
 

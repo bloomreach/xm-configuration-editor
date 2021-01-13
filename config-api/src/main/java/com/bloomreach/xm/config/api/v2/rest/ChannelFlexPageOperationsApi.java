@@ -29,14 +29,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @Path("/v2")
-public interface ChannelCurrentPageOperationsApi {
+public interface ChannelFlexPageOperationsApi {
 
 
     /**
      * Get a channel page
      */
     @GET
-    @Path("/channels/{channel_id}/page/{page_path:.*}")
+    @Path("/channels/{channel_id}/flexpage/{page_path:.*}")
     @Produces({"application/json"})
     @Operation(summary = "Get a channel page", tags = {"Channel Current Page Operations"})
     @ApiResponses(value = {
@@ -48,7 +48,7 @@ public interface ChannelCurrentPageOperationsApi {
      * Update a channel page
      */
     @PUT
-    @Path("/channels/{channel_id}/pages/{page_path:.*}")
+    @Path("/channels/{channel_id}/flexpage/{page_path:.*}")
     @Consumes({"application/json"})
     @Produces({"application/json"})
     @Operation(summary = "Create or update a channel page", tags = {"Channel Current Page Operations"})
