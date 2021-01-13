@@ -50,10 +50,10 @@ public class ChannelFlexPageOperationsApiServiceImpl implements ChannelFlexPageO
     /**
      * Create or update a channel page
      */
-    public Page putChannelPage(@Context HttpServletRequest request, String channelId, String pagePath, Page body) {
+    public Page putChannelPage(HttpServletRequest request, String channelId, String pagePath, Page body) {
         // TODO: Implement...
 
-        return null;
+        return body;
     }
 
 

@@ -89,9 +89,9 @@ export const ChannelFlexPageOperationsApiAxiosParamCreator = function (configura
             if (pagePath === null || pagePath === undefined) {
                 throw new RequiredError('pagePath','Required parameter pagePath was null or undefined when calling putChannelPage.');
             }
-            const localVarPath = `/channels/{channel_id}/flexpage/{page_name}`
+            const localVarPath = `/channels/{channel_id}/flexpage{page_name}`
               .replace(`{${"channel_id"}}`, encodeURIComponent(String(channelId)))
-              .replace(`{${"page_name"}}`, encodeURIComponent(String(pagePath)));
+              .replace(`{${"page_name"}}`, String(pagePath));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;

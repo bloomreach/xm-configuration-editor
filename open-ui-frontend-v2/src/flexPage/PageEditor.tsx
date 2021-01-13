@@ -58,20 +58,15 @@ class PageEditor extends React.Component<PageEditorProps, PageEditorState> {
         <React.Fragment>
           <MoreHorizOutlinedIcon {...bindTrigger(popupState)}/>
           <Menu {...bindMenu(popupState)}>
-            {isNotManagedComponent &&
-            <MenuItem onClick={() => this.addComponent(rowInfo, "static", () => popupState.close())}>
-              <ListItemIcon>
-                <Icon className="fa fa-puzzle-piece" fontSize={'small'}/>
-              </ListItemIcon>
-              <Typography variant="inherit">Add Static Component</Typography>
-            </MenuItem>}
-            {isNotManagedComponent &&
-            <MenuItem onClick={() => this.addComponent(rowInfo, "managed", () => popupState.close())}>
-              <ListItemIcon>
-                <Icon className="fa fa-columns" fontSize={'small'}/>
-              </ListItemIcon>
-              <Typography variant="inherit">Add Managed Component</Typography>
-            </MenuItem>}
+            {isNotManagedComponent && this.props.components?.map(component => {
+              const clazz = component.type === 'managed' ? 'fa-columns' : 'fa-puzzle-piece';
+              return <MenuItem onClick={() => this.addComponent(rowInfo, component, () => popupState.close())}>
+                <ListItemIcon>
+                  <Icon className={'fa ' + clazz} fontSize={'small'}/>
+                </ListItemIcon>
+                <Typography variant="inherit">{component.description}</Typography>
+              </MenuItem>
+            })}
             <MenuItem disabled={rowInfo.treeIndex === 0} onClick={() => this.deleteComponent(rowInfo, () => popupState.close())}>
               <ListItemIcon>
                 <Delete fontSize="small"/>
@@ -84,12 +79,8 @@ class PageEditor extends React.Component<PageEditorProps, PageEditorState> {
     </PopupState>
   }
 
-  addComponent (rowInfo: ExtendedNodeData, type: string, callback?: () => void) {
-    const newNode: AbstractComponent = {
-      type: type,
-      name: `new-${type}-component`
-    }
-    const newNodeComponent: ComponentTreeItem = componentToNode(newNode);
+  addComponent (rowInfo: ExtendedNodeData, component: AbstractComponent, callback?: () => void) {
+    const newNodeComponent: ComponentTreeItem = componentToNode(component);
 
     const treeData: TreeItem[] = addNodeUnderParent({
       treeData: this.state.treeData,
@@ -101,7 +92,7 @@ class PageEditor extends React.Component<PageEditorProps, PageEditorState> {
     }).treeData;
 
     this.setState({treeData: treeData}, () => {
-      this.onComponentSelected(newNodeComponent);
+      // this.onComponentSelected(newNodeComponent);
       if (callback) {
         callback();
         this.onPageModelChanged();
@@ -112,7 +103,7 @@ class PageEditor extends React.Component<PageEditorProps, PageEditorState> {
   onComponentChanged (component: AbstractComponent, node?: ComponentTreeItem) {
     if (node !== undefined) {
       node.component = component;
-      node.title = component.name;
+      node.title = component.description ? component.description : component.name;
       this.setState({treeData: this.state.treeData},
         () => this.onPageModelChanged());
     }

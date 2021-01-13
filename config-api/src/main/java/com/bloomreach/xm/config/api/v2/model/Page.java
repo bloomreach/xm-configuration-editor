@@ -6,13 +6,17 @@ import java.util.Map;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@SuperBuilder
 public class Page {
 
     @Schema(required = true, description = "identifying name of this page within its channel")
@@ -20,13 +24,11 @@ public class Page {
      * identifying name of this page within its channel
      **/
     private String name = null;
-
     @Schema(description = "description for this page")
     /**
      * description for this page
      **/
     private String description = null;
-
     @Schema(description = "a map of string parameters (names/values) for this page")
     /**
      * a map of string parameters (names/values) for this page
@@ -47,6 +49,15 @@ public class Page {
      * the components that are defined in the current page
      **/
     private List<AbstractComponent> components = null;
+
+    @JsonCreator
+    public Page(@JsonProperty("name") final String name, @JsonProperty("description") final String description, @JsonProperty("parameters") final Map<String, String> parameters, @JsonProperty("type") final PageType type, @JsonProperty("extends") final String _extends) {
+        this.name = name;
+        this.description = description;
+        this.parameters = parameters;
+        this.type = type;
+        this._extends = _extends;
+    }
 
     /**
      * Convert the given object to string with each line indented by 4 spaces
@@ -69,7 +80,6 @@ public class Page {
     public String getName() {
         return name;
     }
-
 
     /**
      * description for this page
@@ -128,12 +138,12 @@ public class Page {
         return type.getValue();
     }
 
-
     /**
      * the name of the (abstract) page extended by this page
      *
      * @return _extends
      **/
+
     @JsonProperty("extends")
     public String getExtends() {
         return _extends;
@@ -172,7 +182,6 @@ public class Page {
         return this;
     }
 
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -187,6 +196,7 @@ public class Page {
         sb.append("}");
         return sb.toString();
     }
+
 
     public enum PageType {
         ABSTRACT("abstract"),

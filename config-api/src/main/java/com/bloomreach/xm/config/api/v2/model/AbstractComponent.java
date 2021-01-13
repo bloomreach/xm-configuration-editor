@@ -6,17 +6,37 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.experimental.SuperBuilder;
 
 /**
  * the components that are defined in the current page
  **/
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = ManagedComponent.class),
+        @JsonSubTypes.Type(value = StaticComponent.class)
+})
 @SuperBuilder
 @Schema(description = "the components that are defined in the current page")
 public class AbstractComponent {
+
+    @JsonCreator
+    public AbstractComponent(@JsonProperty("name") final String name, @JsonProperty("description") final String description, @JsonProperty("parameters") final Map<String, String> parameters, @JsonProperty("xtype") final XtypeEnum xtype, @JsonProperty("type") final TypeEnum type) {
+        this.name = name;
+        this.description = description;
+        this.parameters = parameters;
+        this.xtype = xtype;
+        this.type = type;
+    }
 
     @Schema(required = true, description = "identifying name of this component within its page")
     /**

@@ -44,7 +44,7 @@ export function componentToNode (component: AbstractComponent | StaticComponent 
     ({
       id: `${component.name}-${getId()}`,
       component: {...component, components: []},
-      title: `${component.name}`,
+      title: component.description ? component.description : `${component.name}`,
       expanded: true,
       children: [],
     }) as ComponentTreeItem;
@@ -72,7 +72,7 @@ export function getPageSchema (pages: Array<Page>): JSONSchema7 {
   return pageSchema as JSONSchema7;
 }
 
-export function getSchemaForComponentType (type: Nullable<string>, pages?: Array<Page>) {
+export function getSchemaForComponentType (type: Nullable<string>) {
   let schema = null;
   switch (type) {
     case ComponentType.PAGE:
@@ -80,13 +80,12 @@ export function getSchemaForComponentType (type: Nullable<string>, pages?: Array
     case ComponentType.ABSTRACT:
       schema = {...pageSchema} as JSONSchema7;
       Object.assign(schema.properties?.name, {readOnly: true});
-      const abstractPages: Array<string> | undefined = pages && pages.filter(page => page.type === 'abstract').map(page => page.name);
-      abstractPages && Object.assign(pageSchema.properties?.extends, {
-        "enum": abstractPages
-      });
+      Object.assign(schema.properties?.type, {readOnly: true});
+      Object.assign(schema.properties?.extends, {readOnly: true});
       break;
     case ComponentType.MANAGED:
       schema = {...managedComponentSchema};
+      Object.assign(schema.properties?.name, {readOnly: true});
       break;
     case ComponentType.STATIC:
       schema = {...staticComponentSchema};
@@ -101,11 +100,11 @@ const managedComponentSchema: JSONSchema7 = {
     name: {
       type: "string",
     },
-    label: {
-      type: "string",
-    },
     description: {
       type: "string"
+    },
+    label: {
+      type: "string",
     },
     parameters: {
       "type": "object",
@@ -221,12 +220,11 @@ const pageSchema = {
   }
 };
 
-
 export function getPageNameFromPagePath (pagePath: string) {
   return pagePath === "/" || !pagePath ? "/root" : pagePath
 }
 
-export function convertPageToTreeModel (page: Page) : TreeModel {
+export function convertPageToTreeModel (page: Page): TreeModel {
   console.log('converting page to tree model', page)
   return {
     id: getId(),

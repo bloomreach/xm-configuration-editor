@@ -41,7 +41,7 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
     }, basePath);
 
     this.otherOperationsApi = new ChannelOtherOperationsApi({
-      baseOptions: {withCredentials: true}
+      baseOptions: baseOptions
     }, basePath);
 
     this.state = {
@@ -70,7 +70,7 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
         saveDisabled: true
       }, () => this.state.treeModel ? this.logSnackBar('Flex Page updated') : this.logSnackBarError('No Flex Page Found'))
     ).catch(reason => {
-      this.logSnackBarError(reason.response.data?.errorMessage);
+      this.logSnackBarError(reason.response?.data?.errorMessage);
     });
     this.otherOperationsApi.getAllComponents(channelId).then(response => this.setState({components: response.data}));
   }
@@ -100,7 +100,7 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
       <PageEditor key={this.state.treeModel?.id} treeModel={this.state.treeModel} onPageModelChange={page => this.onPageModelChange(page)} components={this.state.components}/>
       }
       <PositionedSnackbar open={this.state.snackbarOpen} message={this.state.snackbarMessage}
-                           severity={this.state.snackbarSeverity} onClose={() => this.setState({snackbarOpen: false})}/>
+                          severity={this.state.snackbarSeverity} onClose={() => this.setState({snackbarOpen: false})}/>
     </>
   }
 
@@ -112,9 +112,11 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
     this.setState({snackbarOpen: true, snackbarMessage: message, snackbarSeverity: 'error'});
   }
 
-  private savePage () {
-    console.log('save.. on success', this.state.page);
-    this.setState({saveDisabled: true});
+  savePage () {
+    this.state.channelId && this.state.path && this.pageOperationsApi.putChannelPage(this.state.channelId, this.state.path, this.state.page).then(value => {
+      this.setState({saveDisabled: true});
+      this.logSnackBar('save successful');
+    }).catch(reason => this.logSnackBarError(reason.response?.data?.errorMessage));
   }
 }
 

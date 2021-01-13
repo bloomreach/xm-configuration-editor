@@ -1,13 +1,17 @@
 package com.bloomreach.xm.config.api.v2.model;
 
 import java.util.List;
+import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
+@JsonTypeName("static")
 public class StaticComponent extends AbstractComponent {
 
     @Schema(description = "the catalog component definition this component is based on")
@@ -15,12 +19,27 @@ public class StaticComponent extends AbstractComponent {
      * the catalog component definition this component is based on
      **/
     private String definition = null;
-
     /**
      * the components that are defined in the current page
      **/
     private List<AbstractComponent> components = null;
 
+    @JsonCreator
+    public StaticComponent(@JsonProperty("name") final String name, @JsonProperty("description") final String description, @JsonProperty("parameters") final Map<String, String> parameters, @JsonProperty("xtype") final XtypeEnum xtype, @JsonProperty("type") final TypeEnum type, @JsonProperty("definition") String definition) {
+        super(name, description, parameters, xtype, type);
+        this.definition = definition;
+    }
+
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
+    private static String toIndentedString(Object o) {
+        if (o == null) {
+            return "null";
+        }
+        return o.toString().replace("\n", "\n    ");
+    }
 
     /**
      * the components that are defined in the current page
@@ -44,17 +63,6 @@ public class StaticComponent extends AbstractComponent {
     public StaticComponent addComponentsItem(AbstractComponent componentsItem) {
         this.components.add(componentsItem);
         return this;
-    }
-
-    /**
-     * Convert the given object to string with each line indented by 4 spaces
-     * (except the first line).
-     */
-    private static String toIndentedString(Object o) {
-        if (o == null) {
-            return "null";
-        }
-        return o.toString().replace("\n", "\n    ");
     }
 
     /**
