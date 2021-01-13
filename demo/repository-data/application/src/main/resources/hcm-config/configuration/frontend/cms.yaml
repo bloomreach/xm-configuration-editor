@@ -6,5 +6,5 @@ definitions:
       frontend:extensionPoint: channel.page.tools
       frontend:url: angular/xm-config-editor/index.html#/components
     /hippo:configuration/hippo:frontend/cms/ui-extensions/channelConfigEditor:
-      frontend:displayName: Current Page
-      frontend:url: http://localhost:3000/#/current-page
+      frontend:displayName: Flex Page
+      frontend:url: http://localhost:3000/#/flex-page

@@ -6,8 +6,8 @@ import Fallback from "./Fallback";
 import {HashRouter, Route, Switch} from "react-router-dom";
 import UiExtension, {UiScope} from "@bloomreach/ui-extension";
 import {ACLProvider} from "./ACLContext";
-import CurrentPage from "./currentPage";
-import {ChannelOtherOperationsApi} from "./api/apis/channel-other-api";
+import FlexPage from "./flexPage/flexPage";
+import {ChannelOtherOperationsApi} from "./api";
 
 document.addEventListener('DOMContentLoaded', async () => {
   try {
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <ACLProvider value={acl}>
           <HashRouter>
             <Switch>
-              <Route path="/current-page" render={() => <CurrentPage ui={ui}/>}/>
+              <Route path="/flex-page" render={() => <FlexPage ui={ui}/>}/>
               {/*<Route path="/components" render={props => <Components ui={ui}/>}/>*/}
               {/*<Route exact path="/" render={props => <Navigation ui={ui} />}/>*/}
             </Switch>

@@ -11,5 +11,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-export * from './apis/channel-page-operations-api';
+export * from './apis/channel-flex-page-operations-api';
+export * from './apis/channel-other-api';
 
