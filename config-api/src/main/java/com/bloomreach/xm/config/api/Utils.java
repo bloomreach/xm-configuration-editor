@@ -3,7 +3,9 @@ package com.bloomreach.xm.config.api;
 import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -29,7 +31,8 @@ import com.bloomreach.xm.config.api.v2.rest.ChannelFlexPageOperationsApiServiceI
 import com.bloomreach.xm.config.api.v2.rest.ChannelOtherOperationsApiServiceImpl;
 import com.google.common.base.Predicates;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.jackrabbit.value.StringValue;
 import org.hippoecm.hst.configuration.HstNodeTypes;
 import org.hippoecm.hst.configuration.components.HstComponentConfiguration;
 import org.hippoecm.hst.configuration.hosting.Mount;
@@ -40,6 +43,7 @@ import org.hippoecm.hst.container.RequestContextProvider;
 import org.hippoecm.hst.container.site.CompositeHstSite;
 import org.hippoecm.hst.core.internal.PreviewDecorator;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.experiencepage.XPageUtils;
+import org.hippoecm.hst.pagecomposer.jaxrs.services.helpers.LockHelper;
 import org.hippoecm.hst.platform.configuration.components.HstComponentConfigurationService;
 import org.hippoecm.hst.platform.model.HstModel;
 import org.hippoecm.hst.platform.model.HstModelRegistry;
@@ -52,17 +56,24 @@ import org.hippoecm.repository.api.HippoWorkspace;
 import org.hippoecm.repository.api.WorkflowException;
 import org.hippoecm.repository.api.WorkflowManager;
 import org.hippoecm.repository.util.JcrUtils;
+import org.hippoecm.repository.util.NodeIterable;
 import org.hippoecm.repository.util.WorkflowUtils;
 import org.onehippo.cms7.services.HippoServiceRegistry;
 import org.onehippo.cms7.services.cmscontext.CmsSessionContext;
 import org.onehippo.cms7.services.hst.Channel;
 import org.onehippo.cms7.utilities.servlet.HttpSessionBoundJcrSessionHolder;
 import org.onehippo.repository.documentworkflow.DocumentWorkflow;
+import org.onehippo.repository.util.JcrConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.bloomreach.xm.config.api.v2.model.Page.PageType.ABSTRACT;
+import static org.hippoecm.hst.configuration.HstNodeTypes.COMPONENT_PROPERTY_LABEL;
+import static org.hippoecm.hst.configuration.HstNodeTypes.COMPONENT_PROPERTY_XTYPE;
+import static org.hippoecm.hst.configuration.HstNodeTypes.GENERAL_PROPERTY_PARAMETER_NAMES;
+import static org.hippoecm.hst.configuration.HstNodeTypes.GENERAL_PROPERTY_PARAMETER_VALUES;
 import static org.hippoecm.hst.configuration.HstNodeTypes.NODENAME_HST_XPAGE;
+import static org.hippoecm.hst.configuration.HstNodeTypes.NODETYPE_HST_CONTAINERCOMPONENT;
 import static org.hippoecm.hst.configuration.components.HstComponentConfiguration.Type.CONTAINER_COMPONENT;
 import static org.hippoecm.repository.api.HippoNodeType.HIPPO_PROPERTY_BRANCH_ID;
 import static org.hippoecm.repository.util.JcrUtils.getStringProperty;
@@ -457,6 +468,82 @@ public class Utils {
         final HippoSession userSession = (HippoSession)getUserSession(request, systemSession);
         if (!userSession.isUserInRole(requiredUserRole)) {
             throw new UnauthorizedException(String.format("User %s does not have the (implied) userrole: %s", userSession.getUserID(), requiredUserRole));
+        }
+    }
+
+    public static void setHstParameters(final Node componentNode, final Map<String, String> parameters) throws RepositoryException {
+        if (parameters != null && !parameters.keySet().isEmpty()) {
+            componentNode.setProperty(GENERAL_PROPERTY_PARAMETER_NAMES, parameters.keySet().stream().map(StringValue::new).toArray(StringValue[]::new));
+            componentNode.setProperty(GENERAL_PROPERTY_PARAMETER_VALUES, parameters.values().stream().map(StringValue::new).toArray(StringValue[]::new));
+        }
+    }
+
+    public static void setAbstractComponentPropsOnNode(final Node componentNode, final AbstractComponent component) throws RepositoryException {
+        setStringProperty(componentNode, PROP_DESC, component.getDescription());
+        setHstParameters(componentNode, component.getParameters());
+    }
+
+    public static void setPagePropsOnNode(final Node componentNode, final Page page) throws RepositoryException {
+        setStringProperty(componentNode, PROP_DESC, page.getDescription());
+        setHstParameters(componentNode, page.getParameters());
+    }
+
+    public static void storeContainerNodesTemporarily(final Node configNode, final Node storageNode) throws RepositoryException {
+        if (configNode.getPrimaryNodeType().getName().equals(NODETYPE_HST_CONTAINERCOMPONENT)) {
+            JcrUtils.copy(configNode.getSession(), configNode.getPath(), storageNode.getPath() + "/" + configNode.getName());
+        }
+        for (Node childNode : new NodeIterable(configNode.getNodes())) {
+            storeContainerNodesTemporarily(childNode, storageNode);
+        }
+    }
+
+    public static Node getTemporaryStorageNode(final Session session) throws RepositoryException {
+        return session.getRootNode().addNode(UUID.randomUUID().toString().toLowerCase(), JcrConstants.NT_UNSTRUCTURED);
+    }
+
+    public static void setManagedComponentPropsOnNode(final Node managedComponentNode, final ManagedComponent managedComponent) throws RepositoryException {
+        setAbstractComponentPropsOnNode(managedComponentNode, managedComponent);
+        setStringProperty(managedComponentNode, COMPONENT_PROPERTY_LABEL, managedComponent.getLabel());
+        setStringProperty(managedComponentNode, COMPONENT_PROPERTY_XTYPE, managedComponent.getXtype());
+    }
+
+    public static void setStringProperty(Node node, String propertyName, String newValue) throws RepositoryException {
+        if (newValue != null) {
+            node.setProperty(propertyName, newValue);
+        } else if (node.hasProperty(propertyName)) {
+            node.getProperty(propertyName).remove();
+        }
+    }
+
+    public static void renameNode(final Node node, final String newName) throws RepositoryException {
+        node.getSession().move(node.getPath(), node.getParent().getPath() + "/" + newName);
+    }
+
+    public static Node getOrCreateNode(final Node parent, final String nodeType, final String name) throws RepositoryException {
+        if (parent.hasNode(name)) {
+            Node existingNode = parent.getNode(name);
+            if (existingNode.isNodeType(nodeType)) {
+                return existingNode;
+            } else {
+                existingNode.remove();
+            }
+        }
+        return parent.addNode(name, nodeType);
+    }
+
+    /**
+     * Unlocks a given hst component and it's descendents
+     *
+     * @param configNode page node to be unlocked quietly
+     */
+    public static void unlockQuietly(final Node configNode, final LockHelper lockHelper) {
+        try {
+            if (configNode != null) {
+                lockHelper.unlock(configNode);
+                configNode.getSession().save();
+            }
+        } catch (RepositoryException ex) {
+            LOGGER.error(ex.getMessage());
         }
     }
 

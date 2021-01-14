@@ -54,14 +54,16 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
 
   componentDidMount (): void {
     this.props.ui.channel.page.get().then((page: PageProperties) => {
-      this.updatePage(page);
+      this.updatePageByProperties(page);
     });
-    this.props.ui.channel.page.on('navigate', pageProperties => this.updatePage(pageProperties));
+    this.props.ui.channel.page.on('navigate', pageProperties => this.updatePageByProperties(pageProperties));
   }
 
-  updatePage (page: PageProperties) {
-    const channelId = page.channel.id;
-    const path = getPageNameFromPagePath(page.path);
+  update () {
+    this.state.channelId && this.state.path && this.updatePage(this.state.channelId, this.state.path);
+  }
+
+  updatePage (channelId: string, path: string) {
     this.pageOperationsApi.getChannelPage(channelId, path).then(response =>
       this.setState({
         treeModel: response.status === 200 ? convertPageToTreeModel(response.data) : undefined,
@@ -75,12 +77,20 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
     this.otherOperationsApi.getAllComponents(channelId).then(response => this.setState({components: response.data}));
   }
 
+  updatePageByProperties (page: PageProperties) {
+    const channelId = page.channel.id;
+    const path = getPageNameFromPagePath(page.path);
+    this.updatePage(channelId, path);
+  }
+
   onPageModelChange (page: Page): void {
     console.log('changed..', page);
     this.setState({saveDisabled: false, page: page});
   }
 
   render () {
+    const treeData = this.state.treeModel?.treeData;
+    const validTree = treeData && treeData.length > 0;
     return <>
       <AppBar position="sticky" variant={'outlined'} color={'default'}>
         <Toolbar variant={'dense'}>
@@ -96,7 +106,7 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
           </Button>
         </Toolbar>
       </AppBar>
-      {this.state.treeModel &&
+      {this.state.treeModel && validTree &&
       <PageEditor key={this.state.treeModel?.id} treeModel={this.state.treeModel} onPageModelChange={page => this.onPageModelChange(page)} components={this.state.components}/>
       }
       <PositionedSnackbar open={this.state.snackbarOpen} message={this.state.snackbarMessage}
@@ -114,8 +124,15 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
 
   savePage () {
     this.state.channelId && this.state.path && this.pageOperationsApi.putChannelPage(this.state.channelId, this.state.path, this.state.page).then(value => {
-      this.setState({saveDisabled: true});
+      this.props.ui.channel.refresh().then(() => {
+        console.info('channel refreshed');
+      });
+      this.props.ui.channel.page.refresh().then(() => {
+        console.info('page refreshed');
+      });
       this.logSnackBar('save successful');
+      this.setState({saveDisabled: true});
+      this.update();
     }).catch(reason => this.logSnackBarError(reason.response?.data?.errorMessage));
   }
 }

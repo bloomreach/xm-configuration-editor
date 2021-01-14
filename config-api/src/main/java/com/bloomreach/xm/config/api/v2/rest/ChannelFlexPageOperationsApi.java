@@ -17,6 +17,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 
 import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
+import com.bloomreach.xm.config.api.exception.PageLockedException;
 import com.bloomreach.xm.config.api.exception.UnauthorizedException;
 import com.bloomreach.xm.config.api.exception.WorkspaceComponentNotFoundException;
 import com.bloomreach.xm.config.api.v2.model.Page;
@@ -54,5 +55,5 @@ public interface ChannelFlexPageOperationsApi {
     @Operation(summary = "Create or update a channel page", tags = {"Channel Current Page Operations"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "OK", content = @Content(schema = @Schema(implementation = Page.class)))})
-    Page putChannelPage(@Context HttpServletRequest request, @PathParam("channel_id") String channelId, @PathParam("page_path") String pagePath, Page body);
+    Page putChannelPage(@Context HttpServletRequest request, @PathParam("channel_id") String channelId, @PathParam("page_path") String pagePath, Page body) throws UnauthorizedException, ChannelNotFoundException, WorkspaceComponentNotFoundException, PageLockedException;
 }

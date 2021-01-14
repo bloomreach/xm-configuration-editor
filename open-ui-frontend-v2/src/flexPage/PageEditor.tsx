@@ -58,9 +58,9 @@ class PageEditor extends React.Component<PageEditorProps, PageEditorState> {
         <React.Fragment>
           <MoreHorizOutlinedIcon {...bindTrigger(popupState)}/>
           <Menu {...bindMenu(popupState)}>
-            {isNotManagedComponent && this.props.components?.map(component => {
+            {isNotManagedComponent && this.props.components?.map((component, index) => {
               const clazz = component.type === 'managed' ? 'fa-columns' : 'fa-puzzle-piece';
-              return <MenuItem onClick={() => this.addComponent(rowInfo, component, () => popupState.close())}>
+              return <MenuItem key={index} onClick={() => this.addComponent(rowInfo, component, () => popupState.close())}>
                 <ListItemIcon>
                   <Icon className={'fa ' + clazz} fontSize={'small'}/>
                 </ListItemIcon>
