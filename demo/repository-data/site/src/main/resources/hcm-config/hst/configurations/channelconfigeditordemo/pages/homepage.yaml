@@ -9,3 +9,10 @@ definitions:
         /container:
           jcr:primaryType: hst:containercomponentreference
           hst:referencecomponent: homepage/containermain
+        /left:
+          jcr:primaryType: hst:component
+          /container:
+            jcr:primaryType: hst:containercomponentreference
+            hst:referencecomponent: homepage/containermain
+        /right:
+          jcr:primaryType: hst:component
