@@ -1,7 +1,8 @@
 {
-  "name": "open-ui-frontend-v2",
-  "version": "0.1.0",
+  "name": "xm-configuration-editor",
+  "version": "0.3.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@bloomreach/ui-extension": "^14.4.0",
     "@material-ui/core": "^4.11.2",
