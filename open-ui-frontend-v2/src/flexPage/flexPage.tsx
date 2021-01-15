@@ -10,6 +10,7 @@ import {convertPageToTreeModel, getPageNameFromPagePath, TreeModel} from "./page
 import PageEditor from "./PageEditor";
 import PositionedSnackbar from "../common/PositionedSnackbar";
 import {Color} from "@material-ui/lab";
+import {ACLConsumer} from "../ACLContext";
 
 type FlexPageState = {
   channelId?: string
@@ -56,12 +57,16 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
     this.props.ui.channel.page.get().then((page: PageProperties) => {
       this.updatePage(page);
     });
-    this.props.ui.channel.page.on('navigate', pageProperties => this.setState({
+    this.props.ui.channel.page.on('navigate', pageProperties => this.reset(pageProperties));
+  }
+
+  reset (pageProperties: PageProperties) {
+    this.setState({
       treeModel: undefined,
       page: undefined,
       channelId: undefined,
       path: undefined
-    }, () => this.updatePage(pageProperties)));
+    }, () => this.updatePage(pageProperties))
   }
 
   updatePage (page: PageProperties) {
@@ -89,16 +94,20 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
     return <>
       <AppBar position="sticky" variant={'outlined'} color={'default'}>
         <Toolbar variant={'dense'}>
-            <Button
-              disabled={this.state.saveDisabled}
-              variant="outlined"
-              color="primary"
-              style={{marginRight: '10px'}}
-              startIcon={<SaveOutlinedIcon/>}
-              onClick={() => this.savePage()}
-            >
-         Save
-          </Button>
+          <ACLConsumer>
+            {permissions => permissions?.currentPageEditAllowed &&
+              <Button
+                disabled={this.state.saveDisabled}
+                variant="outlined"
+                color="primary"
+                style={{marginRight: '10px'}}
+                startIcon={<SaveOutlinedIcon/>}
+                onClick={() => this.savePage()}
+              >
+                Save
+              </Button>
+            }
+          </ACLConsumer>
         </Toolbar>
       </AppBar>
       {this.state.treeModel &&
@@ -119,24 +128,15 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
 
   savePage () {
     this.state.channelId && this.state.path && this.pageOperationsApi.putChannelPage(this.state.channelId, this.state.path, this.state.page).then(value => {
+      this.logSnackBar('save successful');
       this.props.ui.channel.refresh().then(() => {
         console.info('channel refreshed');
       });
       this.props.ui.channel.page.refresh().then(() => {
         console.info('page refreshed');
       });
-      this.logSnackBar('save successful');
-      this.setState({
-        treeModel: undefined,
-        page: undefined,
-        channelId: undefined,
-        path: undefined,
-        saveDisabled: true
-      });
-      this.props.ui.channel.page.get().then((page: PageProperties) => {
-        this.updatePage(page);
-      });
 
+      this.props.ui.channel.page.get().then((pageProperties: PageProperties) => this.reset(pageProperties));
     }).catch(reason => this.logSnackBarError(reason.response?.data?.errorMessage));
   }
 }

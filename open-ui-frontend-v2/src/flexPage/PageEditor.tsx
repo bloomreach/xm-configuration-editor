@@ -23,6 +23,7 @@ import {JSONSchema7} from "json-schema";
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Form from "@rjsf/material-ui";
 import {getNodeKey} from "../common/common-utils";
+import {ACLConsumer} from "../ACLContext";
 
 type PageEditorState = {
   treeData: ComponentTreeItem[] | TreeItem[]
@@ -120,29 +121,60 @@ class PageEditor extends React.Component<PageEditorProps, PageEditorState> {
 
   render () {
     return (<>
-          <SortableTree style={{minHeight: '70px', width: '100%'}}
-                        reactVirtualizedListProps={{autoHeight: true}}
-                        isVirtualized={false}
-                        treeData={this.state.treeData}
-                        getNodeKey={getNodeKey}
-                        onChange={treeData => {
-                          this.setState({treeData: treeData}, () => {
-                            this.onPageModelChanged();
-                          });
-                        }}
-                        canNodeHaveChildren={node => (node.component.type !== 'managed')}
-                        canDrag={({treeIndex}) => treeIndex !== 0}
-                        canDrop={({nextParent}) => nextParent !== null}
-            // @ts-ignore
-                        nodeContentRenderer={NodeRendererDefault}
-                        generateNodeProps={rowInfo => ({
-                          buttons: [
-                            this.getMenu(rowInfo)
-                          ],
-                          rowLabelClickEventHandler: () =>
-                            this.onComponentSelected((rowInfo.node) as ComponentTreeItem)
-                        })}
-          />
+      <ACLConsumer>
+            {permissions =>
+              <>
+              {permissions?.currentPageEditAllowed &&
+              <SortableTree style={{minHeight: '70px', width: '100%'}}
+                            reactVirtualizedListProps={{autoHeight: true}}
+                            isVirtualized={false}
+                            treeData={this.state.treeData}
+                            getNodeKey={getNodeKey}
+                            onChange={treeData => {
+                              this.setState({treeData: treeData}, () => {
+                                this.onPageModelChanged();
+                              });
+                            }}
+                            canNodeHaveChildren={node => (node.component.type !== 'managed')}
+                            canDrag={({treeIndex}) => treeIndex !== 0}
+                            canDrop={({nextParent}) => nextParent !== null}
+                // @ts-ignore
+                            nodeContentRenderer={NodeRendererDefault}
+                            generateNodeProps={rowInfo => ({
+                              buttons: [
+                                this.getMenu(rowInfo)
+                              ],
+                              rowLabelClickEventHandler: () =>
+                                this.onComponentSelected((rowInfo.node) as ComponentTreeItem)
+                            })}/>
+              }
+
+                {!permissions?.currentPageEditAllowed && permissions?.currentPageViewAllowed &&
+                <SortableTree style={{
+                  minHeight: '70px',
+                  width: '100%'
+                }}
+                              reactVirtualizedListProps={{autoHeight: true}}
+                              isVirtualized={false}
+                              treeData={this.state.treeData}
+                              getNodeKey={getNodeKey}
+                              onChange={treeData => {
+                                this.setState({treeData: treeData}, () => {
+                                  this.onPageModelChanged();
+                                });
+                              }}
+                              canNodeHaveChildren={node => (node.component.type !== 'managed')}
+                              canDrag={() => false}
+                              canDrop={() => false}
+                  // @ts-ignore
+                              nodeContentRenderer={NodeRendererDefault}
+
+                />
+                }
+              </>
+
+            }
+    </ACLConsumer>
 
         <Drawer anchor={'right'} open={this.state.drawerOpen}
                 onClose={() => this.setState({drawerOpen: false})}>

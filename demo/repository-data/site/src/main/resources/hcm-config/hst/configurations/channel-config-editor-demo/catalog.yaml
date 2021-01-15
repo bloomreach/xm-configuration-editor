@@ -4,3 +4,24 @@ definitions:
       jcr:primaryType: hst:catalog
       /channelconfigeditordemo-catalog:
         jcr:primaryType: hst:containeritempackage
+        /Dynamic Banner:
+          jcr:primaryType: hst:componentdefinition
+          hst:componentclassname: org.hippoecm.hst.component.support.bean.dynamic.BaseHstDynamicComponent
+          hst:ctype: Banner
+          hst:label: Dynamic Banner
+          /document:
+            jcr:primaryType: hst:dynamicparameter
+            hst:valuetype: text
+            /hst:fieldconfig:
+              jcr:primaryType: hst:jcrpath
+              hst:pickerconfiguration: cms-pickers/documents-only
+              hst:pickerinitialpath: banners
+              hst:relative: true
+          /document2:
+            jcr:primaryType: hst:dynamicparameter
+            hst:valuetype: text
+            /hst:fieldconfig:
+              jcr:primaryType: hst:jcrpath
+              hst:pickerconfiguration: cms-pickers/documents-only
+              hst:pickerinitialpath: banners
+              hst:relative: true
