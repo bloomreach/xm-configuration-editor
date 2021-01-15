@@ -49,6 +49,7 @@ import static com.bloomreach.xm.config.api.Utils.getUserSession;
 import static com.bloomreach.xm.config.api.Utils.getXPageModelFromVariantNode;
 import static com.bloomreach.xm.config.api.Utils.getXPageTemplate;
 import static com.bloomreach.xm.config.api.Utils.getXPageUnpublishedNode;
+import static com.bloomreach.xm.config.api.Utils.isXPage;
 import static com.bloomreach.xm.config.api.Utils.renameNode;
 import static com.bloomreach.xm.config.api.Utils.setAbstractComponentPropsOnNode;
 import static com.bloomreach.xm.config.api.Utils.setManagedComponentPropsOnNode;
@@ -108,9 +109,12 @@ public class PageDao {
             }
             staticComponentNode = JcrUtils.copy(session, STATIC_COMPONENT_LOCATION, newNodePath);
             setAbstractComponentPropsOnNode(staticComponentNode, staticComponent);
-            for (AbstractComponent childComponent : staticComponent.getComponents()) {
-                createNodeFromComponent(storageNode, session, childComponent, newNodePath, userId);
+            if (staticComponent.getComponents() != null && !staticComponent.getComponents().isEmpty()) {
+                for (AbstractComponent childComponent : staticComponent.getComponents()) {
+                    createNodeFromComponent(storageNode, session, childComponent, newNodePath, userId);
+                }
             }
+
         }
     }
 
@@ -214,7 +218,9 @@ public class PageDao {
         return page;
     }
 
-    public Page getPage(final boolean isXpage, final HttpServletRequest request, final String channelId, final String pageName, final Session userSession) throws ChannelNotFoundException, WorkspaceComponentNotFoundException {
+    public Page getPage(final HttpServletRequest request, final String channelId, final String pageName) throws ChannelNotFoundException, WorkspaceComponentNotFoundException {
+        final Session userSession = getUserSession(request, systemSession);
+        final boolean isXpage = isXPage(channelId, pageName, userSession);
         return isXpage ? getXPage(request, channelId, pageName, userSession) : getLandingPage(channelId, pageName, userSession);
     }
 
@@ -256,6 +262,8 @@ public class PageDao {
         }
         return page;
     }
+
+
 
 
 }

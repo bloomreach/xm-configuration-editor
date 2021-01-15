@@ -13,6 +13,7 @@ import com.bloomreach.xm.config.api.Utils;
 import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
 import com.bloomreach.xm.config.api.exception.UnauthorizedException;
 import com.bloomreach.xm.config.api.v2.model.AbstractComponent;
+import com.bloomreach.xm.config.api.v2.model.Page;
 
 import org.hippoecm.hst.configuration.components.HstComponentConfiguration;
 import org.slf4j.Logger;
@@ -44,7 +45,7 @@ public class ChannelOtherOperationsApiServiceImpl implements ChannelOtherOperati
         final Map<String, HstComponentConfiguration> componentConfigurations = getHstSite(channelId).getComponentsConfiguration().getComponentConfigurations();
         final List<AbstractComponent> components = componentConfigurations.values().stream()
                 .filter(Utils::isFirstLevelChildOfHstComponents)
-                .map(configToComponentMapper(systemSession))
+                .map(configToComponentMapper(systemSession, Page.PageType.ABSTRACT))
                 .collect(Collectors.toList());
         return Response.ok(components).build();
     }

@@ -67,7 +67,6 @@ import org.onehippo.repository.util.JcrConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.bloomreach.xm.config.api.v2.model.Page.PageType.ABSTRACT;
 import static org.hippoecm.hst.configuration.HstNodeTypes.COMPONENT_PROPERTY_LABEL;
 import static org.hippoecm.hst.configuration.HstNodeTypes.COMPONENT_PROPERTY_XTYPE;
 import static org.hippoecm.hst.configuration.HstNodeTypes.GENERAL_PROPERTY_PARAMETER_NAMES;
@@ -383,13 +382,13 @@ public class Utils {
         return null;
     }
 
-    public static Function<HstComponentConfiguration, AbstractComponent> configToComponentMapper(Session session) {
+    public static Function<HstComponentConfiguration, AbstractComponent> configToComponentMapper(Session session, Page.PageType type) {
         return componentConfiguration -> {
             AbstractComponent.AbstractComponentBuilder<?, ?> builder = null;
 
             if (componentConfiguration.getComponentType().equals(HstComponentConfiguration.Type.COMPONENT)) {
                 builder = StaticComponent.builder();
-                ((StaticComponent.StaticComponentBuilder)builder).components(getComponents(componentConfiguration, ABSTRACT, session))
+                ((StaticComponent.StaticComponentBuilder)builder).components(getComponents(componentConfiguration, type, session))
                         .type(AbstractComponent.TypeEnum.STATIC);
 
             } else if (componentConfiguration.getComponentType().equals(CONTAINER_COMPONENT)) {
@@ -416,13 +415,17 @@ public class Utils {
                 filter = componentConfiguration -> componentConfiguration.getCanonicalStoredLocation().contains(componentConfiguration.getParent().getCanonicalStoredLocation());
                 break;
             case XPAGE:
-                filter = componentConfiguration -> ((HstComponentConfigurationService)componentConfiguration).isXpageLayoutComponent() || componentConfiguration.isExperiencePageComponent();
+                filter = componentConfiguration -> {
+                    boolean isXpageLayoutComponent = ((HstComponentConfigurationService)componentConfiguration).isXpageLayoutComponent();
+                    boolean isExperiencePageComponent = componentConfiguration.isExperiencePageComponent();
+                    return !(isXpageLayoutComponent && isExperiencePageComponent) && (isExperiencePageComponent || isXpageLayoutComponent);
+                };
                 break;
         }
 
         List<AbstractComponent> components = config.getChildren().values().stream()
                 .filter(filter)
-                .map(configToComponentMapper(session)).collect(Collectors.toList());
+                .map(configToComponentMapper(session, type)).collect(Collectors.toList());
 
         return components;
     }

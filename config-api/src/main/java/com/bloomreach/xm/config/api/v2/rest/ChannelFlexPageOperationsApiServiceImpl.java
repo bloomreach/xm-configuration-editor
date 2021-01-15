@@ -42,9 +42,7 @@ public class ChannelFlexPageOperationsApiServiceImpl implements ChannelFlexPageO
      */
     public Page getChannelPage(HttpServletRequest request, String channelId, String pagePath) throws ChannelNotFoundException, UnauthorizedException, WorkspaceComponentNotFoundException {
         ensureUserIsAuthorized(request, CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER, systemSession);
-        final Session userSession = getUserSession(request, systemSession);
-        final boolean isXPage = isXPage(channelId, pagePath, userSession);
-        Page page = this.pageDao.getPage(isXPage, request, channelId, pagePath, userSession);
+        Page page = this.pageDao.getPage(request, channelId, pagePath);
         return page;
     }
 
