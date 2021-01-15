@@ -86,7 +86,6 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
   }
 
   onPageModelChange (page: Page): void {
-    console.log('changed..', page);
     this.setState({saveDisabled: false, page: page});
   }
 

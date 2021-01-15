@@ -218,7 +218,6 @@ export function getPageNameFromPagePath (pagePath: string) {
 }
 
 export function convertPageToTreeModel (page: Page): TreeModel {
-  console.log('converting page to tree model', page)
   return {
     id: getId(),
     page: page,
