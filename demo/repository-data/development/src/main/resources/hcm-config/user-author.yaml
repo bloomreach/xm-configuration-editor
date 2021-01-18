@@ -16,4 +16,5 @@ definitions:
         .meta:category: system
         .meta:add-new-system-values: true
         type: string
-        value: [xm.project.editor, xm.config-editor.current-page.editor, xm.channel.webmaster]
+        value: [xm.config-editor.current-page.viewer, xm.channel.webmaster, xm.project.editor,
+          xm.config-editor.current-page.editor]

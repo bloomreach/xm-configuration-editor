@@ -337,21 +337,21 @@
                     <context>/site</context>
                   </properties>
                 </deployable>
-                <deployable>
-                  <location>${project.basedir}/essentials/target/essentials</location>
-                  <type>war</type>
-                  <properties>
-                    <context>/essentials</context>
-                  </properties>
-                </deployable>
-                <deployable>
-                  <properties>
-                    <context>/bpm</context>
-                  </properties>
-                  <groupId>com.onehippo.cms7</groupId>
-                  <artifactId>hippo-addon-wpm-camunda</artifactId>
-                  <type>war</type>
-                </deployable>
+<!--                <deployable>-->
+<!--                  <location>${project.basedir}/essentials/target/essentials</location>-->
+<!--                  <type>war</type>-->
+<!--                  <properties>-->
+<!--                    <context>/essentials</context>-->
+<!--                  </properties>-->
+<!--                </deployable>-->
+<!--                <deployable>-->
+<!--                  <properties>-->
+<!--                    <context>/bpm</context>-->
+<!--                  </properties>-->
+<!--                  <groupId>com.onehippo.cms7</groupId>-->
+<!--                  <artifactId>hippo-addon-wpm-camunda</artifactId>-->
+<!--                  <type>war</type>-->
+<!--                </deployable>-->
               </deployables>
               <container>
                 <systemProperties>

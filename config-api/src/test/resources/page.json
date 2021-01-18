@@ -1,29 +1,203 @@
 {
-  "name": "contentpage",
-  "label": "contentpage",
-  "description": "contentpage",
+  "name": "test2-contentpage",
+  "description": "Content Page",
   "parameters": {},
-  "type": "xpage",
+  "type": "page",
   "components": [
     {
-      "name": "main",
-      "label": null,
+      "name": "main-1",
       "description": "main",
       "parameters": {},
       "xtype": null,
-      "managed": false,
+      "type": "static",
       "definition": null,
       "components": [
         {
-          "name": "container",
-          "label": null,
-          "description": "container",
-          "parameters": {},
+          "name": "section-white-1",
+          "description": "White Section",
+          "parameters": {
+            "background-color": "white"
+          },
           "xtype": null,
-          "managed": true
+          "type": "static",
+          "definition": null,
+          "components": [
+            {
+              "name": "row-1",
+              "description": "Row",
+              "parameters": {
+                "background-color": "white"
+              },
+              "xtype": null,
+              "type": "static",
+              "definition": null,
+              "components": [
+                {
+                  "name": "79dfaffc-e09b-45e5-8dd1-41ccc22a02ad",
+                  "description": "Column",
+                  "parameters": {
+                    "background-color": "white"
+                  },
+                  "xtype": "hst.vbox",
+                  "type": "managed",
+                  "label": null
+                },
+                {
+                  "name": "479e0a37-10f0-477e-a4eb-80879b4b6254",
+                  "description": "Column",
+                  "parameters": {
+                    "background-color": "white"
+                  },
+                  "xtype": "hst.vbox",
+                  "type": "managed",
+                  "label": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "section-grey-1",
+          "description": "Grey Section",
+          "parameters": {
+            "background-color": "grey",
+            "pageType": "bar"
+          },
+          "xtype": null,
+          "type": "static",
+          "definition": null,
+          "components": [
+            {
+              "name": "row-1",
+              "description": "Row",
+              "parameters": {
+                "background-color": "grey",
+                "pageType": "bar"
+              },
+              "xtype": null,
+              "type": "static",
+              "definition": null,
+              "components": [
+                {
+                  "name": "a8d18bb7-50df-4837-9120-e2c386ec104f",
+                  "description": "Column",
+                  "parameters": {
+                    "background-color": "grey",
+                    "pageType": "bar"
+                  },
+                  "xtype": "hst.vbox",
+                  "type": "managed",
+                  "label": null
+                },
+                {
+                  "name": "ff5850ff-8c3e-4968-995e-0d41edd74c50",
+                  "description": "Column",
+                  "parameters": {
+                    "background-color": "grey",
+                    "pageType": "bar"
+                  },
+                  "xtype": "hst.vbox",
+                  "type": "managed",
+                  "label": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "section-grey-2",
+          "description": "Grey Section",
+          "parameters": {
+            "background-color": "grey",
+            "pageType": "bar"
+          },
+          "xtype": null,
+          "type": "static",
+          "definition": null,
+          "components": [
+            {
+              "name": "row-1",
+              "description": "Row",
+              "parameters": {
+                "background-color": "grey",
+                "pageType": "bar"
+              },
+              "xtype": null,
+              "type": "static",
+              "definition": null,
+              "components": [
+                {
+                  "name": "52c353fd-84fe-4ea5-a201-7aa594be6172",
+                  "description": "Column",
+                  "parameters": {
+                    "background-color": "grey",
+                    "pageType": "bar"
+                  },
+                  "xtype": "hst.vbox",
+                  "type": "managed",
+                  "label": null
+                },
+                {
+                  "name": "5977edcf-372a-421c-83fa-0ef54b3c949e",
+                  "description": "Column",
+                  "parameters": {
+                    "background-color": "grey",
+                    "pageType": "bar"
+                  },
+                  "xtype": "hst.vbox",
+                  "type": "managed",
+                  "label": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "section-white-2",
+          "description": "White Section",
+          "parameters": {
+            "background-color": "white"
+          },
+          "xtype": null,
+          "type": "static",
+          "definition": null,
+          "components": [
+            {
+              "name": "row-1",
+              "description": "Row",
+              "parameters": {
+                "background-color": "white"
+              },
+              "xtype": null,
+              "type": "static",
+              "definition": null,
+              "components": [
+                {
+                  "name": "2e98cca4-c5fd-4447-a43c-a853103989f5",
+                  "description": "Column",
+                  "parameters": {
+                    "background-color": "white"
+                  },
+                  "xtype": "hst.vbox",
+                  "type": "managed",
+                  "label": null
+                },
+                {
+                  "name": "0a87b9d1-c554-46de-87ae-f9f079e52b2f",
+                  "description": "Column",
+                  "parameters": {
+                    "background-color": "white"
+                  },
+                  "xtype": "hst.vbox",
+                  "type": "managed",
+                  "label": null
+                }
+              ]
+            }
+          ]
         }
       ]
     }
   ],
-  "extends": null
+  "extends": "base"
 }

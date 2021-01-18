@@ -23,7 +23,7 @@ definitions:
           jcr:primaryType: hst:containercomponent
           hst:label: Home Page Main
           hst:xtype: hst.vbox
-          hst:lastmodified: 2020-08-11T07:44:40.474+02:00
+          hst:lastmodified: 2021-01-15T09:47:23.622+01:00
           hippo:identifier: 83064557-3edf-4889-a997-f871a6bea2f7
       /pagenotfound:
         jcr:primaryType: hst:containercomponentfolder

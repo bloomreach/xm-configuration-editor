@@ -103,7 +103,7 @@
   </repositories>
 
   <modules>
-    <module>open-ui-frontend</module>
+    <module>open-ui-frontend-v2</module>
     <module>config-api</module>
   </modules>
 

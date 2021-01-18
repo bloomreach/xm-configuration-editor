@@ -2,6 +2,6 @@ definitions:
   config:
     /hippo:configuration/hippo:frontend/cms/ui-extensions/channelConfigEditor:
       jcr:primaryType: frontend:uiExtension
-      frontend:displayName: Config Editor - Current Page
+      frontend:displayName: Flex Page Editor
       frontend:extensionPoint: channel.page.tools
-      frontend:url: angular/xm-config-editor/index.html#/current-page
+      frontend:url: angular/xm-config-editor/index.html#/flex-page
