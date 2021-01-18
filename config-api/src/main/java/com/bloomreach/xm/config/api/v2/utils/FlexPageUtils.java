@@ -1,4 +1,4 @@
-package com.bloomreach.xm.config.api;
+package com.bloomreach.xm.config.api.v2.utils;
 
 import java.rmi.RemoteException;
 import java.util.Arrays;
@@ -79,15 +79,15 @@ import static org.hippoecm.repository.util.JcrUtils.getStringProperty;
 import static org.hippoecm.repository.util.WorkflowUtils.Variant.UNPUBLISHED;
 import static org.onehippo.repository.branch.BranchConstants.MASTER_BRANCH_ID;
 
-public class Utils {
+public class FlexPageUtils {
 
     public static final String CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER = "xm.config-editor.current-page.viewer";
     public static final String CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR = "xm.config-editor.current-page.editor";
     private static final String PROP_DESC = "hst:description";
     private static final String SYSTEM_USER = "system";
-    private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FlexPageUtils.class);
 
-    private Utils() {
+    private FlexPageUtils() {
     }
 
     public static HstModelRegistry getHstModelRegistry() {
