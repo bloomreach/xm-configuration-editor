@@ -134,7 +134,6 @@ class FlexPage extends React.Component<FlexPageProps, FlexPageState> {
       this.props.ui.channel.page.refresh().then(() => {
         console.info('page refreshed');
       });
-
       this.props.ui.channel.page.get().then((pageProperties: PageProperties) => this.reset(pageProperties));
     }).catch(reason => this.logSnackBarError(reason.response?.data?.errorMessage));
   }

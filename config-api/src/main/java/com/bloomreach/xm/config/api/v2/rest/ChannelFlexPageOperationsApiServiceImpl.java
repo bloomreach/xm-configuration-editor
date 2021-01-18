@@ -1,7 +1,10 @@
 package com.bloomreach.xm.config.api.v2.rest;
 
+import java.net.URI;
+
 import javax.jcr.Session;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Response;
 
 import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
 import com.bloomreach.xm.config.api.exception.PageLockedException;
@@ -47,7 +50,7 @@ public class ChannelFlexPageOperationsApiServiceImpl implements ChannelFlexPageO
     /**
      * Create or update a channel page
      */
-    public Page putChannelPage(HttpServletRequest request, String channelId, String pagePath, Page page) throws UnauthorizedException, ChannelNotFoundException, WorkspaceComponentNotFoundException, PageLockedException {
+    public Response putChannelPage(HttpServletRequest request, String channelId, String pagePath, Page page) throws UnauthorizedException, ChannelNotFoundException, WorkspaceComponentNotFoundException, PageLockedException {
         ensureUserIsAuthorized(request, CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR, systemSession);
         final Session session = getImpersonatedSession(systemSession);
         try {
@@ -55,7 +58,7 @@ public class ChannelFlexPageOperationsApiServiceImpl implements ChannelFlexPageO
         } finally {
             closeSession(session);
         }
-        return page;
+        return Response.created(URI.create(String.format("/channels/%s/pages/%s", channelId, pagePath))).build();
     }
 
 
