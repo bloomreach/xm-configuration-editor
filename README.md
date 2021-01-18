@@ -2,10 +2,11 @@
 
 The Configuration Editor project is a tool in the channel manager, as an Open UI Page Tool extension, to edit HST configuration.
 
-Although the project has the ambition to edit all hst configuration we currently have only support for the "Current Page" feature.
+Although the project has the ambition to edit all hst configuration we currently have only support for the "Current Page (a.k.a Flex Page)" feature.
 
-The current page feature will allow a CMS user with the appropriate user roles to edit the page model of a landingpage.
+The current page feature will allow a CMS user with the appropriate user roles to edit the page model of a landingpage or XPage.
 
+**Please note**  this plugin is not yet suited to work in combination with the "Projects" addon yet.
 
 ## Release Notes
 
