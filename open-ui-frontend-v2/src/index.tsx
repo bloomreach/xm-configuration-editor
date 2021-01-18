@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Fallback from "./Fallback";
+import Fallback from "./other/Fallback";
 import {HashRouter, Route, Switch} from "react-router-dom";
 import UiExtension, {UiScope} from "@bloomreach/ui-extension";
 import {ACLProvider} from "./ACLContext";
