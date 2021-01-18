@@ -27,7 +27,7 @@
   <artifactId>brxm-configuration-editor</artifactId>
   <name>brXM Configuration Editor</name>
   <description>brXM Configuration Editor</description>
-  <version>0.9.0</version>
+  <version>0.9.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <properties>
