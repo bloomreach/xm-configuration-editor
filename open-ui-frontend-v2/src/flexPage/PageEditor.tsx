@@ -65,7 +65,7 @@ class PageEditor extends React.Component<PageEditorProps, PageEditorState> {
                 <ListItemIcon>
                   <Icon className={'fa ' + clazz} fontSize={'small'}/>
                 </ListItemIcon>
-                <Typography variant="inherit">{component.description}</Typography>
+                <Typography variant="inherit">{component.description ? component.description : component.name}</Typography>
               </MenuItem>
             })}
             <MenuItem disabled={rowInfo.treeIndex === 0} onClick={() => this.deleteComponent(rowInfo, () => popupState.close())}>

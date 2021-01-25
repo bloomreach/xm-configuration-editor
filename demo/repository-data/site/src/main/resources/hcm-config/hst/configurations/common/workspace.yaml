@@ -1,0 +1,7 @@
+definitions:
+  config:
+    /hst:hst/hst:configurations/common/hst:workspace:
+      jcr:primaryType: hst:workspace
+      /hst:components:
+        .meta:residual-child-node-category: content
+        jcr:primaryType: hst:components

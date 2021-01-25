@@ -1,0 +1,5 @@
+definitions:
+  config:
+    /hst:hst/hst:configurations/channelconfigeditordemo/hst:components/menu:
+      jcr:primaryType: hst:component
+      hst:description: Menu

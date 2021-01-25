@@ -21,7 +21,7 @@ definitions:
           jcr:primaryType: hst:catalog
       /channelconfigeditordemo:
         jcr:primaryType: hst:configuration
-        hst:inheritsfrom: [../common]
+        hst:inheritsfrom: [../common, '../common/hst:workspace']
       /channelconfigeditordemo-fr:
         jcr:primaryType: hst:configuration
         hst:inheritsfrom: [../common]
