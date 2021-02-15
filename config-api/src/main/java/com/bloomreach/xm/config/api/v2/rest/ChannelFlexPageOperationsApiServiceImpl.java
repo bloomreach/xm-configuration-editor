@@ -17,11 +17,11 @@ import org.hippoecm.hst.pagecomposer.jaxrs.services.helpers.LockHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.closeSession;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.ensureUserIsAuthorized;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getImpersonatedSession;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.ensureUserIsAuthorized;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.closeSession;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getImpersonatedSession;
 
 
 public class ChannelFlexPageOperationsApiServiceImpl implements ChannelFlexPageOperationsApi {

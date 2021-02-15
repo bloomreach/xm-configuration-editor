@@ -4,10 +4,12 @@ public class ConfigApiPermissions {
 
     private final boolean isCurrentPageViewAllowed;
     private final boolean isCurrentPageEditAllowed;
+    private final boolean isConfigUser;
 
-    public ConfigApiPermissions(boolean isCurrentPageViewAllowed, boolean isCurrentPageEditAllowed) {
+    public ConfigApiPermissions(final boolean isCurrentPageViewAllowed, final boolean isCurrentPageEditAllowed, final boolean isConfigUser) {
         this.isCurrentPageViewAllowed = isCurrentPageViewAllowed;
         this.isCurrentPageEditAllowed = isCurrentPageEditAllowed;
+        this.isConfigUser = isConfigUser;
     }
 
     public boolean isCurrentPageViewAllowed() {
@@ -16,5 +18,9 @@ public class ConfigApiPermissions {
 
     public boolean isCurrentPageEditAllowed() {
         return isCurrentPageEditAllowed;
+    }
+
+    public boolean isConfigUser() {
+        return isConfigUser;
     }
 }

@@ -19,12 +19,12 @@ import org.hippoecm.hst.configuration.components.HstComponentConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.configToComponentMapper;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.ensureUserIsAuthorized;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getConfigApiPermissions;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getHstSite;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.isWorkspaceComponent;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.configToComponentMapper;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.ensureUserIsAuthorized;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getConfigApiPermissions;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getHstSite;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.isWorkspaceComponent;
 
 
 public class ChannelOtherOperationsApiServiceImpl implements ChannelOtherOperationsApi {
