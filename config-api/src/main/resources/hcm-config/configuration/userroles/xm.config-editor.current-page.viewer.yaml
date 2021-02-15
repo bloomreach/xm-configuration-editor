@@ -2,6 +2,6 @@ definitions:
   config:
     /hippo:configuration/hippo:userroles/xm.config-editor.current-page.viewer:
       jcr:primaryType: hipposys:userrole
-      hipposys:description: Required to view the Channel Config Editor plugin's Current Page tab
+      hipposys:description: Required to view the Channel Config Editor plugin's Flex Page tab
       hipposys:system: true
       hipposys:userroles: [xm.config-editor.user]
