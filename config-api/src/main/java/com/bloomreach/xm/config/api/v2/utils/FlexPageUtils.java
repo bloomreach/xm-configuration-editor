@@ -130,7 +130,8 @@ public class FlexPageUtils {
         final HstModel platformModel = hstModelRegistry.getHstModel(ChannelFlexPageOperationsApiServiceImpl.class.getClassLoader());
 
         try {
-            final ResolvedMountImpl resolvedMount = (ResolvedMountImpl)platformModel.getVirtualHosts().matchMount(mount.getVirtualHost().getName(), mount.getMountPath());
+//            final ResolvedMountImpl resolvedMount = (ResolvedMountImpl)platformModel.getVirtualHosts().matchMount(mount.getVirtualHost().getName(), mount.getMountPath());
+            final ResolvedMountImpl resolvedMount = (ResolvedMountImpl)platformModel.getVirtualHosts().matchMount(mount.getVirtualHost().getHostName(), mount.getMountPath());
             resolvedMount.setMount(mount);
             final ResolvedSiteMapItemImpl resolvedSiteMapItem = (ResolvedSiteMapItemImpl)resolvedMount.matchSiteMapItem("/" + path);
 
