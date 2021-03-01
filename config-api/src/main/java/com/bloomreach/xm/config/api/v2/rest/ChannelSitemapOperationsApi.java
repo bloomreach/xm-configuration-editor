@@ -12,6 +12,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
 import com.bloomreach.xm.config.api.v2.model.SitemapItem;
@@ -46,8 +47,8 @@ public interface ChannelSitemapOperationsApi {
     @Path("/channels/{channel_id}/sitemap")
     @Consumes({"application/json"})
     @Produces({"application/json"})
-    @Operation(summary = "Create or update the sitemap ", tags = {"Channel Sitemap Operations"})
+    @Operation(summary = "Update the sitemap ", tags = {"Channel Sitemap Operations"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = SitemapItem.class))))})
-    public List<SitemapItem> putChannelSitemap(@PathParam("channel_id") String channelId, @Valid List<SitemapItem> body);
+    Response putChannelSitemap(@PathParam("channel_id") String channelId, @Valid List<SitemapItem> body);
 }

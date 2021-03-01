@@ -1,5 +1,6 @@
 package com.bloomreach.xm.config.api.v2.rest;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -9,6 +10,7 @@ import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.validation.Valid;
+import javax.ws.rs.core.Response;
 
 import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
 import com.bloomreach.xm.config.api.v2.model.SitemapItem;
@@ -88,8 +90,8 @@ public class ChannelSitemapOperationsApiServiceImpl implements ChannelSitemapOpe
     }
 
     @Override
-    public List<SitemapItem> putChannelSitemap(final String channelId, @Valid final List<SitemapItem> body) {
-        return null;
+    public Response putChannelSitemap(final String channelId, @Valid final List<SitemapItem> body) {
+        return Response.created(URI.create(String.format("/channels/%s/sitemap", channelId))).build();
     }
 }
 
