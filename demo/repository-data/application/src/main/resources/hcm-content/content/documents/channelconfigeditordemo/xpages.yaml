@@ -3213,7 +3213,7 @@
       hippostd:state: unpublished
       hippostdpubwf:createdBy: admin
       hippostdpubwf:creationDate: 2021-03-03T13:45:22.690+01:00
-      hippostdpubwf:lastModificationDate: 2021-03-03T13:51:57.103+01:00
+      hippostdpubwf:lastModificationDate: 2021-03-03T14:11:12.480+01:00
       hippostdpubwf:lastModifiedBy: admin
       hippotranslation:id: 7eba5ea0-a61a-4a0b-8942-4564521efc64
       hippotranslation:locale: en
@@ -3228,25 +3228,73 @@
           jcr:primaryType: hst:containercomponent
           jcr:uuid: 587af787-629e-41d1-9b6c-f43df13dc178
           hippo:identifier: dad57efb-dbb0-42bd-a4b4-863fe987a901
-          hst:lastmodified: 2021-03-03T13:49:50.763+01:00
+          hst:lastmodified: 2021-03-03T14:11:12.478+01:00
           /banner:
             jcr:primaryType: hst:containeritemcomponent
             jcr:uuid: faff236d-14d8-4ecb-95df-08450af83c80
             hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
             hst:iconpath: images/essentials/catalog-component-icons/banner.svg
             hst:label: Banner
+            hst:parameternames: [document, org.hippoecm.hst.core.component.template]
+            hst:parametervalues: [content/sample-document, 'webfile:/freemarker/hstdefault/essentials-banner.ftl']
             hst:template: essentials-banner
         /top:
           jcr:primaryType: hst:component
-          jcr:uuid: fbb45566-4dd9-4561-8582-b01f657d4690
+          jcr:uuid: 63a883eb-f5b6-43ee-b4d0-553cdf409150
           hst:description: Snel-naar balk
+          /8d12c5a2-4bab-467c-a928-7b253f761843:
+            jcr:primaryType: hst:containercomponent
+            jcr:uuid: 0fd9afe6-a4c5-4d7a-a59c-b8c9c01e7be7
+            hippo:identifier: be8d7141-58e3-434a-a1a2-72045a230a61
+            hst:description: Column
+            hst:lastmodified: 2021-03-03T14:11:12.436+01:00
+            hst:lockedby: admin
+            hst:lockedon: 2021-03-03T14:10:05.779+01:00
+            hst:xtype: hst.vbox
         /main:
           jcr:primaryType: hst:component
-          jcr:uuid: d58c2121-ee1e-4fe6-b4e1-f6d030de3075
+          jcr:uuid: e041a799-32aa-42b3-9c31-f0500c8e2b85
           hst:description: Pagina opbouwen
-          /fromcommonwithoutdescription:
+          /row-:
             jcr:primaryType: hst:component
-            jcr:uuid: 1cc7b73d-948f-4187-ae1c-dfe2dacc41d5
+            jcr:uuid: e954cf5c-fa33-4507-a79f-d13c59fb01b4
+            hst:description: Row
+            /a2ca4342-5d4a-4c2d-8b44-0bda7655251f:
+              jcr:primaryType: hst:containercomponent
+              jcr:uuid: bb169e57-5d4c-42b1-8908-51af1b57ca30
+              hippo:identifier: be8d7141-58e3-434a-a1a2-72045a230a61
+              hst:description: Column
+              hst:lastmodified: 2020-08-08T06:23:11.158+02:00
+              hst:lockedby: admin
+              hst:lockedon: 2021-03-03T14:10:05.780+01:00
+              hst:xtype: hst.vbox
+              /banner:
+                jcr:primaryType: hst:containeritemcomponent
+                jcr:uuid: 9d25c822-cc0a-407e-8261-6ca090f90c69
+                hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
+                hst:iconpath: images/essentials/catalog-component-icons/banner.svg
+                hst:label: Banner
+                hst:parameternames: [document, org.hippoecm.hst.core.component.template]
+                hst:parametervalues: [banners/banner2, 'webfile:/freemarker/hstdefault/essentials-banner.ftl']
+                hst:template: essentials-banner
+            /b9c230a8-19ac-432f-9591-68d93617f496:
+              jcr:primaryType: hst:containercomponent
+              jcr:uuid: b0ad310b-00c7-4a48-9348-a5feec4ea4d8
+              hippo:identifier: be8d7141-58e3-434a-a1a2-72045a230a61
+              hst:description: Column
+              hst:lastmodified: 2020-08-08T06:23:11.158+02:00
+              hst:lockedby: admin
+              hst:lockedon: 2021-03-03T14:10:05.781+01:00
+              hst:xtype: hst.vbox
+              /banner:
+                jcr:primaryType: hst:containeritemcomponent
+                jcr:uuid: 059de92b-b1e3-4bd2-9b2c-34af95ffd513
+                hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
+                hst:iconpath: images/essentials/catalog-component-icons/banner.svg
+                hst:label: Banner
+                hst:parameternames: [document, org.hippoecm.hst.core.component.template]
+                hst:parametervalues: [banners/banner1, 'webfile:/freemarker/hstdefault/essentials-banner.ftl']
+                hst:template: essentials-banner
     /testlandingpage[3]:
       jcr:primaryType: channelconfigeditordemo:contentdocument
       jcr:mixinTypes: ['hst:xpagemixin', 'mix:referenceable']
@@ -3260,9 +3308,9 @@
       hippostd:state: published
       hippostdpubwf:createdBy: admin
       hippostdpubwf:creationDate: 2021-03-03T13:45:22.690+01:00
-      hippostdpubwf:lastModificationDate: 2021-03-03T13:48:04.045+01:00
+      hippostdpubwf:lastModificationDate: 2021-03-03T14:11:12.480+01:00
       hippostdpubwf:lastModifiedBy: admin
-      hippostdpubwf:publicationDate: 2021-03-03T13:48:12.623+01:00
+      hippostdpubwf:publicationDate: 2021-03-03T14:11:15.832+01:00
       hippotranslation:id: 7eba5ea0-a61a-4a0b-8942-4564521efc64
       hippotranslation:locale: en
       /channelconfigeditordemo:content:
@@ -3270,24 +3318,76 @@
         hippostd:content: ''
       /hst:xpage:
         jcr:primaryType: hst:xpage
-        jcr:uuid: f8da8322-ebfc-460e-8968-1eb0f54d1b68
+        jcr:uuid: 0756c70e-13fe-40ca-a78b-87bd389a316e
         hst:pageref: landingspagina
         /9e5813f3-59c0-4eb2-bc27-477aa907febf:
           jcr:primaryType: hst:containercomponent
-          jcr:uuid: b18e237c-f34c-4993-99a1-de4637660456
+          jcr:uuid: 4533245f-5096-4078-9cb7-c6f1898ca972
           hippo:identifier: dad57efb-dbb0-42bd-a4b4-863fe987a901
-          hst:lastmodified: 2021-03-03T13:48:04.043+01:00
+          hst:lastmodified: 2021-03-03T14:11:12.478+01:00
           /banner:
             jcr:primaryType: hst:containeritemcomponent
-            jcr:uuid: 02f1c368-6fd0-4a38-9aaf-6b958c13a99c
+            jcr:uuid: c9be8465-eb44-40a2-a639-66fdfcf5fab6
             hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
             hst:iconpath: images/essentials/catalog-component-icons/banner.svg
             hst:label: Banner
+            hst:parameternames: [document, org.hippoecm.hst.core.component.template]
+            hst:parametervalues: [content/sample-document, 'webfile:/freemarker/hstdefault/essentials-banner.ftl']
             hst:template: essentials-banner
-          /banner1:
-            jcr:primaryType: hst:containeritemcomponent
-            jcr:uuid: e41c4bd4-7887-46b9-820c-7fb25b354938
-            hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
-            hst:iconpath: images/essentials/catalog-component-icons/banner.svg
-            hst:label: Banner
-            hst:template: essentials-banner
+        /top:
+          jcr:primaryType: hst:component
+          jcr:uuid: c5cd77d6-2810-48e0-9efe-b2def1bd47dc
+          hst:description: Snel-naar balk
+          /8d12c5a2-4bab-467c-a928-7b253f761843:
+            jcr:primaryType: hst:containercomponent
+            jcr:uuid: 48838c13-a8aa-4f02-aaf5-d53166f462c0
+            hippo:identifier: be8d7141-58e3-434a-a1a2-72045a230a61
+            hst:description: Column
+            hst:lastmodified: 2021-03-03T14:11:12.436+01:00
+            hst:lockedby: admin
+            hst:lockedon: 2021-03-03T14:10:05.779+01:00
+            hst:xtype: hst.vbox
+        /main:
+          jcr:primaryType: hst:component
+          jcr:uuid: ce10df0c-4efb-4a48-a342-866589614b5d
+          hst:description: Pagina opbouwen
+          /row-:
+            jcr:primaryType: hst:component
+            jcr:uuid: e298b166-f9ea-478b-b10e-2a193e29a8a4
+            hst:description: Row
+            /a2ca4342-5d4a-4c2d-8b44-0bda7655251f:
+              jcr:primaryType: hst:containercomponent
+              jcr:uuid: 3ea64727-016f-4612-9032-a0ea02ca44bc
+              hippo:identifier: be8d7141-58e3-434a-a1a2-72045a230a61
+              hst:description: Column
+              hst:lastmodified: 2020-08-08T06:23:11.158+02:00
+              hst:lockedby: admin
+              hst:lockedon: 2021-03-03T14:10:05.780+01:00
+              hst:xtype: hst.vbox
+              /banner:
+                jcr:primaryType: hst:containeritemcomponent
+                jcr:uuid: 17794760-9017-4194-be0c-7e0e923b2c19
+                hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
+                hst:iconpath: images/essentials/catalog-component-icons/banner.svg
+                hst:label: Banner
+                hst:parameternames: [document, org.hippoecm.hst.core.component.template]
+                hst:parametervalues: [banners/banner2, 'webfile:/freemarker/hstdefault/essentials-banner.ftl']
+                hst:template: essentials-banner
+            /b9c230a8-19ac-432f-9591-68d93617f496:
+              jcr:primaryType: hst:containercomponent
+              jcr:uuid: 6bc8b2a0-57ce-45eb-91cc-e07f9b8f91f5
+              hippo:identifier: be8d7141-58e3-434a-a1a2-72045a230a61
+              hst:description: Column
+              hst:lastmodified: 2020-08-08T06:23:11.158+02:00
+              hst:lockedby: admin
+              hst:lockedon: 2021-03-03T14:10:05.781+01:00
+              hst:xtype: hst.vbox
+              /banner:
+                jcr:primaryType: hst:containeritemcomponent
+                jcr:uuid: 801dcf14-dacf-498d-885b-2b464417c708
+                hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
+                hst:iconpath: images/essentials/catalog-component-icons/banner.svg
+                hst:label: Banner
+                hst:parameternames: [document, org.hippoecm.hst.core.component.template]
+                hst:parametervalues: [banners/banner1, 'webfile:/freemarker/hstdefault/essentials-banner.ftl']
+                hst:template: essentials-banner

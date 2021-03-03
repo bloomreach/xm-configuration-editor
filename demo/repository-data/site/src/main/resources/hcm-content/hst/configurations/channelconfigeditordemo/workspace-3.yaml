@@ -1,0 +1,14 @@
+/hst:hst/hst:configurations/channelconfigeditordemo/hst:workspace/hst:components/row-:
+  .meta:order-before: col-
+  jcr:primaryType: hst:component
+  hst:description: Row
+  /col-1:
+    jcr:primaryType: hst:containercomponent
+    hippo:identifier: 887e999f-5086-428f-a7e2-ebb0d3e73e9f
+    hst:description: Column
+    hst:xtype: hst.vbox
+  /col-2:
+    jcr:primaryType: hst:containercomponent
+    hippo:identifier: 20bb4e33-749e-4688-ac4f-93e3251833d6
+    hst:description: Column
+    hst:xtype: hst.vbox
