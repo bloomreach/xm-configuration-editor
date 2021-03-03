@@ -46,10 +46,11 @@
       jcr:uuid: 43bb410b-cfff-4251-ba46-2ffcf3c70ad1
       channelconfigeditordemo:title: Sample banner
       hippo:availability: [preview]
+      hippostd:retainable: false
       hippostd:state: unpublished
       hippostdpubwf:createdBy: admin
       hippostdpubwf:creationDate: 2014-03-20T17:00:00+01:00
-      hippostdpubwf:lastModificationDate: 2014-03-20T17:04:00+01:00
+      hippostdpubwf:lastModificationDate: 2021-03-03T14:34:59.989+01:00
       hippostdpubwf:lastModifiedBy: admin
       hippotranslation:id: 60eb6711-37f6-436f-b9eb-f85f0a1c6907
       hippotranslation:locale: en
@@ -74,7 +75,7 @@
       jcr:uuid: 05cd7373-4d05-4254-970e-e05fd81e16f7
       channelconfigeditordemo:title: Sample banner
       hippo:availability: []
-      hippostd:holder: admin
+      hippostd:retainable: false
       hippostd:state: draft
       hippostdpubwf:createdBy: admin
       hippostdpubwf:creationDate: 2014-03-20T17:00:00+01:00

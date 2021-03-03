@@ -1,0 +1,5 @@
+/hst:hst/hst:configurations/channelconfigeditordemo/hst:workspace/hst:sitemenus/main/landingpage test:
+  .meta:order-before: content
+  jcr:primaryType: hst:sitemenuitem
+  hst:referencesitemapitem: landingpage
+  hst:repobased: false
