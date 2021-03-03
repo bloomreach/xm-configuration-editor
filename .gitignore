@@ -3,3 +3,5 @@
 target
 *.eslintcache
 /open-ui-frontend-v2/node/
+/react-csr/node_modules/
+/.

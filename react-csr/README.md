@@ -1,22 +1,17 @@
-RUN WITH
-```bash
-PORT=3001 npm run dev
-```
-
 # brXM + React = ♥️
 
 Example React SPA using the Bloomreach Experience [React SDK](https://www.npmjs.com/package/@bloomreach/react-sdk).
 The app is created using [create-react-app](https://github.com/facebook/create-react-app).
 
 ## Install and run
-Run [Docker](https://hub.docker.com/repository/docker/bloomreach/xm-spa-example) container with the configured brXM instance:
+Run [Docker](https://hub.docker.com/r/bloomreach/xm-spa-example) container with the configured brXM instance:
 ```bash
-docker run --net=host bloomreach/xm-spa-example
+docker run -p 8080:8080 bloomreach/xm-spa-example
 ```
 
 Then, copy `.env.dist` file to `.env` and specify the brXM instance to fetch the page model from:
 ```
-REACT_APP_CMS_BASE_URL=http://localhost:8080/site
+REACT_APP_BRXM_ENDPOINT=http://localhost:8080/site/resourceapi
 ```
 
 Finally, build and run the React app as follows:

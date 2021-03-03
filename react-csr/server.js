@@ -27,7 +27,7 @@ if (fs.existsSync(dotenvPath)) {
   }
 }
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'build')));

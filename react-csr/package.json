@@ -1,23 +1,22 @@
 {
   "name": "@bloomreach/example-react-csr",
   "description": "Example React SPA for Bloomreach Experience",
-  "version": "14.2.2",
+  "version": "14.4.0",
   "private": true,
   "dependencies": {
-    "@bloomreach/react-sdk": "^14.2",
+    "@bloomreach/react-sdk": "14.4.0",
     "axios": "^0.21",
-    "react": "^16.13",
-    "react-dom": "^16.13",
+    "react": "^16.14",
+    "react-dom": "^16.14",
     "react-router-dom": "^5.2",
-    "react-scripts": "3.4.1",
-    "typescript": "^3.8"
+    "react-scripts": "4.0.0",
+    "typescript": "4.0"
   },
   "scripts": {
-    "build": "react-scripts build",
-    "dev": "PORT=3001 react-scripts start",
+    "build": "SKIP_PREFLIGHT_CHECK=true react-scripts build",
+    "dev": "PORT=3001 SKIP_PREFLIGHT_CHECK=true react-scripts start",
     "lint": "eslint --ext js,ts,tsx src",
-    "start": "node server.js",
-    "test": "echo no tests"
+    "start": "node server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,9 +38,8 @@
     "@types/react-dom": "^16.9",
     "@types/react-router-dom": "^5.1",
     "dotenv": "^8.2",
-    "express": "^4.17",
-    "gulp": "^4.0.2",
-    "gulp-inline-source": "^4.0.0",
-    "gulp-replace": "^1.0.0"
+    "eslint": "^7.12",
+    "eslint-config-react-app": "^6.0",
+    "express": "^4.17"
   }
 }

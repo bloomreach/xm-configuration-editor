@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Hippo B.V. (http://www.onehippo.com)
+ * Copyright 2019-2020 Hippo B.V. (http://www.onehippo.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,32 +16,30 @@
 
 import React from 'react';
 import axios from 'axios';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {BrComponent, BrPage, BrPageContext} from '@bloomreach/react-sdk';
-import {Banner, Content, Menu, NewsList} from './components';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { BrComponent, BrPage, BrPageContext } from '@bloomreach/react-sdk';
+import { Banner, Content, Menu, NewsList } from './components';
+import {Section} from "./components/Section";
 import {Static} from "./components/Static";
+import {Row} from "./components/Row";
 import {WhiteSection} from "./components/WhiteSection";
 import {GreySection} from "./components/GreySection";
-import {Row} from "./components/Row";
-import {TYPE_CONTAINER_BOX, TYPE_CONTAINER_INLINE, TYPE_CONTAINER_NO_MARKUP} from '@bloomreach/spa-sdk';
-import Vbox from './util/vbox';
+import Vbox from "./util/vbox";
 import VSpan from "./util/vspan";
-import {Section} from "./components/Section";
-import Nomarkup from "./util/nomarkup";
+import {TYPE_CONTAINER_BOX, TYPE_CONTAINER_INLINE, TYPE_CONTAINER_NO_MARKUP} from '@bloomreach/spa-sdk';
 
-export default function App (props: RouteComponentProps) {
+
+export default function App(props: RouteComponentProps) {
   const configuration = {
+    baseUrl: process.env.REACT_APP_BASE_URL,
+    endpoint: process.env.REACT_APP_BRXM_ENDPOINT,
+    endpointQueryParameter: 'endpoint',
     httpClient: axios,
-    cmsBaseUrl: process.env.REACT_APP_CMS_BASE_URL!,
-    spaBaseUrl: process.env.REACT_APP_SPA_BASE_URL,
     request: {
       path: `${props.location.pathname}${props.location.search}`,
     },
   };
-  const mapping = {
-    Banner,
-    Content,
-    'News List': NewsList,
+  const mapping = { Banner, Content, 'News List': NewsList, 'Simple Content': Content ,
     'row-x': Static,
     'section-*': Section,
     'section-': Section,
@@ -74,37 +72,33 @@ export default function App (props: RouteComponentProps) {
         <nav className="navbar navbar-expand-sm navbar-dark sticky-top bg-dark" role="navigation">
           <div className="container">
             <BrPageContext.Consumer>
-              {page => (
+              { page => (
                 <Link to={page!.getUrl('/')} className="navbar-brand">
-                  {page!.getTitle() || 'brXM + React = ♥️'}
+                  { page!.getTitle() || 'brXM + React = ♥️'}
                 </Link>
-              )}
+              ) }
             </BrPageContext.Consumer>
             <div className="collapse navbar-collapse">
               <BrComponent path="menu">
-                <Menu/>
+                <Menu />
               </BrComponent>
             </div>
           </div>
         </nav>
       </header>
       <section className="container flex-fill pt-3">
-        <BrComponent path="top"/>
-      </section>
-      <section className="container flex-fill pt-3">
-        <BrComponent path="main"/>
-        <BrComponent path="main-1"/>
+        <BrComponent path="top" />
+        <BrComponent path="main" />
+        <BrComponent path="main-1" />
       </section>
       <footer className="bg-dark text-light py-3">
         <div className="container clearfix">
           <div className="float-left pr-3">&copy; Bloomreach</div>
           <div className="overflow-hidden">
-            <BrComponent path="footer"/>
+            <BrComponent path="footer" />
           </div>
         </div>
       </footer>
     </BrPage>
   );
 }
-
-
