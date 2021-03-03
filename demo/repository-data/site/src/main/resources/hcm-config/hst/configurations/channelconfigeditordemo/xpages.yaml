@@ -32,3 +32,22 @@ definitions:
           /container:
             jcr:primaryType: hst:containercomponent
             hippo:identifier: e0b622cf-7bc7-44bb-881a-3de929017cb3
+      /landingspagina:
+        jcr:primaryType: hst:xpage
+        hst:label: Landingspagina
+        hst:referencecomponent: hst:abstractpages/base
+        /top:
+          jcr:primaryType: hst:component
+          hst:description: Snel-naar balk
+          /container:
+            jcr:primaryType: hst:containercomponent
+            hippo:identifier: 9e5813f3-59c0-4eb2-bc27-477aa907febf
+            /banner:
+              jcr:primaryType: hst:containeritemcomponent
+              hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
+              hst:iconpath: images/essentials/catalog-component-icons/banner.svg
+              hst:label: Banner
+              hst:template: essentials-banner
+        /main:
+          jcr:primaryType: hst:component
+          hst:description: Pagina opbouwen

@@ -15,11 +15,11 @@
   <version>0.1.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <!-- 
+  <!--
     The below project elements are emptied/overridden as otherwise their metadata would be
     inherited or merged from the parent hippo-cms7-release pom (or its hippo-cms7-project pom).
 
-    DO NOT remove these tags but instead fill them in appropriately as needed, 
+    DO NOT remove these tags but instead fill them in appropriately as needed,
     UNLESS the inherited values are valid for your project.
   -->
   <organization />
@@ -64,7 +64,7 @@
     <essentials.version>14.4.0</essentials.version>
     <jsp-api.version>2.2</jsp-api.version>
     <taglibs.version>1.2.5</taglibs.version>
-    <brxm-configuration-editor.version>0.9.3-SNAPSHOT</brxm-configuration-editor.version>
+    <brxm-configuration-editor.version>0.9.2</brxm-configuration-editor.version>
 
     <development-module-deploy-dir>shared/lib</development-module-deploy-dir>
 

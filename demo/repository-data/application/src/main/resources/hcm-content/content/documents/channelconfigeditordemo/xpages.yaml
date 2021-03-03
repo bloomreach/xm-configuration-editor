@@ -11,7 +11,7 @@
     jcr:mixinTypes: ['hippo:versionInfo', 'mix:referenceable']
     jcr:uuid: f109b58f-38a6-411d-b917-d662f4ef74e0
     hippo:branches: [master, vwTeX, vV6E6]
-    hippo:versionHistory: 2862a5ef-1236-42ee-86be-13d9da79abb5
+    hippo:versionHistory: ca63350c-be24-4631-a2b4-cdcb9ae439b6
     /test1[1]:
       jcr:primaryType: channelconfigeditordemo:bannerdocument
       jcr:mixinTypes: ['hippo:branchInfo', 'hst:xpagemixin', 'mix:referenceable']
@@ -299,9 +299,9 @@
       hippostd:state: published
       hippostdpubwf:createdBy: admin
       hippostdpubwf:creationDate: 2020-12-08T14:23:14.436+01:00
-      hippostdpubwf:lastModificationDate: 2020-12-22T11:12:07.948+01:00
+      hippostdpubwf:lastModificationDate: 2021-01-14T21:45:43.376+01:00
       hippostdpubwf:lastModifiedBy: admin
-      hippostdpubwf:publicationDate: 2020-12-22T11:12:12.937+01:00
+      hippostdpubwf:publicationDate: 2021-02-18T12:06:42.646+01:00
       hippotranslation:id: 32b98bc3-b136-4163-b4f8-3c396b1c253e
       hippotranslation:locale: en
       /channelconfigeditordemo:content:
@@ -318,17 +318,17 @@
         hippo:docbase: cafebabe-cafe-babe-cafe-babecafebabe
       /hst:xpage:
         jcr:primaryType: hst:xpage
-        jcr:uuid: b005bb95-11c7-4ac1-b686-27c99e8fe86d
+        jcr:uuid: ea273189-591b-40ee-a316-f204c5890a2f
         hst:description: readstructure1
         hst:pageref: readstructure1
         /e0b622cf-7bc7-44bb-881a-3de929017cb3:
           jcr:primaryType: hst:containercomponent
-          jcr:uuid: acf3c9df-63c5-4d31-8373-89ed83a65f24
+          jcr:uuid: 9c773a4b-7d6c-438c-86ca-468fdc650671
           hippo:identifier: 26193a4b-ed0c-45dc-b7cc-bb31f3f706a7
           hst:lastmodified: 2020-12-08T13:25:16.031Z
           /banner:
             jcr:primaryType: hst:containeritemcomponent
-            jcr:uuid: ca89a500-a893-4bc2-8bf8-e446336fec2a
+            jcr:uuid: 522aebb6-860b-4f6c-b270-50c235c2df70
             hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
             hst:iconpath: images/essentials/catalog-component-icons/banner.svg
             hst:label: Banner
@@ -337,147 +337,201 @@
             hst:template: essentials-banner
         /main:
           jcr:primaryType: hst:component
-          jcr:uuid: 0bdbbf37-4475-4169-891b-a2a7af3a7798
-          hst:description: main
+          jcr:uuid: d6b80e76-f20d-45c1-9a96-781efacdbae7
+          /f36cc0f7-48c4-456a-96cb-d4d478b71e2f:
+            jcr:primaryType: hst:containercomponent
+            jcr:uuid: 92d76222-1822-49d1-b458-b371846ba8d7
+            hippo:identifier: 3be85902-9342-424c-aa30-ea551a8aacf2
+            hst:lastmodified: 2020-08-08T06:23:11.158+02:00
+            hst:lockedby: admin
+            hst:lockedon: 2021-01-14T21:45:43.366+01:00
           /row-:
             jcr:primaryType: hst:component
-            jcr:uuid: 36fef365-0dcb-44b8-b8d1-7a89fa32030c
+            jcr:uuid: fca20c4f-99f0-41a1-a944-e765ae242cff
             hst:description: Row
-            /51fe2127-f353-426f-a014-f344a79a4246:
+            /fddeee86-1d96-4e1f-8583-8570e9835119:
               jcr:primaryType: hst:containercomponent
-              jcr:uuid: 3d7836f2-2de1-4895-8027-33a68343f81d
-              hippo:identifier: d5a551fa-4d38-4440-8f6f-c9c92628fac9
-              hst:description: Column
-              hst:lastmodified: 2020-12-22T10:12:07.945Z
+              jcr:uuid: 66d8a0a4-340f-489a-b940-13465d3b081c
+              hippo:identifier: 3be85902-9342-424c-aa30-ea551a8aacf2
+              hst:lastmodified: 2020-08-08T06:23:11.158+02:00
               hst:lockedby: admin
-              hst:lockedon: 2020-12-22T10:52:39.789+01:00
+              hst:lockedon: 2021-01-14T21:45:43.366+01:00
+            /dfa0dcdc-b8b8-4ec8-acf6-4409bc3fa6bc:
+              jcr:primaryType: hst:containercomponent
+              jcr:uuid: 9e13bb5f-e102-45b1-b18c-8045e2bbaa96
+              hippo:identifier: 3be85902-9342-424c-aa30-ea551a8aacf2
+              hst:lastmodified: 2020-08-08T06:23:11.158+02:00
+              hst:lockedby: admin
+              hst:lockedon: 2021-01-14T21:45:43.367+01:00
+            /8cdcfacc-8ab8-4561-b366-2fa7cbe16f7e:
+              jcr:primaryType: hst:containercomponent
+              jcr:uuid: 684c9aff-24b7-4e86-a6bc-0aa2766518e8
+              hippo:identifier: 3be85902-9342-424c-aa30-ea551a8aacf2
+              hst:description: Column
+              hst:lastmodified: 2020-08-08T06:23:11.158+02:00
+              hst:lockedby: admin
+              hst:lockedon: 2021-01-14T21:45:43.367+01:00
               hst:xtype: hst.vbox
               /banner:
                 jcr:primaryType: hst:containeritemcomponent
-                jcr:uuid: 086728eb-f7b7-4de3-9940-e011eacc5594
+                jcr:uuid: 501b1078-a959-409f-9c42-3e633996982b
                 hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
                 hst:iconpath: images/essentials/catalog-component-icons/banner.svg
                 hst:label: Banner
                 hst:parameternames: [document, org.hippoecm.hst.core.component.template]
                 hst:parametervalues: [banners/banner1, 'webfile:/freemarker/hstdefault/essentials-banner.ftl']
                 hst:template: essentials-banner
-            /60c51973-2ba2-4e48-bbc0-6bbd351487d0:
+            /c1c0940e-1c82-42c7-97fb-465a12c198e8:
               jcr:primaryType: hst:containercomponent
-              jcr:uuid: 943014e8-fa3e-4747-bb1a-eafa2e701fbd
-              hippo:identifier: d5a551fa-4d38-4440-8f6f-c9c92628fac9
+              jcr:uuid: c345f012-18ba-4328-85b1-3b0c9825dc34
+              hippo:identifier: 3be85902-9342-424c-aa30-ea551a8aacf2
               hst:description: Column
               hst:lastmodified: 2020-08-08T06:23:11.158+02:00
               hst:lockedby: admin
-              hst:lockedon: 2020-12-22T10:52:39.793+01:00
+              hst:lockedon: 2021-01-14T21:45:43.368+01:00
               hst:xtype: hst.vbox
           /section-grey-:
             jcr:primaryType: hst:component
-            jcr:uuid: e93ec477-d3bc-45b2-ad2e-4198ad5f0cad
+            jcr:uuid: 01296380-f20f-4619-ae51-01bd98782332
             hst:description: Grey Section
             hst:parameternames: [background-color, pageType]
             hst:parametervalues: [grey, bar]
             /row-:
               jcr:primaryType: hst:component
-              jcr:uuid: c4250b54-7639-4f9c-a154-aaef46bc196a
+              jcr:uuid: 2355d754-867a-4240-a65e-046f01e05826
               hst:description: Row
               hst:parameternames: [background-color, pageType]
               hst:parametervalues: [grey, bar]
-              /0c846a4f-adb7-46e4-91d8-7ad6b43747b1:
+              /13a68a46-077e-4a1c-82da-6c3289c1e89c:
                 jcr:primaryType: hst:containercomponent
-                jcr:uuid: b50bc3d2-9154-4274-9edb-b90887a6a51b
-                hippo:identifier: d5a551fa-4d38-4440-8f6f-c9c92628fac9
+                jcr:uuid: 47eb9e33-0077-4c00-8380-f07d44374cc1
+                hippo:identifier: 3be85902-9342-424c-aa30-ea551a8aacf2
                 hst:description: Column
                 hst:lastmodified: 2020-08-08T06:23:11.158+02:00
                 hst:lockedby: admin
-                hst:lockedon: 2020-12-22T10:52:39.798+01:00
+                hst:lockedon: 2021-01-14T21:45:43.369+01:00
                 hst:parameternames: [background-color, pageType]
                 hst:parametervalues: [grey, bar]
                 hst:xtype: hst.vbox
                 /banner:
                   jcr:primaryType: hst:containeritemcomponent
-                  jcr:uuid: 7ef7c420-af7b-4f42-a2f0-a7e87c41944e
+                  jcr:uuid: 2a5ac0fd-e9b9-4c2a-bdbb-14f0f630c991
                   hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
                   hst:iconpath: images/essentials/catalog-component-icons/banner.svg
                   hst:label: Banner
                   hst:parameternames: [document, org.hippoecm.hst.core.component.template]
                   hst:parametervalues: [banners/banner1, 'webfile:/freemarker/hstdefault/essentials-banner.ftl']
                   hst:template: essentials-banner
-              /b38cdb92-4483-48bc-823f-97079c36cb3c:
+              /e1c94b52-8e8b-4406-b81e-92b6d8d01564:
                 jcr:primaryType: hst:containercomponent
-                jcr:uuid: 9f899a95-58ce-45f8-9892-dcf8948fb871
-                hippo:identifier: d5a551fa-4d38-4440-8f6f-c9c92628fac9
+                jcr:uuid: a1ac4db0-f218-4651-bbe3-82a242b4587b
+                hippo:identifier: 3be85902-9342-424c-aa30-ea551a8aacf2
                 hst:description: Column
                 hst:lastmodified: 2020-08-08T06:23:11.158+02:00
                 hst:lockedby: admin
-                hst:lockedon: 2020-12-22T10:52:39.801+01:00
+                hst:lockedon: 2021-01-14T21:45:43.369+01:00
                 hst:parameternames: [background-color, pageType]
                 hst:parametervalues: [grey, bar]
                 hst:xtype: hst.vbox
           /section-white-:
             jcr:primaryType: hst:component
-            jcr:uuid: 57351d55-4075-4aa6-b767-822d707c2098
+            jcr:uuid: 0933b20f-d469-4165-9c38-ffd33dbddf8f
             hst:description: White Section
             hst:parameternames: [background-color]
             hst:parametervalues: [white]
             /row-:
               jcr:primaryType: hst:component
-              jcr:uuid: 322e9bbe-5fe8-4c7e-adf8-6eacef37ebf1
+              jcr:uuid: cdef31bc-498b-4c06-9ac1-31f09350ef3d
               hst:description: Row
               hst:parameternames: [background-color]
               hst:parametervalues: [white]
-              /409b491d-1cf5-4eee-91f6-772c8a1e6d2e:
+              /6bfd59f3-ddb3-4cff-b8e0-0bd6c9394e65:
                 jcr:primaryType: hst:containercomponent
-                jcr:uuid: 1214c4d9-519e-484f-b7a4-3c81a747b1e3
-                hippo:identifier: d5a551fa-4d38-4440-8f6f-c9c92628fac9
+                jcr:uuid: 85a0c942-ab0d-4b82-a206-4b054e4d4f4e
+                hippo:identifier: 3be85902-9342-424c-aa30-ea551a8aacf2
                 hst:description: Column
                 hst:lastmodified: 2020-08-08T06:23:11.158+02:00
                 hst:lockedby: admin
-                hst:lockedon: 2020-12-22T10:52:39.804+01:00
+                hst:lockedon: 2021-01-14T21:45:43.371+01:00
                 hst:parameternames: [background-color]
                 hst:parametervalues: [white]
                 hst:xtype: hst.vbox
-              /dbee225c-9d3d-4189-a218-5d25b425c202:
+              /37a50d15-0d9c-4791-a83c-b5714ce7743b:
                 jcr:primaryType: hst:containercomponent
-                jcr:uuid: 2bcbda35-41ea-4c92-8729-7fbd72a58fcb
-                hippo:identifier: d5a551fa-4d38-4440-8f6f-c9c92628fac9
+                jcr:uuid: 267ccd35-659b-4879-b85b-c931ae94f3f4
+                hippo:identifier: 3be85902-9342-424c-aa30-ea551a8aacf2
                 hst:description: Column
                 hst:lastmodified: 2020-08-08T06:23:11.158+02:00
                 hst:lockedby: admin
-                hst:lockedon: 2020-12-22T10:52:39.805+01:00
+                hst:lockedon: 2021-01-14T21:45:43.372+01:00
                 hst:parameternames: [background-color]
                 hst:parametervalues: [white]
                 hst:xtype: hst.vbox
           /section-grey-1:
             jcr:primaryType: hst:component
-            jcr:uuid: d1bd4575-8266-4baa-8e99-2f592990a937
+            jcr:uuid: ba7dc1f9-4984-4cc8-b925-d715bd1433a4
             hst:description: Grey Section
             hst:parameternames: [background-color, pageType]
             hst:parametervalues: [grey, bar]
             /row-:
               jcr:primaryType: hst:component
-              jcr:uuid: 1eea82ce-da5a-4100-be65-3e05261f9768
+              jcr:uuid: af849e79-6d4c-4d02-bd31-617b8e687629
               hst:description: Row
               hst:parameternames: [background-color, pageType]
               hst:parametervalues: [grey, bar]
-              /c95b7db2-7174-475c-8549-773a81e5f4e3:
+              /13b53b23-d007-4ae7-b319-db9b130358af:
                 jcr:primaryType: hst:containercomponent
-                jcr:uuid: 30ffbada-b3b8-4d74-ac9d-a70709377f12
-                hippo:identifier: d5a551fa-4d38-4440-8f6f-c9c92628fac9
+                jcr:uuid: d2a9fd8a-8a64-4d25-b6c7-fe7d3308c787
+                hippo:identifier: 3be85902-9342-424c-aa30-ea551a8aacf2
                 hst:description: Column
                 hst:lastmodified: 2020-08-08T06:23:11.158+02:00
                 hst:lockedby: admin
-                hst:lockedon: 2020-12-22T10:52:39.806+01:00
+                hst:lockedon: 2021-01-14T21:45:43.373+01:00
                 hst:parameternames: [background-color, pageType]
                 hst:parametervalues: [grey, bar]
                 hst:xtype: hst.vbox
-              /ff8ffb32-9806-432e-b879-e6ed8d7c0405:
+              /8b52adc5-8cad-497a-89f2-2dc70b917223:
                 jcr:primaryType: hst:containercomponent
-                jcr:uuid: 745c6088-7c2f-4b5e-9e98-620e973aa6dc
-                hippo:identifier: d5a551fa-4d38-4440-8f6f-c9c92628fac9
+                jcr:uuid: 12df5469-4885-49b0-87b6-9ec3d9af3ebb
+                hippo:identifier: 3be85902-9342-424c-aa30-ea551a8aacf2
                 hst:description: Column
                 hst:lastmodified: 2020-08-08T06:23:11.158+02:00
                 hst:lockedby: admin
-                hst:lockedon: 2020-12-22T10:52:39.807+01:00
+                hst:lockedon: 2021-01-14T21:45:43.373+01:00
+                hst:parameternames: [background-color, pageType]
+                hst:parametervalues: [grey, bar]
+                hst:xtype: hst.vbox
+          /section-grey-2:
+            jcr:primaryType: hst:component
+            jcr:uuid: 775c6374-0e93-413d-b609-25d3cb908a4d
+            hst:description: Grey Section
+            hst:parameternames: [background-color, pageType]
+            hst:parametervalues: [grey, bar]
+            /row-:
+              jcr:primaryType: hst:component
+              jcr:uuid: af13d825-e32e-442d-8bba-77a4ab9d02c5
+              hst:description: Row
+              hst:parameternames: [background-color, pageType]
+              hst:parametervalues: [grey, bar]
+              /78b3de33-a4b6-4f23-8ec9-5818be8d344e:
+                jcr:primaryType: hst:containercomponent
+                jcr:uuid: 7a249f81-b458-40f5-8aa2-574688ea7a75
+                hippo:identifier: 3be85902-9342-424c-aa30-ea551a8aacf2
+                hst:description: Column
+                hst:lastmodified: 2020-08-08T06:23:11.158+02:00
+                hst:lockedby: admin
+                hst:lockedon: 2021-01-14T21:45:43.375+01:00
+                hst:parameternames: [background-color, pageType]
+                hst:parametervalues: [grey, bar]
+                hst:xtype: hst.vbox
+              /fcb9b153-5b6a-4b95-8497-a9283290b7e2:
+                jcr:primaryType: hst:containercomponent
+                jcr:uuid: 812c0bbe-d8c7-4222-b382-f37b887fc27d
+                hippo:identifier: 3be85902-9342-424c-aa30-ea551a8aacf2
+                hst:description: Column
+                hst:lastmodified: 2020-08-08T06:23:11.158+02:00
+                hst:lockedby: admin
+                hst:lockedon: 2021-01-14T21:45:43.375+01:00
                 hst:parameternames: [background-color, pageType]
                 hst:parametervalues: [grey, bar]
                 hst:xtype: hst.vbox
@@ -2998,3 +3052,242 @@
         path: demo/demo[2]
       hippostdpubwf:type: publish
       hippostdpubwf:username: author
+  /landingspagina:
+    jcr:primaryType: hippo:handle
+    jcr:mixinTypes: ['hippo:named', 'hippo:versionInfo', 'mix:referenceable']
+    jcr:uuid: 61b56d4b-52bb-449b-8be6-fe17c2d2ef0e
+    hippo:name: Landingspagina
+    hippo:versionHistory: ac95da3b-45f6-4a4b-91c8-738de744c984
+    /landingspagina[1]:
+      jcr:primaryType: channelconfigeditordemo:contentdocument
+      jcr:mixinTypes: ['hst:xpagemixin', 'mix:referenceable']
+      jcr:uuid: 17db9e9b-b82a-4a75-b501-64ca6fa74c97
+      channelconfigeditordemo:introduction: ''
+      channelconfigeditordemo:publicationdate: 0001-01-01T12:00:00Z
+      channelconfigeditordemo:title: ''
+      hippo:availability: []
+      hippo:related___pathreference: []
+      hippostd:retainable: false
+      hippostd:state: draft
+      hippostd:transferable: false
+      hippostdpubwf:createdBy: admin
+      hippostdpubwf:creationDate: 2021-02-18T12:12:41.260+01:00
+      hippostdpubwf:lastModificationDate: 2021-02-18T12:12:56.454+01:00
+      hippostdpubwf:lastModifiedBy: admin
+      hippotranslation:id: 6d953b8d-2110-47fb-bfe3-f4f9989bbe80
+      hippotranslation:locale: en
+      /channelconfigeditordemo:content:
+        jcr:primaryType: hippostd:html
+        hippostd:content: ''
+    /landingspagina[2]:
+      jcr:primaryType: channelconfigeditordemo:contentdocument
+      jcr:mixinTypes: ['hst:xpagemixin', 'mix:referenceable', 'mix:versionable']
+      jcr:uuid: a5425b51-1027-428f-820c-66e1249c0512
+      channelconfigeditordemo:introduction: ''
+      channelconfigeditordemo:publicationdate: 0001-01-01T12:00:00Z
+      channelconfigeditordemo:title: ''
+      hippo:availability: [preview]
+      hippo:related___pathreference: []
+      hippostd:retainable: false
+      hippostd:state: unpublished
+      hippostdpubwf:createdBy: admin
+      hippostdpubwf:creationDate: 2021-02-18T12:12:41.260+01:00
+      hippostdpubwf:lastModificationDate: 2021-02-18T12:13:16.807+01:00
+      hippostdpubwf:lastModifiedBy: admin
+      hippotranslation:id: 6d953b8d-2110-47fb-bfe3-f4f9989bbe80
+      hippotranslation:locale: en
+      /channelconfigeditordemo:content:
+        jcr:primaryType: hippostd:html
+        hippostd:content: ''
+      /hst:xpage:
+        jcr:primaryType: hst:xpage
+        jcr:uuid: 7fa7d5df-d3ad-4011-a3f1-94cccc67afa1
+        hst:pageref: landingspagina
+        /9e5813f3-59c0-4eb2-bc27-477aa907febf:
+          jcr:primaryType: hst:containercomponent
+          jcr:uuid: 80ccf701-b43f-4731-9862-a5d5a4ec16f0
+          hippo:identifier: 3bbd8a54-6a7c-4164-bfa1-e499e4c27a94
+          /banner:
+            jcr:primaryType: hst:containeritemcomponent
+            jcr:uuid: afd3e45c-6de5-459c-8fa3-496895f52851
+            hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
+            hst:iconpath: images/essentials/catalog-component-icons/banner.svg
+            hst:label: Banner
+            hst:template: essentials-banner
+        /top:
+          jcr:primaryType: hst:component
+          jcr:uuid: f3b6b578-1eec-424c-92f9-8a57db9b55ba
+          hst:description: Snel-naar balk
+        /main:
+          jcr:primaryType: hst:component
+          jcr:uuid: 7e420fcb-dca9-4d86-9310-b023cb9debf6
+          hst:description: Pagina opbouwen
+          /fromcommon:
+            jcr:primaryType: hst:component
+            jcr:uuid: 9b8d4e0e-e7ff-420f-acc5-f51040e9eb51
+            hst:description: From Common (inherited)
+    /landingspagina[3]:
+      jcr:primaryType: channelconfigeditordemo:contentdocument
+      jcr:mixinTypes: ['hst:xpagemixin', 'mix:referenceable']
+      jcr:uuid: e45075e0-dda3-4c7f-9095-0b5d74182fbe
+      channelconfigeditordemo:introduction: ''
+      channelconfigeditordemo:publicationdate: 0001-01-01T12:00:00Z
+      channelconfigeditordemo:title: ''
+      hippo:availability: [live]
+      hippo:related___pathreference: []
+      hippostd:retainable: false
+      hippostd:state: published
+      hippostdpubwf:createdBy: admin
+      hippostdpubwf:creationDate: 2021-02-18T12:12:41.260+01:00
+      hippostdpubwf:lastModificationDate: 2021-02-18T12:13:16.807+01:00
+      hippostdpubwf:lastModifiedBy: admin
+      hippostdpubwf:publicationDate: 2021-02-18T12:47:35.065+01:00
+      hippotranslation:id: 6d953b8d-2110-47fb-bfe3-f4f9989bbe80
+      hippotranslation:locale: en
+      /channelconfigeditordemo:content:
+        jcr:primaryType: hippostd:html
+        hippostd:content: ''
+      /hst:xpage:
+        jcr:primaryType: hst:xpage
+        jcr:uuid: 770ebe03-324f-48bb-93d0-fed5f570acdd
+        hst:pageref: landingspagina
+        /9e5813f3-59c0-4eb2-bc27-477aa907febf:
+          jcr:primaryType: hst:containercomponent
+          jcr:uuid: cd8134a3-2a17-48fe-989d-0a1c16357608
+          hippo:identifier: 3bbd8a54-6a7c-4164-bfa1-e499e4c27a94
+          /banner:
+            jcr:primaryType: hst:containeritemcomponent
+            jcr:uuid: c5fa2b9b-065a-4ec7-b3ab-181856abcc31
+            hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
+            hst:iconpath: images/essentials/catalog-component-icons/banner.svg
+            hst:label: Banner
+            hst:template: essentials-banner
+        /top:
+          jcr:primaryType: hst:component
+          jcr:uuid: 9e2356dc-a8d9-4f73-86b5-b2b5d840803b
+          hst:description: Snel-naar balk
+        /main:
+          jcr:primaryType: hst:component
+          jcr:uuid: fcf65d08-6110-4f57-8bae-9c3a64e97ca0
+          hst:description: Pagina opbouwen
+          /fromcommon:
+            jcr:primaryType: hst:component
+            jcr:uuid: 4eb97135-9ad0-4ae3-94e9-dd8286bf123d
+            hst:description: From Common (inherited)
+  /testlandingpage:
+    jcr:primaryType: hippo:handle
+    jcr:mixinTypes: ['hippo:versionInfo', 'mix:referenceable']
+    jcr:uuid: 70e90fd8-ecf1-44ae-b0c2-950af20cce57
+    hippo:versionHistory: 8e4d3419-05f1-4d13-9c77-c0d060ff237f
+    /testlandingpage[1]:
+      jcr:primaryType: channelconfigeditordemo:contentdocument
+      jcr:mixinTypes: ['hst:xpagemixin', 'mix:referenceable']
+      jcr:uuid: 7df5ff8b-ac9c-4ef3-bdcf-3eee83b2cbea
+      channelconfigeditordemo:introduction: ''
+      channelconfigeditordemo:publicationdate: 0001-01-01T12:00:00Z
+      channelconfigeditordemo:title: ''
+      hippo:availability: []
+      hippo:related___pathreference: []
+      hippostd:retainable: false
+      hippostd:state: draft
+      hippostd:transferable: false
+      hippostdpubwf:createdBy: admin
+      hippostdpubwf:creationDate: 2021-03-03T13:45:22.690+01:00
+      hippostdpubwf:lastModificationDate: 2021-03-03T13:45:27.661+01:00
+      hippostdpubwf:lastModifiedBy: admin
+      hippotranslation:id: 7eba5ea0-a61a-4a0b-8942-4564521efc64
+      hippotranslation:locale: en
+      /channelconfigeditordemo:content:
+        jcr:primaryType: hippostd:html
+        hippostd:content: ''
+    /testlandingpage[2]:
+      jcr:primaryType: channelconfigeditordemo:contentdocument
+      jcr:mixinTypes: ['hst:xpagemixin', 'mix:referenceable', 'mix:versionable']
+      jcr:uuid: 288a23e1-59e5-421c-8d0f-ef50cc0247b7
+      channelconfigeditordemo:introduction: ''
+      channelconfigeditordemo:publicationdate: 0001-01-01T12:00:00Z
+      channelconfigeditordemo:title: ''
+      hippo:availability: [preview]
+      hippo:related___pathreference: []
+      hippostd:retainable: false
+      hippostd:state: unpublished
+      hippostdpubwf:createdBy: admin
+      hippostdpubwf:creationDate: 2021-03-03T13:45:22.690+01:00
+      hippostdpubwf:lastModificationDate: 2021-03-03T13:51:57.103+01:00
+      hippostdpubwf:lastModifiedBy: admin
+      hippotranslation:id: 7eba5ea0-a61a-4a0b-8942-4564521efc64
+      hippotranslation:locale: en
+      /channelconfigeditordemo:content:
+        jcr:primaryType: hippostd:html
+        hippostd:content: ''
+      /hst:xpage:
+        jcr:primaryType: hst:xpage
+        jcr:uuid: d27cf308-2191-41ae-af3b-0504291ba2e6
+        hst:pageref: landingspagina
+        /9e5813f3-59c0-4eb2-bc27-477aa907febf:
+          jcr:primaryType: hst:containercomponent
+          jcr:uuid: 587af787-629e-41d1-9b6c-f43df13dc178
+          hippo:identifier: dad57efb-dbb0-42bd-a4b4-863fe987a901
+          hst:lastmodified: 2021-03-03T13:49:50.763+01:00
+          /banner:
+            jcr:primaryType: hst:containeritemcomponent
+            jcr:uuid: faff236d-14d8-4ecb-95df-08450af83c80
+            hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
+            hst:iconpath: images/essentials/catalog-component-icons/banner.svg
+            hst:label: Banner
+            hst:template: essentials-banner
+        /top:
+          jcr:primaryType: hst:component
+          jcr:uuid: fbb45566-4dd9-4561-8582-b01f657d4690
+          hst:description: Snel-naar balk
+        /main:
+          jcr:primaryType: hst:component
+          jcr:uuid: d58c2121-ee1e-4fe6-b4e1-f6d030de3075
+          hst:description: Pagina opbouwen
+          /fromcommonwithoutdescription:
+            jcr:primaryType: hst:component
+            jcr:uuid: 1cc7b73d-948f-4187-ae1c-dfe2dacc41d5
+    /testlandingpage[3]:
+      jcr:primaryType: channelconfigeditordemo:contentdocument
+      jcr:mixinTypes: ['hst:xpagemixin', 'mix:referenceable']
+      jcr:uuid: 0291e6fb-aa68-4a91-9c24-9f451b3c0a51
+      channelconfigeditordemo:introduction: ''
+      channelconfigeditordemo:publicationdate: 0001-01-01T12:00:00Z
+      channelconfigeditordemo:title: ''
+      hippo:availability: [live]
+      hippo:related___pathreference: []
+      hippostd:retainable: false
+      hippostd:state: published
+      hippostdpubwf:createdBy: admin
+      hippostdpubwf:creationDate: 2021-03-03T13:45:22.690+01:00
+      hippostdpubwf:lastModificationDate: 2021-03-03T13:48:04.045+01:00
+      hippostdpubwf:lastModifiedBy: admin
+      hippostdpubwf:publicationDate: 2021-03-03T13:48:12.623+01:00
+      hippotranslation:id: 7eba5ea0-a61a-4a0b-8942-4564521efc64
+      hippotranslation:locale: en
+      /channelconfigeditordemo:content:
+        jcr:primaryType: hippostd:html
+        hippostd:content: ''
+      /hst:xpage:
+        jcr:primaryType: hst:xpage
+        jcr:uuid: f8da8322-ebfc-460e-8968-1eb0f54d1b68
+        hst:pageref: landingspagina
+        /9e5813f3-59c0-4eb2-bc27-477aa907febf:
+          jcr:primaryType: hst:containercomponent
+          jcr:uuid: b18e237c-f34c-4993-99a1-de4637660456
+          hippo:identifier: dad57efb-dbb0-42bd-a4b4-863fe987a901
+          hst:lastmodified: 2021-03-03T13:48:04.043+01:00
+          /banner:
+            jcr:primaryType: hst:containeritemcomponent
+            jcr:uuid: 02f1c368-6fd0-4a38-9aaf-6b958c13a99c
+            hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
+            hst:iconpath: images/essentials/catalog-component-icons/banner.svg
+            hst:label: Banner
+            hst:template: essentials-banner
+          /banner1:
+            jcr:primaryType: hst:containeritemcomponent
+            jcr:uuid: e41c4bd4-7887-46b9-820c-7fb25b354938
+            hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
+            hst:iconpath: images/essentials/catalog-component-icons/banner.svg
+            hst:label: Banner
+            hst:template: essentials-banner
