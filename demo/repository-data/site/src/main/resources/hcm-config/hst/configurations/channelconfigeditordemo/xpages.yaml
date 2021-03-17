@@ -51,3 +51,31 @@ definitions:
         /main:
           jcr:primaryType: hst:component
           hst:description: Pagina opbouwen
+      /salespagina:
+        jcr:primaryType: hst:xpage
+        hst:label: Sales pagina
+        hst:referencecomponent: hst:abstractpages/base
+        /top:
+          jcr:primaryType: hst:component
+          /container:
+            jcr:primaryType: hst:containercomponent
+            hippo:identifier: 38ef4d28-f4bb-4a03-b6fc-57a54916b771
+            /banner:
+              jcr:primaryType: hst:containeritemcomponent
+              hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
+              hst:iconpath: images/essentials/catalog-component-icons/banner.svg
+              hst:label: Banner
+              hst:template: essentials-banner
+        /main:
+          jcr:primaryType: hst:component
+          /hero:
+            jcr:primaryType: hst:component
+            /container:
+              jcr:primaryType: hst:containercomponent
+              hippo:identifier: bae310e4-b468-4b9f-9f73-3a503380e724
+              /banner:
+                jcr:primaryType: hst:containeritemcomponent
+                hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
+                hst:iconpath: images/essentials/catalog-component-icons/banner.svg
+                hst:label: Banner
+                hst:template: essentials-banner
