@@ -24,6 +24,7 @@ import org.hippoecm.hst.configuration.components.HstComponentConfiguration;
 import org.hippoecm.hst.configuration.experiencepage.ExperiencePageService;
 import org.hippoecm.hst.configuration.hosting.Mount;
 import org.hippoecm.hst.configuration.site.HstSite;
+import org.hippoecm.hst.core.request.ComponentConfiguration;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.exceptions.ClientException;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.helpers.LockHelper;
 import org.hippoecm.hst.platform.configuration.components.HstComponentConfigurationService;
@@ -36,16 +37,16 @@ import org.onehippo.repository.documentworkflow.DocumentWorkflow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getComponents;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getDescription;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getHstSite;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getUserSession;
 import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.checkoutCorrectBranch;
 import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getComponentConfig;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getComponents;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getDescription;
 import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getHandle;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getHstSite;
 import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getMount;
 import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getObtainEditableInstanceWorkflow;
 import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getTemporaryStorageNode;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getUserSession;
 import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getXPageModelFromVariantNode;
 import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getXPageTemplate;
 import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getXPageUnpublishedNode;
@@ -137,9 +138,7 @@ public class PageDao {
         //container nodes are to be put back according to the incoming page model structure
         storeContainerNodesTemporarily(pageNode, temporaryStorageNode);
 
-        final List<String> sealedComponents = page.getType().equals(Page.PageType.XPAGE.getValue()) ? getXPageTemplate(hstSite, pageNode).getChildren()
-                .values().stream()
-                .flatMap(componentConfiguration -> componentConfiguration.getChildren().values().stream())
+        final List<String> sealedComponents = page.getType().equals(Page.PageType.XPAGE.getValue()) ? getXPageTemplate(hstSite, pageNode).flattened()
                 .filter(componentConfiguration -> CONTAINER_COMPONENT.equals(componentConfiguration.getComponentType()))
                 .map(componentConfiguration -> componentConfiguration.getHippoIdentifier())
                 .collect(Collectors.toList()) :

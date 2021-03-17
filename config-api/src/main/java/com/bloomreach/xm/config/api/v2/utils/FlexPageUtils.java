@@ -6,30 +6,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-import javax.jcr.SimpleCredentials;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.InternalServerErrorException;
 
 import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
-import com.bloomreach.xm.config.api.exception.UnauthorizedException;
 import com.bloomreach.xm.config.api.exception.WorkspaceComponentNotFoundException;
 import com.bloomreach.xm.config.api.v2.model.AbstractComponent;
-import com.bloomreach.xm.config.api.v2.model.ConfigApiPermissions;
 import com.bloomreach.xm.config.api.v2.model.ManagedComponent;
 import com.bloomreach.xm.config.api.v2.model.Page;
-import com.bloomreach.xm.config.api.v2.model.StaticComponent;
 import com.bloomreach.xm.config.api.v2.rest.ChannelFlexPageOperationsApiServiceImpl;
-import com.bloomreach.xm.config.api.v2.rest.ChannelOtherOperationsApiServiceImpl;
-import com.google.common.base.Predicates;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.value.StringValue;
@@ -39,19 +28,15 @@ import org.hippoecm.hst.configuration.hosting.Mount;
 import org.hippoecm.hst.configuration.site.HstSite;
 import org.hippoecm.hst.configuration.sitemap.HstSiteMap;
 import org.hippoecm.hst.configuration.sitemap.HstSiteMapItem;
-import org.hippoecm.hst.container.RequestContextProvider;
-import org.hippoecm.hst.container.site.CompositeHstSite;
 import org.hippoecm.hst.core.internal.PreviewDecorator;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.experiencepage.XPageUtils;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.helpers.LockHelper;
-import org.hippoecm.hst.platform.configuration.components.HstComponentConfigurationService;
 import org.hippoecm.hst.platform.model.HstModel;
 import org.hippoecm.hst.platform.model.HstModelRegistry;
 import org.hippoecm.hst.site.HstServices;
 import org.hippoecm.hst.site.request.ResolvedMountImpl;
 import org.hippoecm.hst.site.request.ResolvedSiteMapItemImpl;
 import org.hippoecm.repository.api.DocumentWorkflowAction;
-import org.hippoecm.repository.api.HippoSession;
 import org.hippoecm.repository.api.HippoWorkspace;
 import org.hippoecm.repository.api.WorkflowException;
 import org.hippoecm.repository.api.WorkflowManager;
@@ -59,21 +44,21 @@ import org.hippoecm.repository.util.JcrUtils;
 import org.hippoecm.repository.util.NodeIterable;
 import org.hippoecm.repository.util.WorkflowUtils;
 import org.onehippo.cms7.services.HippoServiceRegistry;
-import org.onehippo.cms7.services.cmscontext.CmsSessionContext;
 import org.onehippo.cms7.services.hst.Channel;
-import org.onehippo.cms7.utilities.servlet.HttpSessionBoundJcrSessionHolder;
 import org.onehippo.repository.documentworkflow.DocumentWorkflow;
 import org.onehippo.repository.util.JcrConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.PROP_DESC;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getVirtualHostGroupName;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.isWorkspaceComponent;
 import static org.hippoecm.hst.configuration.HstNodeTypes.COMPONENT_PROPERTY_LABEL;
 import static org.hippoecm.hst.configuration.HstNodeTypes.COMPONENT_PROPERTY_XTYPE;
 import static org.hippoecm.hst.configuration.HstNodeTypes.GENERAL_PROPERTY_PARAMETER_NAMES;
 import static org.hippoecm.hst.configuration.HstNodeTypes.GENERAL_PROPERTY_PARAMETER_VALUES;
 import static org.hippoecm.hst.configuration.HstNodeTypes.NODENAME_HST_XPAGE;
 import static org.hippoecm.hst.configuration.HstNodeTypes.NODETYPE_HST_CONTAINERCOMPONENT;
-import static org.hippoecm.hst.configuration.components.HstComponentConfiguration.Type.CONTAINER_COMPONENT;
 import static org.hippoecm.repository.api.HippoNodeType.HIPPO_PROPERTY_BRANCH_ID;
 import static org.hippoecm.repository.util.JcrUtils.getStringProperty;
 import static org.hippoecm.repository.util.WorkflowUtils.Variant.UNPUBLISHED;
@@ -81,10 +66,7 @@ import static org.onehippo.repository.branch.BranchConstants.MASTER_BRANCH_ID;
 
 public class FlexPageUtils {
 
-    public static final String CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER = "xm.config-editor.current-page.viewer";
-    public static final String CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR = "xm.config-editor.current-page.editor";
-    private static final String PROP_DESC = "hst:description";
-    private static final String SYSTEM_USER = "system";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(FlexPageUtils.class);
 
     private FlexPageUtils() {
@@ -189,11 +171,6 @@ public class FlexPageUtils {
         return null;
     }
 
-    public static void closeSession(final Session session) {
-        if (session != null && session.isLive()) {
-            session.logout();
-        }
-    }
 
     public static HstComponentConfiguration getComponentConfig(final HstSite hstSite, final String pageName) throws WorkspaceComponentNotFoundException, ChannelNotFoundException {
         final String componentConfigurationId = getHstSiteMapItemFromPath(pageName, hstSite.getSiteMap()).getComponentConfigurationId();
@@ -212,36 +189,6 @@ public class FlexPageUtils {
         return componentConfig.getId().startsWith("hst:components/") && componentConfig.getId().chars().filter(ch -> ch == '/').count() == 1;
     }
 
-    public static HstSite getHstSite(final String channelId) throws ChannelNotFoundException {
-        final HstModelRegistry service = HippoServiceRegistry.getService(HstModelRegistry.class);
-        String branchId = null;
-        HstModel hstModel = null;
-        for (HstModel model : service.getHstModels()) {
-            final Channel channel = model.getVirtualHosts().getChannelById(getVirtualHostGroupName(), channelId);
-            if (channel != null) {
-                hstModel = model;
-                branchId = channel.getBranchId();
-                break;
-            }
-        }
-        if (hstModel == null) {
-            throw new ChannelNotFoundException("Channel with id: " + channelId + " not found");
-        }
-
-        final String finalBranchId = branchId;
-        if (finalBranchId != null) {
-            String masterChannelId = StringUtils.remove(channelId, branchId + "-");
-            LOGGER.debug("fetching hstSite for project branch: {}", finalBranchId);
-            return getHstSiteStream(hstModel, masterChannelId)
-                    .map(hstSite -> ((CompositeHstSite)hstSite).getBranches().get(finalBranchId))
-                    .findFirst()
-                    .orElseThrow(() -> new ChannelNotFoundException("Channel with id: " + channelId + " not found"));
-        } else {
-            return getHstSiteStream(hstModel, channelId)
-                    .findFirst()
-                    .orElseThrow(() -> new ChannelNotFoundException("Channel with id: " + channelId + " not found"));
-        }
-    }
 
     public static Mount getMount(final String channelId) throws ChannelNotFoundException {
         final HstModelRegistry service = HippoServiceRegistry.getService(HstModelRegistry.class);
@@ -273,12 +220,6 @@ public class FlexPageUtils {
         }
     }
 
-    public static Stream<HstSite> getHstSiteStream(final HstModel hstModel, final String masterChannelId) {
-        final PreviewDecorator pd = HstServices.getComponentManager().getComponent(PreviewDecorator.class);
-        return pd.decorateVirtualHostsAsPreview(hstModel.getVirtualHosts()).getMountsByHostGroup(getVirtualHostGroupName()).stream()
-                .filter(m -> m.getChannel() != null && m.getChannel().getId().equals(masterChannelId))
-                .map(Mount::getHstSite);
-    }
 
     public static Stream<Mount> getMountStream(final HstModel hstModel, final String masterChannelId) {
         final PreviewDecorator pd = HstServices.getComponentManager().getComponent(PreviewDecorator.class);
@@ -286,17 +227,6 @@ public class FlexPageUtils {
                 .filter(m -> m.getChannel() != null && m.getChannel().getId().equals(masterChannelId));
     }
 
-    /**
-     * @return The virtual host name of the hst platform which should be the same as the browsed channels'
-     * virtual host group
-     */
-    public static String getVirtualHostGroupName() {
-        return RequestContextProvider.get().getResolvedMount().getMount().getVirtualHost().getHostGroupName();
-    }
-
-    public static boolean isWorkspaceComponent(final HstComponentConfiguration componentConfiguration) {
-        return componentConfiguration.getCanonicalStoredLocation().contains("/hst:workspace");
-    }
 
     public static HstComponentConfiguration getXPageTemplate(final HstSite hstSite, final Node xpageNode) throws RepositoryException {
         if (xpageNode.isNodeType(NODENAME_HST_XPAGE) && xpageNode.hasProperty(HstNodeTypes.XPAGE_PROPERTY_PAGEREF)) {
@@ -368,112 +298,6 @@ public class FlexPageUtils {
         return true;
     }
 
-    /**
-     * @param componentConfig PaaS component to read the hst:descrtiption property from.
-     * @param session         for lookup of the hst:descrtiption property. This field is not part of the api
-     */
-    public static String getDescription(final HstComponentConfiguration componentConfig, final Session session) {
-        try {
-            final Node configNode = JcrUtils.getNodeIfExists(componentConfig.getCanonicalStoredLocation(), session);
-            if (configNode != null && configNode.hasProperty(PROP_DESC)) {
-                return configNode.getProperty(PROP_DESC).getString();
-            }
-        } catch (RepositoryException ignored) {
-        }
-        return null;
-    }
-
-    public static Function<HstComponentConfiguration, AbstractComponent> configToComponentMapper(Session session, Page.PageType type) {
-        return componentConfiguration -> {
-            AbstractComponent.AbstractComponentBuilder<?, ?> builder = null;
-
-            if (componentConfiguration.getComponentType().equals(HstComponentConfiguration.Type.COMPONENT)) {
-                builder = StaticComponent.builder();
-                ((StaticComponent.StaticComponentBuilder)builder).components(getComponents(componentConfiguration, type, session))
-                        .type(AbstractComponent.TypeEnum.STATIC);
-
-            } else if (componentConfiguration.getComponentType().equals(CONTAINER_COMPONENT)) {
-                builder = ManagedComponent.builder()
-                        .label(componentConfiguration.getLabel())
-                        .type(AbstractComponent.TypeEnum.MANAGED);
-            }
-
-            AbstractComponent component = builder
-                    .name(componentConfiguration.getName())
-                    .description(getDescription(componentConfiguration, session))
-                    .parameters(componentConfiguration.getParameters())
-                    .xtype(AbstractComponent.XtypeEnum.fromValue(componentConfiguration.getXType()))
-                    .build();
-
-            return component;
-        };
-    }
-
-    public static List<AbstractComponent> getComponents(final HstComponentConfiguration config, final Page.PageType type, final Session session) {
-        Predicate<HstComponentConfiguration> filter = Predicates.alwaysTrue();
-        switch (type) {
-            case PAGE:
-                filter = componentConfiguration -> componentConfiguration.getCanonicalStoredLocation().contains(componentConfiguration.getParent().getCanonicalStoredLocation());
-                break;
-            case XPAGE:
-                filter = componentConfiguration -> {
-                    boolean isXpageLayoutComponent = ((HstComponentConfigurationService)componentConfiguration).isXpageLayoutComponent();
-                    boolean isExperiencePageComponent = componentConfiguration.isExperiencePageComponent();
-                    return !(isXpageLayoutComponent && isExperiencePageComponent) && (isExperiencePageComponent || isXpageLayoutComponent);
-                };
-                break;
-        }
-
-        List<AbstractComponent> components = config.getChildren().values().stream()
-                .filter(filter)
-                .map(configToComponentMapper(session, type)).collect(Collectors.toList());
-
-        return components;
-    }
-
-    /**
-     * @return request-scoped {@link Session} session with system privileges
-     * @throws InternalServerErrorException
-     */
-    public static Session getImpersonatedSession(final Session systemSession) throws InternalServerErrorException {
-        try {
-            return systemSession.impersonate(new SimpleCredentials(SYSTEM_USER, new char[]{}));
-        } catch (RepositoryException ex) {
-            LOGGER.error(ex.getMessage());
-            throw new InternalServerErrorException("Internal server error", ex);
-        }
-    }
-
-    /**
-     * @param httpServletRequest belonging to the config api call
-     * @return Session of the user who logged into the CMS. No need to log this session out.
-     */
-    public static Session getUserSession(final HttpServletRequest httpServletRequest, final Session systemSession) {
-        final HttpSession httpSession = httpServletRequest.getSession(false);
-        final CmsSessionContext cmsSessionContext = CmsSessionContext.getContext(httpSession);
-        final SimpleCredentials credentials = cmsSessionContext.getRepositoryCredentials();
-        try {
-            return HttpSessionBoundJcrSessionHolder.getOrCreateJcrSession(ChannelOtherOperationsApiServiceImpl.class.getName() + ".session",
-                    httpSession, credentials, systemSession.getRepository()::login);
-        } catch (RepositoryException e) {
-            LOGGER.error("Repo exception", e);
-            throw new InternalServerErrorException("Error on getting user session");
-        }
-    }
-
-    public static ConfigApiPermissions getConfigApiPermissions(final HttpServletRequest request, final Session systemSession) {
-        final HippoSession userSession = (HippoSession)getUserSession(request, systemSession);
-        return new ConfigApiPermissions(
-                userSession.isUserInRole(CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER),
-                userSession.isUserInRole(CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR));
-    }
-
-    public static void ensureUserIsAuthorized(final HttpServletRequest request, final String requiredUserRole, final Session systemSession) throws UnauthorizedException {
-        final HippoSession userSession = (HippoSession)getUserSession(request, systemSession);
-        if (!userSession.isUserInRole(requiredUserRole)) {
-            throw new UnauthorizedException(String.format("User %s does not have the (implied) userrole: %s", userSession.getUserID(), requiredUserRole));
-        }
-    }
 
     public static void setHstParameters(final Node componentNode, final Map<String, String> parameters) throws RepositoryException {
         if (parameters != null && !parameters.keySet().isEmpty()) {
