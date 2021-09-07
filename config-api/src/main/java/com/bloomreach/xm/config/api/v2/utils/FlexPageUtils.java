@@ -25,10 +25,15 @@ import org.apache.jackrabbit.value.StringValue;
 import org.hippoecm.hst.configuration.HstNodeTypes;
 import org.hippoecm.hst.configuration.components.HstComponentConfiguration;
 import org.hippoecm.hst.configuration.hosting.Mount;
+import org.hippoecm.hst.configuration.internal.InternalHstSiteMapItem;
 import org.hippoecm.hst.configuration.site.HstSite;
 import org.hippoecm.hst.configuration.sitemap.HstSiteMap;
 import org.hippoecm.hst.configuration.sitemap.HstSiteMapItem;
+import org.hippoecm.hst.container.PlatformRequestContextProvider;
+import org.hippoecm.hst.container.RequestContextProvider;
+import org.hippoecm.hst.content.beans.ObjectBeanManagerException;
 import org.hippoecm.hst.core.internal.PreviewDecorator;
+import org.hippoecm.hst.core.request.HstRequestContext;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.experiencepage.XPageUtils;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.helpers.LockHelper;
 import org.hippoecm.hst.platform.model.HstModel;
@@ -53,12 +58,8 @@ import org.slf4j.LoggerFactory;
 import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.PROP_DESC;
 import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getVirtualHostGroupName;
 import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.isWorkspaceComponent;
-import static org.hippoecm.hst.configuration.HstNodeTypes.COMPONENT_PROPERTY_LABEL;
-import static org.hippoecm.hst.configuration.HstNodeTypes.COMPONENT_PROPERTY_XTYPE;
-import static org.hippoecm.hst.configuration.HstNodeTypes.GENERAL_PROPERTY_PARAMETER_NAMES;
-import static org.hippoecm.hst.configuration.HstNodeTypes.GENERAL_PROPERTY_PARAMETER_VALUES;
-import static org.hippoecm.hst.configuration.HstNodeTypes.NODENAME_HST_XPAGE;
-import static org.hippoecm.hst.configuration.HstNodeTypes.NODETYPE_HST_CONTAINERCOMPONENT;
+import static org.hippoecm.hst.configuration.HstNodeTypes.*;
+import static org.hippoecm.hst.configuration.HstNodeTypes.INDEX;
 import static org.hippoecm.repository.api.HippoNodeType.HIPPO_PROPERTY_BRANCH_ID;
 import static org.hippoecm.repository.util.JcrUtils.getStringProperty;
 import static org.hippoecm.repository.util.WorkflowUtils.Variant.UNPUBLISHED;
@@ -105,6 +106,8 @@ public class FlexPageUtils {
         return null;
     }
 
+//    private static ClassLoader platformClassloader = this.getClass().getClassLoader();
+
     public static Node getXPageHandle(String channelId, String path, Session userSession) throws ChannelNotFoundException {
         final HstModelRegistry hstModelRegistry = getHstModelRegistry();
 
@@ -112,10 +115,27 @@ public class FlexPageUtils {
         final HstModel platformModel = hstModelRegistry.getHstModel(ChannelFlexPageOperationsApiServiceImpl.class.getClassLoader());
 
         try {
-//            final ResolvedMountImpl resolvedMount = (ResolvedMountImpl)platformModel.getVirtualHosts().matchMount(mount.getVirtualHost().getName(), mount.getMountPath());
-            final ResolvedMountImpl resolvedMount = (ResolvedMountImpl)platformModel.getVirtualHosts().matchMount(mount.getVirtualHost().getHostName(), mount.getMountPath());
+            final ResolvedMountImpl resolvedMount = (ResolvedMountImpl) platformModel.getVirtualHosts().matchMount(mount.getVirtualHost().getHostName(), mount.getMountPath());
             resolvedMount.setMount(mount);
-            final ResolvedSiteMapItemImpl resolvedSiteMapItem = (ResolvedSiteMapItemImpl)resolvedMount.matchSiteMapItem("/" + path);
+            ResolvedSiteMapItemImpl resolvedSiteMapItem = (ResolvedSiteMapItemImpl) resolvedMount.matchSiteMapItem("/" + path);
+
+            //_index_ check
+            HstSiteMapItem index = resolvedSiteMapItem.getHstSiteMapItem().getChild(INDEX);
+            if (index != null) {
+                ResolvedSiteMapItemImpl indexResolvedSiteMapItem = new ResolvedSiteMapItemImpl(index, resolvedSiteMapItem.getParameters(), "/" + path + "/" + INDEX, resolvedMount);
+                if (indexResolvedSiteMapItem.getRelativeContentPath() != null) {
+                    // check whether the folder/document being referred to by the indexResolvedSiteMapItem exists : If so, use _index_ item as match
+                    String absolutePath = mount.getContentPath() + "/" + indexResolvedSiteMapItem.getRelativeContentPath();
+                    try {
+                        final HstRequestContext ctx = RequestContextProvider.get();
+                        if (ctx != null && ctx.getObjectBeanManager(userSession).getObject(absolutePath) != null) {
+                            resolvedSiteMapItem = indexResolvedSiteMapItem;
+                        }
+                    } catch (ObjectBeanManagerException e) {
+                        LOGGER.warn("ObjectBeanManager exception while trying to fetch bean for  '{}'", absolutePath, e);
+                    }
+                }
+            }
 
             final Optional<String> relativeContentPath = Optional.ofNullable(resolvedSiteMapItem.getRelativeContentPath());
 
@@ -154,9 +174,9 @@ public class FlexPageUtils {
 
     public static DocumentWorkflow getDocumentWorkflow(Session userSession, String handleId) throws RepositoryException {
         Node handle = userSession.getNodeByIdentifier(handleId);
-        HippoWorkspace workspace = (HippoWorkspace)userSession.getWorkspace();
+        HippoWorkspace workspace = (HippoWorkspace) userSession.getWorkspace();
         WorkflowManager workflowManager = workspace.getWorkflowManager();
-        return (DocumentWorkflow)workflowManager.getWorkflow("default", handle);
+        return (DocumentWorkflow) workflowManager.getWorkflow("default", handle);
     }
 
     public static Node getHandle(final Node node) {
