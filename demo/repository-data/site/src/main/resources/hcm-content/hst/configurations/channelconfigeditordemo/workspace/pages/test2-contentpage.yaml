@@ -6,32 +6,6 @@
   /main:
     jcr:primaryType: hst:component
     hst:description: main
-    /section-white-:
-      jcr:primaryType: hst:component
-      hst:description: White Section
-      hst:parameternames: [background-color]
-      hst:parametervalues: [white]
-      /row-:
-        jcr:primaryType: hst:component
-        hst:description: Row
-        hst:parameternames: [background-color]
-        hst:parametervalues: [white]
-        /740adc4e-07e8-4ad7-ab19-e1ede8e2fef9:
-          jcr:primaryType: hst:containercomponent
-          hippo:identifier: 459a9e08-0b31-4a21-9304-ec75b0bfb978
-          hst:description: Column
-          hst:lastmodified: 2021-01-18T12:12:09.626+01:00
-          hst:parameternames: [background-color]
-          hst:parametervalues: [white]
-          hst:xtype: hst.vbox
-        /5447411f-d595-49ca-835f-4d328d23bf9a:
-          jcr:primaryType: hst:containercomponent
-          hippo:identifier: 459a9e08-0b31-4a21-9304-ec75b0bfb978
-          hst:description: Column
-          hst:lastmodified: 2021-01-18T12:12:09.626+01:00
-          hst:parameternames: [background-color]
-          hst:parametervalues: [white]
-          hst:xtype: hst.vbox
     /section-grey-:
       jcr:primaryType: hst:component
       hst:description: Grey Section
@@ -42,42 +16,47 @@
         hst:description: Row
         hst:parameternames: [background-color, pageType]
         hst:parametervalues: [grey, bar]
-        /d1ea9183-d52a-48ce-9553-531e5b369a8f:
+        /5d8270b2-cb5b-4af8-9d21-aebe57a538dd:
           jcr:primaryType: hst:containercomponent
-          hippo:identifier: 459a9e08-0b31-4a21-9304-ec75b0bfb978
+          hippo:identifier: 9174043f-1a88-4f22-94c4-445fe8551311
           hst:description: Column
-          hst:lastmodified: 2021-01-18T12:12:09.626+01:00
+          hst:lastmodified: 2021-08-23T09:34:48.748+02:00
           hst:parameternames: [background-color, pageType]
           hst:parametervalues: [grey, bar]
           hst:xtype: hst.vbox
-        /45c1ed4a-cd14-4563-9e09-5c99eb660d1e:
+        /286fac73-7448-4d62-a10f-93d08c0c844c:
           jcr:primaryType: hst:containercomponent
-          hippo:identifier: 459a9e08-0b31-4a21-9304-ec75b0bfb978
+          hippo:identifier: 9174043f-1a88-4f22-94c4-445fe8551311
           hst:description: Column
-          hst:lastmodified: 2021-01-18T12:12:09.626+01:00
+          hst:lastmodified: 2021-08-23T09:34:48.748+02:00
           hst:parameternames: [background-color, pageType]
           hst:parametervalues: [grey, bar]
           hst:xtype: hst.vbox
-      /row-1:
+    /section-white-:
+      jcr:primaryType: hst:component
+      hst:description: White Section
+      hst:parameternames: [background-color]
+      hst:parametervalues: [white]
+      /row-:
         jcr:primaryType: hst:component
         hst:description: Row
-        hst:parameternames: [background-color, pageType]
-        hst:parametervalues: [grey, bar]
-        /cd639319-a309-46bb-b1b8-448fcf5c7e49:
+        hst:parameternames: [background-color]
+        hst:parametervalues: [white]
+        /32dfa715-d48c-4dd8-8a63-824f7e4bf355:
           jcr:primaryType: hst:containercomponent
-          hippo:identifier: 459a9e08-0b31-4a21-9304-ec75b0bfb978
+          hippo:identifier: 9174043f-1a88-4f22-94c4-445fe8551311
           hst:description: Column
-          hst:lastmodified: 2021-01-18T12:12:09.626+01:00
-          hst:parameternames: [background-color, pageType]
-          hst:parametervalues: [grey, bar]
+          hst:lastmodified: 2021-08-23T09:34:48.748+02:00
+          hst:parameternames: [background-color]
+          hst:parametervalues: [white]
           hst:xtype: hst.vbox
-        /e2b129e9-3f30-4125-89c4-66c88821a3e2:
+        /a2464a31-bfcf-4187-96f0-cbfe2851e776:
           jcr:primaryType: hst:containercomponent
-          hippo:identifier: 459a9e08-0b31-4a21-9304-ec75b0bfb978
+          hippo:identifier: 9174043f-1a88-4f22-94c4-445fe8551311
           hst:description: Column
-          hst:lastmodified: 2021-01-18T12:12:09.626+01:00
-          hst:parameternames: [background-color, pageType]
-          hst:parametervalues: [grey, bar]
+          hst:lastmodified: 2021-08-23T09:34:48.748+02:00
+          hst:parameternames: [background-color]
+          hst:parametervalues: [white]
           hst:xtype: hst.vbox
     /section-grey-1:
       jcr:primaryType: hst:component
@@ -89,19 +68,40 @@
         hst:description: Row
         hst:parameternames: [background-color, pageType]
         hst:parametervalues: [grey, bar]
-        /a8373bda-9e10-4259-82e3-a06b6f85c205:
+        /5fbac1bf-f26d-4b01-9f7c-02271e5d72d2:
           jcr:primaryType: hst:containercomponent
-          hippo:identifier: 459a9e08-0b31-4a21-9304-ec75b0bfb978
+          hippo:identifier: 9174043f-1a88-4f22-94c4-445fe8551311
           hst:description: Column
-          hst:lastmodified: 2021-01-18T12:12:09.626+01:00
+          hst:lastmodified: 2021-08-23T09:34:48.748+02:00
           hst:parameternames: [background-color, pageType]
           hst:parametervalues: [grey, bar]
           hst:xtype: hst.vbox
-        /802c3be7-1970-4276-98c1-9a9013cbfb24:
+        /f02c9d05-217b-40f2-91dc-60290f6168b6:
           jcr:primaryType: hst:containercomponent
-          hippo:identifier: 459a9e08-0b31-4a21-9304-ec75b0bfb978
+          hippo:identifier: 9174043f-1a88-4f22-94c4-445fe8551311
           hst:description: Column
-          hst:lastmodified: 2021-01-18T12:12:09.626+01:00
+          hst:lastmodified: 2021-08-23T09:34:48.748+02:00
+          hst:parameternames: [background-color, pageType]
+          hst:parametervalues: [grey, bar]
+          hst:xtype: hst.vbox
+      /row-1:
+        jcr:primaryType: hst:component
+        hst:description: Row
+        hst:parameternames: [background-color, pageType]
+        hst:parametervalues: [grey, bar]
+        /e44cf1d5-800d-4bd2-8664-d70197f059ee:
+          jcr:primaryType: hst:containercomponent
+          hippo:identifier: 9174043f-1a88-4f22-94c4-445fe8551311
+          hst:description: Column
+          hst:lastmodified: 2021-08-23T09:34:48.748+02:00
+          hst:parameternames: [background-color, pageType]
+          hst:parametervalues: [grey, bar]
+          hst:xtype: hst.vbox
+        /7c98cc24-74ec-4a80-a5fe-a9d762726b23:
+          jcr:primaryType: hst:containercomponent
+          hippo:identifier: 9174043f-1a88-4f22-94c4-445fe8551311
+          hst:description: Column
+          hst:lastmodified: 2021-08-23T09:34:48.748+02:00
           hst:parameternames: [background-color, pageType]
           hst:parametervalues: [grey, bar]
           hst:xtype: hst.vbox
@@ -115,27 +115,53 @@
         hst:description: Row
         hst:parameternames: [background-color, pageType]
         hst:parametervalues: [grey, bar]
-        /ba5b6046-692a-4e1d-a9d6-a79b6b9eacb0:
+        /d0519190-b72b-4401-93bd-a83091f61cc3:
           jcr:primaryType: hst:containercomponent
-          hippo:identifier: 459a9e08-0b31-4a21-9304-ec75b0bfb978
+          hippo:identifier: 9174043f-1a88-4f22-94c4-445fe8551311
           hst:description: Column
-          hst:lastmodified: 2021-01-18T12:12:09.626+01:00
+          hst:lastmodified: 2021-08-23T09:34:48.748+02:00
           hst:parameternames: [background-color, pageType]
           hst:parametervalues: [grey, bar]
           hst:xtype: hst.vbox
-        /34b64183-320c-4199-b12d-4d34e3b60aa6:
+        /1167f524-6d25-4b8a-b70a-640ef124aaac:
           jcr:primaryType: hst:containercomponent
-          hippo:identifier: 459a9e08-0b31-4a21-9304-ec75b0bfb978
+          hippo:identifier: 9174043f-1a88-4f22-94c4-445fe8551311
           hst:description: Column
-          hst:lastmodified: 2021-01-18T12:12:09.626+01:00
+          hst:lastmodified: 2021-08-23T09:34:48.748+02:00
           hst:parameternames: [background-color, pageType]
           hst:parametervalues: [grey, bar]
           hst:xtype: hst.vbox
-        /c5819889-f49a-4397-9538-d5ec773db59b:
+    /section-grey-3:
+      jcr:primaryType: hst:component
+      hst:description: Grey Section
+      hst:parameternames: [background-color, pageType]
+      hst:parametervalues: [grey, bar]
+      /row-:
+        jcr:primaryType: hst:component
+        hst:description: Row
+        hst:parameternames: [background-color, pageType]
+        hst:parametervalues: [grey, bar]
+        /f127d1ab-4641-4387-a2bd-09ac1771cf65:
           jcr:primaryType: hst:containercomponent
-          hippo:identifier: 459a9e08-0b31-4a21-9304-ec75b0bfb978
+          hippo:identifier: 9174043f-1a88-4f22-94c4-445fe8551311
+          hst:description: Column
+          hst:lastmodified: 2021-08-23T09:34:48.748+02:00
+          hst:parameternames: [background-color, pageType]
+          hst:parametervalues: [grey, bar]
+          hst:xtype: hst.vbox
+        /0562b327-e393-44fe-b0a8-51e85c4a2fe0:
+          jcr:primaryType: hst:containercomponent
+          hippo:identifier: 9174043f-1a88-4f22-94c4-445fe8551311
+          hst:description: Column
+          hst:lastmodified: 2021-08-23T09:34:48.748+02:00
+          hst:parameternames: [background-color, pageType]
+          hst:parametervalues: [grey, bar]
+          hst:xtype: hst.vbox
+        /e4351adb-8a2a-4f9c-9cd9-d734b277e4c4:
+          jcr:primaryType: hst:containercomponent
+          hippo:identifier: 9174043f-1a88-4f22-94c4-445fe8551311
           hst:description: Another Column
-          hst:lastmodified: 2021-01-18T12:12:09.626+01:00
+          hst:lastmodified: 2021-08-23T09:34:48.748+02:00
           hst:parameternames: [background-color, pageType]
           hst:parametervalues: [grey, bar]
           hst:xtype: hst.vbox
