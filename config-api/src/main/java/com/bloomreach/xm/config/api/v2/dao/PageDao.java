@@ -77,7 +77,7 @@ public class PageDao {
 
     private static void createNodeFromComponent(final Node storageNode, final Session session, final AbstractComponent component, final String parentNodePath, final String userId) throws RepositoryException {
         if (component instanceof ManagedComponent) {
-            final ManagedComponent managedComponent = (ManagedComponent)component;
+            final ManagedComponent managedComponent = (ManagedComponent) component;
             final String newNodePath = parentNodePath + "/" + managedComponent.getName();
             Node managedComponentNode;
             if (!session.nodeExists(newNodePath)) {
@@ -99,8 +99,13 @@ public class PageDao {
                     JcrUtils.copy(session, containerItemComponentNode.getPath(), managedComponentNode.getPath() + "/" + containerItemComponentNode.getName());
                 }
             }
+
+            if (managedComponent.isFromTemplate()) {
+
+                System.out.println(managedComponent);
+            }
         } else if (component instanceof StaticComponent) {
-            final StaticComponent staticComponent = (StaticComponent)component;
+            final StaticComponent staticComponent = (StaticComponent) component;
             String newNodePath = parentNodePath + "/" + component.getName();
             int componentCount = 0;
             Node staticComponentNode;
@@ -204,7 +209,7 @@ public class PageDao {
     }
 
     private Page createPageFromConfig(final HstComponentConfiguration config, Page.PageType type, final Session session) throws RepositoryException {
-        final String referenceComponent = ((HstComponentConfigurationService)config).getReferenceComponent();
+        final String referenceComponent = ((HstComponentConfigurationService) config).getReferenceComponent();
         final String ext = referenceComponent != null ? referenceComponent.substring(referenceComponent.lastIndexOf('/') + 1) : null;
         final Page page = Page.builder()
                 .name(config.getName())
@@ -261,8 +266,6 @@ public class PageDao {
         }
         return page;
     }
-
-
 
 
 }

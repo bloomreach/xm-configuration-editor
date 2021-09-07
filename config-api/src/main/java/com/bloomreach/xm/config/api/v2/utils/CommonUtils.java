@@ -6,10 +6,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.jcr.Node;
-import javax.jcr.RepositoryException;
-import javax.jcr.Session;
-import javax.jcr.SimpleCredentials;
+import javax.jcr.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.InternalServerErrorException;
@@ -98,7 +95,7 @@ public class CommonUtils {
             String masterChannelId = StringUtils.remove(channelId, branchId + "-");
             LOGGER.debug("fetching hstSite for project branch: {}", finalBranchId);
             return getHstSiteStream(hstModel, masterChannelId)
-                    .map(hstSite -> ((CompositeHstSite)hstSite).getBranches().get(finalBranchId))
+                    .map(hstSite -> ((CompositeHstSite) hstSite).getBranches().get(finalBranchId))
                     .findFirst()
                     .orElseThrow(() -> new ChannelNotFoundException("Channel with id: " + channelId + " not found"));
         } else {
@@ -114,13 +111,27 @@ public class CommonUtils {
 
             if (componentConfiguration.getComponentType().equals(HstComponentConfiguration.Type.COMPONENT)) {
                 builder = StaticComponent.builder();
-                ((StaticComponent.StaticComponentBuilder)builder).components(getComponents(componentConfiguration, type, session))
+                ((StaticComponent.StaticComponentBuilder) builder).components(getComponents(componentConfiguration, type, session))
                         .type(AbstractComponent.TypeEnum.STATIC);
 
             } else if (componentConfiguration.getComponentType().equals(CONTAINER_COMPONENT)) {
+
                 builder = ManagedComponent.builder()
                         .label(componentConfiguration.getLabel())
                         .type(AbstractComponent.TypeEnum.MANAGED);
+
+                //start deviation for templating
+                try {
+                    if (session.nodeExists(componentConfiguration.getCanonicalStoredLocation()) && session.getNode(componentConfiguration.getCanonicalStoredLocation()).hasProperty("fromTemplate")) {
+                        Node node = session.getNode(componentConfiguration.getCanonicalStoredLocation());
+                        boolean fromTemplate = node.getProperty("fromTemplate").getBoolean();
+                        ((ManagedComponent.ManagedComponentBuilder) builder).fromTemplate(fromTemplate);
+                    }
+                } catch (RepositoryException e) {
+                    LOGGER.warn("error while trying to set the templating attribute");
+                }
+                //end deviation for templating
+
             }
 
             AbstractComponent component = builder
@@ -157,7 +168,7 @@ public class CommonUtils {
     }
 
     public static void ensureUserIsAuthorized(final HttpServletRequest request, final String requiredUserRole, final Session systemSession) throws UnauthorizedException {
-        final HippoSession userSession = (HippoSession)getUserSession(request, systemSession);
+        final HippoSession userSession = (HippoSession) getUserSession(request, systemSession);
         if (!userSession.isUserInRole(requiredUserRole)) {
             throw new UnauthorizedException(String.format("User %s does not have the (implied) userrole: %s", userSession.getUserID(), requiredUserRole));
         }
@@ -182,7 +193,7 @@ public class CommonUtils {
 
 
     public static ConfigApiPermissions getConfigApiPermissions(final HttpServletRequest request, final Session systemSession) {
-        final HippoSession userSession = (HippoSession)getUserSession(request, systemSession);
+        final HippoSession userSession = (HippoSession) getUserSession(request, systemSession);
         return new ConfigApiPermissions(
                 userSession.isUserInRole(CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER),
                 userSession.isUserInRole(CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR),
@@ -209,7 +220,7 @@ public class CommonUtils {
                 break;
             case XPAGE:
                 filter = componentConfiguration -> {
-                    boolean isXpageLayoutComponent = ((HstComponentConfigurationService)componentConfiguration).isXpageLayoutComponent();
+                    boolean isXpageLayoutComponent = ((HstComponentConfigurationService) componentConfiguration).isXpageLayoutComponent();
                     boolean isExperiencePageComponent = componentConfiguration.isExperiencePageComponent();
                     return !(isXpageLayoutComponent && isExperiencePageComponent) && (isExperiencePageComponent || isXpageLayoutComponent);
                 };

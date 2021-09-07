@@ -3,6 +3,7 @@ package com.bloomreach.xm.config.api.v2.model;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
@@ -19,10 +20,14 @@ public class ManagedComponent extends AbstractComponent {
      **/
     private String label = null;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Boolean fromTemplate = null;
+
     @JsonCreator
-    public ManagedComponent(@JsonProperty("name") final String name, @JsonProperty("description") final String description, @JsonProperty("parameters") final Map<String, String> parameters, @JsonProperty("xtype") final XtypeEnum xtype, @JsonProperty("type") final TypeEnum type, @JsonProperty("label") final String label) {
+    public ManagedComponent(@JsonProperty("name") final String name, @JsonProperty("description") final String description, @JsonProperty("parameters") final Map<String, String> parameters, @JsonProperty("xtype") final XtypeEnum xtype, @JsonProperty("type") final TypeEnum type, @JsonProperty("label") final String label, @JsonProperty("fromTemplate") final boolean fromTemplate) {
         super(name, description, parameters, xtype, type);
         this.label = label;
+        this.fromTemplate = fromTemplate;
     }
 
     /**
@@ -53,6 +58,14 @@ public class ManagedComponent extends AbstractComponent {
     public ManagedComponent label(String label) {
         this.label = label;
         return this;
+    }
+
+    public Boolean isFromTemplate() {
+        return fromTemplate;
+    }
+
+    public void setFromTemplate(Boolean fromTemplate) {
+        this.fromTemplate = fromTemplate;
     }
 
     @Override
