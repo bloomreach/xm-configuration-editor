@@ -19,7 +19,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.7",
     "@types/react-sortable-tree": "^0.3.12",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "material-ui-popup-state": "^1.7.1",
     "object-hash": "^2.1.1",
     "react": "^17.0.1",
