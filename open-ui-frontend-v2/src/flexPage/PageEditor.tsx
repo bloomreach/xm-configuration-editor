@@ -89,7 +89,7 @@ class PageEditor extends React.Component<PageEditorProps, PageEditorState> {
       expandParent: true,
       getNodeKey,
       newNode: newNodeComponent,
-      addAsFirstChild: true,
+      // addAsFirstChild: true,
     }).treeData;
 
     this.setState({treeData: treeData}, () => {
