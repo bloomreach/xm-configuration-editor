@@ -10,34 +10,34 @@ import FlexPage from "./flexPage/flexPage";
 import {ChannelOtherOperationsApi} from "./api";
 
 document.addEventListener('DOMContentLoaded', async () => {
-  try {
-    const ui: UiScope = await UiExtension.register();
+    try {
+        const ui: UiScope = await UiExtension.register();
 
-    const channelOtherOperationsApi: ChannelOtherOperationsApi = new ChannelOtherOperationsApi({
-      baseOptions: {withCredentials: true}
-    }, `${ui.baseUrl}ws/config/v2`);
+        const channelOtherOperationsApi: ChannelOtherOperationsApi = new ChannelOtherOperationsApi({
+            baseOptions: {withCredentials: true}
+        }, `${ui.baseUrl}ws/config/v2`);
 
-    const acl: { [x: string]: boolean } = await channelOtherOperationsApi.getAcl().then(value => value.data);
+        const acl: { [x: string]: boolean } = await channelOtherOperationsApi.getAcl().then(value => value.data);
 
-    ReactDOM.render(
-      <React.Fragment>
-        <ACLProvider value={acl}>
-          <HashRouter>
-            <Switch>
-              <Route path="/flex-page" render={() => <FlexPage ui={ui}/>}/>
-              {/*<Route path="/components" render={props => <Components ui={ui}/>}/>*/}
-              {/*<Route exact path="/" render={props => <Navigation ui={ui} />}/>*/}
-            </Switch>
-          </HashRouter>
-        </ACLProvider>
-      </React.Fragment>,
-      document.getElementById('root')
-    );
-  } catch (error) {
-    console.error('Failed to register extension:', error.message);
-    console.error('- error code:', error.code);
-    ReactDOM.render(<Fallback/>, document.getElementById('root'));
-  }
+        ReactDOM.render(
+            <React.Fragment>
+                <ACLProvider value={acl}>
+                    <HashRouter>
+                        <Switch>
+                            <Route path="/flex-page" render={() => <FlexPage ui={ui}/>}/>
+                            {/*<Route path="/components" render={props => <Components ui={ui}/>}/>*/}
+                            {/*<Route exact path="/" render={props => <Navigation ui={ui} />}/>*/}
+                        </Switch>
+                    </HashRouter>
+                </ACLProvider>
+            </React.Fragment>,
+            document.getElementById('root')
+        );
+    } catch (error: any) {
+        console.error('Failed to register extension:', error.message);
+        console.error('- error code:', error.code);
+        ReactDOM.render(<Fallback/>, document.getElementById('root'));
+    }
 });
 
 // If you want to start measuring performance in your app, pass a function

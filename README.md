@@ -18,6 +18,7 @@ The current page feature will allow a CMS user with the appropriate user roles t
 |14.4   | 0.9.1  | Changed the logic so that only components from the workspace will be a choice for flex pages plugin. Note that the "projects" feature will not work well in combination of this plugin. Awaiting https://issues.onehippo.com/browse/CMS-14297  |
 |14.4   | 0.9.2  | Virtual host fix  |
 |14.4   | 0.9.3  | Page layout fix |
+|14.6   | 0.9.4  | Index matcher fix + Add component as last child |
 
 
 ## Installation
@@ -137,7 +138,7 @@ yarn
 yarn start
 ```
 
-Go to the console and change the OpenUI extension URL to http://localhost:3000/#/current-page
+Go to the console and change the OpenUI extension URL to http://localhost:3000/#/flex-page
 http://localhost:8080/cms/console/?1&path=/hippo:configuration/hippo:frontend/cms/ui-extensions/channelConfigEditor
 
 
