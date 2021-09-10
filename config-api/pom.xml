@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.bloomreach.xm</groupId>
     <artifactId>brxm-configuration-editor</artifactId>
-    <version>0.9.4-SNAPSHOT</version>
+    <version>0.9.4</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
