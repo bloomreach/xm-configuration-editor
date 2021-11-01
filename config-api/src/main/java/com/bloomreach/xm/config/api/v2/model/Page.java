@@ -30,6 +30,8 @@ public class Page {
      **/
     private String description = null;
     @Schema(description = "a map of string parameters (names/values) for this page")
+    private String componentClassName = null;
+
     /**
      * a map of string parameters (names/values) for this page
      **/
@@ -51,7 +53,7 @@ public class Page {
     private List<AbstractComponent> components = null;
 
     @JsonCreator
-    public Page(@JsonProperty("name") final String name, @JsonProperty("description") final String description, @JsonProperty("parameters") final Map<String, String> parameters, @JsonProperty("type") final PageType type, @JsonProperty("extends") final String _extends) {
+    public Page(@JsonProperty("name") final String name, @JsonProperty("description") final String description, @JsonProperty("parameters") final Map<String, String> parameters, @JsonProperty("type") final PageType type, @JsonProperty("extends") final String _extends, @JsonProperty("componentClassName") final String componentClassName) {
         this.name = name;
         this.description = description;
         this.parameters = parameters;
@@ -91,12 +93,26 @@ public class Page {
         return description;
     }
 
+    @JsonProperty("componentClassName")
+    public String getComponentClassName() {
+        return componentClassName;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
 
     public Page description(String description) {
         this.description = description;
+        return this;
+    }
+
+    public void setComponentClassName(String componentClassName) {
+        this.componentClassName = componentClassName;
+    }
+
+    public Page componentClassName(String componentClassName) {
+        this.componentClassName = componentClassName;
         return this;
     }
 

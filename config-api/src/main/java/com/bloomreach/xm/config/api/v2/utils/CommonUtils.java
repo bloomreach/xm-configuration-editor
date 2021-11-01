@@ -52,6 +52,7 @@ public class CommonUtils {
     public static final String CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR = "xm.config-editor.current-page.editor";
     public static final String CONFIG_API_PERMISSION_GLOBAL_USER = "xm.config-editor.user";
     public static final String PROP_DESC = "hst:description";
+    public static final String PROP_COMPONENTCLASSNAME = "hst:componentclassname";
     private static final String SYSTEM_USER = "system";
     private static final Logger LOGGER = LoggerFactory.getLogger(CommonUtils.class);
 
@@ -98,7 +99,7 @@ public class CommonUtils {
             String masterChannelId = StringUtils.remove(channelId, branchId + "-");
             LOGGER.debug("fetching hstSite for project branch: {}", finalBranchId);
             return getHstSiteStream(hstModel, masterChannelId)
-                    .map(hstSite -> ((CompositeHstSite)hstSite).getBranches().get(finalBranchId))
+                    .map(hstSite -> ((CompositeHstSite) hstSite).getBranches().get(finalBranchId))
                     .findFirst()
                     .orElseThrow(() -> new ChannelNotFoundException("Channel with id: " + channelId + " not found"));
         } else {
@@ -113,9 +114,11 @@ public class CommonUtils {
             AbstractComponent.AbstractComponentBuilder<?, ?> builder = null;
 
             if (componentConfiguration.getComponentType().equals(HstComponentConfiguration.Type.COMPONENT)) {
-                builder = StaticComponent.builder();
-                ((StaticComponent.StaticComponentBuilder)builder).components(getComponents(componentConfiguration, type, session))
+                builder = StaticComponent.builder()
+                        .componentClassName(componentConfiguration.getComponentClassName())
                         .type(AbstractComponent.TypeEnum.STATIC);
+                ((StaticComponent.StaticComponentBuilder) builder).components(getComponents(componentConfiguration, type, session));
+
 
             } else if (componentConfiguration.getComponentType().equals(CONTAINER_COMPONENT)) {
                 builder = ManagedComponent.builder()
@@ -157,7 +160,7 @@ public class CommonUtils {
     }
 
     public static void ensureUserIsAuthorized(final HttpServletRequest request, final String requiredUserRole, final Session systemSession) throws UnauthorizedException {
-        final HippoSession userSession = (HippoSession)getUserSession(request, systemSession);
+        final HippoSession userSession = (HippoSession) getUserSession(request, systemSession);
         if (!userSession.isUserInRole(requiredUserRole)) {
             throw new UnauthorizedException(String.format("User %s does not have the (implied) userrole: %s", userSession.getUserID(), requiredUserRole));
         }
@@ -182,7 +185,7 @@ public class CommonUtils {
 
 
     public static ConfigApiPermissions getConfigApiPermissions(final HttpServletRequest request, final Session systemSession) {
-        final HippoSession userSession = (HippoSession)getUserSession(request, systemSession);
+        final HippoSession userSession = (HippoSession) getUserSession(request, systemSession);
         return new ConfigApiPermissions(
                 userSession.isUserInRole(CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER),
                 userSession.isUserInRole(CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR),
@@ -209,7 +212,7 @@ public class CommonUtils {
                 break;
             case XPAGE:
                 filter = componentConfiguration -> {
-                    boolean isXpageLayoutComponent = ((HstComponentConfigurationService)componentConfiguration).isXpageLayoutComponent();
+                    boolean isXpageLayoutComponent = ((HstComponentConfigurationService) componentConfiguration).isXpageLayoutComponent();
                     boolean isExperiencePageComponent = componentConfiguration.isExperiencePageComponent();
                     return !(isXpageLayoutComponent && isExperiencePageComponent) && (isExperiencePageComponent || isXpageLayoutComponent);
                 };

@@ -18,6 +18,7 @@ import com.bloomreach.xm.config.api.exception.WorkspaceComponentNotFoundExceptio
 import com.bloomreach.xm.config.api.v2.model.AbstractComponent;
 import com.bloomreach.xm.config.api.v2.model.ManagedComponent;
 import com.bloomreach.xm.config.api.v2.model.Page;
+import com.bloomreach.xm.config.api.v2.model.StaticComponent;
 import com.bloomreach.xm.config.api.v2.rest.ChannelFlexPageOperationsApiServiceImpl;
 
 import org.apache.commons.lang3.StringUtils;
@@ -55,9 +56,7 @@ import org.onehippo.repository.util.JcrConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.PROP_DESC;
-import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getVirtualHostGroupName;
-import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.isWorkspaceComponent;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.*;
 import static org.hippoecm.hst.configuration.HstNodeTypes.*;
 import static org.hippoecm.hst.configuration.HstNodeTypes.INDEX;
 import static org.hippoecm.repository.api.HippoNodeType.HIPPO_PROPERTY_BRANCH_ID;
@@ -333,6 +332,7 @@ public class FlexPageUtils {
 
     public static void setPagePropsOnNode(final Node componentNode, final Page page) throws RepositoryException {
         setStringProperty(componentNode, PROP_DESC, page.getDescription());
+        setStringProperty(componentNode, PROP_COMPONENTCLASSNAME, page.getComponentClassName());
         setHstParameters(componentNode, page.getParameters());
     }
 
@@ -353,6 +353,11 @@ public class FlexPageUtils {
         setAbstractComponentPropsOnNode(managedComponentNode, managedComponent);
         setStringProperty(managedComponentNode, COMPONENT_PROPERTY_LABEL, managedComponent.getLabel());
         setStringProperty(managedComponentNode, COMPONENT_PROPERTY_XTYPE, managedComponent.getXtype());
+    }
+
+    public static void setStaticComponentPropsOnNode(final Node staticComponentNode, final StaticComponent staticComponent) throws RepositoryException {
+        setAbstractComponentPropsOnNode(staticComponentNode, staticComponent);
+        setStringProperty(staticComponentNode, PROP_COMPONENTCLASSNAME, staticComponent.getComponentClassName());
     }
 
     public static void setStringProperty(Node node, String propertyName, String newValue) throws RepositoryException {

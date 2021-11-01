@@ -41,22 +41,7 @@ import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getComponents;
 import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getDescription;
 import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getHstSite;
 import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getUserSession;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.checkoutCorrectBranch;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getComponentConfig;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getHandle;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getMount;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getObtainEditableInstanceWorkflow;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getTemporaryStorageNode;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getXPageModelFromVariantNode;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getXPageTemplate;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getXPageUnpublishedNode;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.isXPage;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.renameNode;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.setAbstractComponentPropsOnNode;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.setManagedComponentPropsOnNode;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.setPagePropsOnNode;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.storeContainerNodesTemporarily;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.unlockQuietly;
+import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.*;
 import static org.hippoecm.hst.configuration.components.HstComponentConfiguration.Type.CONTAINER_COMPONENT;
 
 
@@ -109,7 +94,7 @@ public class PageDao {
                 newNodePath = parentNodePath + "/" + StringUtils.substringBeforeLast(staticComponent.getName(), "-") + "-" + componentCount;
             }
             staticComponentNode = JcrUtils.copy(session, STATIC_COMPONENT_LOCATION, newNodePath);
-            setAbstractComponentPropsOnNode(staticComponentNode, staticComponent);
+            setStaticComponentPropsOnNode(staticComponentNode, staticComponent);
             if (staticComponent.getComponents() != null && !staticComponent.getComponents().isEmpty()) {
                 for (AbstractComponent childComponent : staticComponent.getComponents()) {
                     createNodeFromComponent(storageNode, session, childComponent, newNodePath, userId);

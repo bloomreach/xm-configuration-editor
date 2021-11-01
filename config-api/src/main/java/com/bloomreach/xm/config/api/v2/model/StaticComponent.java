@@ -25,9 +25,25 @@ public class StaticComponent extends AbstractComponent {
     private List<AbstractComponent> components = null;
 
     @JsonCreator
-    public StaticComponent(@JsonProperty("name") final String name, @JsonProperty("description") final String description, @JsonProperty("parameters") final Map<String, String> parameters, @JsonProperty("xtype") final XtypeEnum xtype, @JsonProperty("type") final TypeEnum type, @JsonProperty("definition") String definition) {
+    public StaticComponent(@JsonProperty("name") final String name, @JsonProperty("description") final String description, @JsonProperty("parameters") final Map<String, String> parameters, @JsonProperty("xtype") final XtypeEnum xtype, @JsonProperty("type") final TypeEnum type, @JsonProperty("definition") String definition, @JsonProperty("componentClassName") final String componentClassName) {
         super(name, description, parameters, xtype, type);
         this.definition = definition;
+        this.componentClassName = componentClassName;
+    }
+
+    private String componentClassName = null;
+
+    public void setComponentClassName(String componentClassName) {
+        this.componentClassName = componentClassName;
+    }
+
+    public AbstractComponent componentClassName(String componentClassName) {
+        this.componentClassName = componentClassName;
+        return this;
+    }
+
+    public String getComponentClassName() {
+        return componentClassName;
     }
 
     /**
