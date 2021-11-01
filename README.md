@@ -19,6 +19,7 @@ The current page feature will allow a CMS user with the appropriate user roles t
 |14.4   | 0.9.2  | Virtual host fix  |
 |14.4   | 0.9.3  | Page layout fix |
 |14.6   | 0.9.4  | Index matcher fix + Add component as last child |
+|14.6   | 0.9.6  | added support for componentclasses |
 
 
 ## Installation
