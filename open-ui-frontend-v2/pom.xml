@@ -4,7 +4,7 @@
   <parent>
     <groupId>com.bloomreach.xm</groupId>
     <artifactId>brxm-configuration-editor</artifactId>
-    <version>0.9.7-SNAPSHOT</version>
+    <version>0.9.7rc1</version>
   </parent>
   <artifactId>brxm-configuration-editor-openui-frontend</artifactId>
   <name>brXM Configuration Editor Open UI Frontend</name>
