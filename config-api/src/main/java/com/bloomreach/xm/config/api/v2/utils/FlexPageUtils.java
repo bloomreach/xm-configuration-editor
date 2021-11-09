@@ -338,7 +338,7 @@ public class FlexPageUtils {
 
     public static void storeContainerNodesTemporarily(final Node configNode, final Node storageNode) throws RepositoryException {
         if (configNode.getPrimaryNodeType().getName().equals(NODETYPE_HST_CONTAINERCOMPONENT)) {
-            JcrUtils.copy(configNode.getSession(), configNode.getPath(), storageNode.getPath() + "/" + configNode.getName());
+            JcrUtils.copy(configNode.getSession(), configNode.getPath(), storageNode.getPath() + "/" + configNode.getName() + "---" + configNode.getProperty(PROP_IDENTIFIER).getString());
         }
         for (Node childNode : new NodeIterable(configNode.getNodes())) {
             storeContainerNodesTemporarily(childNode, storageNode);
@@ -353,6 +353,7 @@ public class FlexPageUtils {
         setAbstractComponentPropsOnNode(managedComponentNode, managedComponent);
         setStringProperty(managedComponentNode, COMPONENT_PROPERTY_LABEL, managedComponent.getLabel());
         setStringProperty(managedComponentNode, COMPONENT_PROPERTY_XTYPE, managedComponent.getXtype());
+        setStringProperty(managedComponentNode, PROP_IDENTIFIER, managedComponent.getId());
     }
 
     public static void setStaticComponentPropsOnNode(final Node staticComponentNode, final StaticComponent staticComponent) throws RepositoryException {

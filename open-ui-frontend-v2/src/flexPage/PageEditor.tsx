@@ -81,7 +81,7 @@ class PageEditor extends React.Component<PageEditorProps, PageEditorState> {
   }
 
   addComponent (rowInfo: ExtendedNodeData, component: AbstractComponent, callback?: () => void) {
-    const newNodeComponent: ComponentTreeItem = componentToNode(component);
+    const newNodeComponent: ComponentTreeItem = componentToNode(component, true);
 
     const treeData: TreeItem[] = addNodeUnderParent({
       treeData: this.state.treeData,

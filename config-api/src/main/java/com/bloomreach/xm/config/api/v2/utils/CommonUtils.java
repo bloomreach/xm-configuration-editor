@@ -51,6 +51,7 @@ public class CommonUtils {
     public static final String CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER = "xm.config-editor.current-page.viewer";
     public static final String CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR = "xm.config-editor.current-page.editor";
     public static final String CONFIG_API_PERMISSION_GLOBAL_USER = "xm.config-editor.user";
+    public static final String PROP_IDENTIFIER = "hippo:identifier";
     public static final String PROP_DESC = "hst:description";
     public static final String PROP_COMPONENTCLASSNAME = "hst:componentclassname";
     private static final String SYSTEM_USER = "system";
@@ -122,6 +123,7 @@ public class CommonUtils {
 
             } else if (componentConfiguration.getComponentType().equals(CONTAINER_COMPONENT)) {
                 builder = ManagedComponent.builder()
+                        .id(componentConfiguration.getHippoIdentifier())
                         .label(componentConfiguration.getLabel())
                         .type(AbstractComponent.TypeEnum.MANAGED);
             }

@@ -1,21 +1,17 @@
 package com.bloomreach.xm.config.api.v2.model;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Map;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 @SuperBuilder
 public class Page {
 
@@ -29,9 +25,11 @@ public class Page {
      * description for this page
      **/
     private String description = null;
-    @Schema(description = "a map of string parameters (names/values) for this page")
+
+    @Schema(description = "component class name")
     private String componentClassName = null;
 
+    @Schema(description = "a map of string parameters (names/values) for this page")
     /**
      * a map of string parameters (names/values) for this page
      **/
@@ -59,6 +57,7 @@ public class Page {
         this.parameters = parameters;
         this.type = type;
         this._extends = _extends;
+        this.componentClassName = componentClassName;
     }
 
     /**

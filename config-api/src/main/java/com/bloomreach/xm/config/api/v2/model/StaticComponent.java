@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.experimental.SuperBuilder;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @SuperBuilder
 @JsonTypeName("static")
 public class StaticComponent extends AbstractComponent {

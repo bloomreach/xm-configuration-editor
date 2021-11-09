@@ -37,10 +37,7 @@ import org.onehippo.repository.documentworkflow.DocumentWorkflow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getComponents;
-import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getDescription;
-import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getHstSite;
-import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getUserSession;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.*;
 import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.*;
 import static org.hippoecm.hst.configuration.components.HstComponentConfiguration.Type.CONTAINER_COMPONENT;
 
@@ -62,30 +59,44 @@ public class PageDao {
 
     private static void createNodeFromComponent(final Node storageNode, final Session session, final AbstractComponent component, final String parentNodePath, final String userId) throws RepositoryException {
         if (component instanceof ManagedComponent) {
-            final ManagedComponent managedComponent = (ManagedComponent)component;
-            final String newNodePath = parentNodePath + "/" + managedComponent.getName();
+            final ManagedComponent managedComponent = (ManagedComponent) component;
+
+            String newNodePath = parentNodePath + "/" + component.getName();
+            int componentCount = 0;
             Node managedComponentNode;
+            while (session.nodeExists(newNodePath)) {
+                componentCount++;
+                newNodePath = parentNodePath + "/" + StringUtils.substringBeforeLast(managedComponent.getName(), "-") + "-" + componentCount;
+            }
+
             if (!session.nodeExists(newNodePath)) {
                 managedComponentNode = JcrUtils.copy(session, MANAGED_COMPONENT_LOCATION, newNodePath);
             } else {
                 managedComponentNode = session.getNode(newNodePath);
             }
+
             //leave a lock on the container node to let hst know that there are "unpublished changes".
             //aka the yellow exclamation mark
             new LockHelper().acquireLock(managedComponentNode, userId, 0);
+//            String id = UUID.randomUUID().toString().toLowerCase();
             setManagedComponentPropsOnNode(managedComponentNode, managedComponent);
+//            setStringProperty(managedComponentNode, PROP_IDENTIFIER, id);
             //have to rename the managedComponentNode to uuid so they are always unique
-            renameNode(managedComponentNode, UUID.randomUUID().toString().toLowerCase());
+//            renameNode(managedComponentNode, id);
             //check storagenode if previously stored container exists there.
             //If so, copy over the container item in it
-            if (storageNode.hasNode(managedComponent.getName())) {
-                final Node previouslyStoredNode = storageNode.getNode(managedComponent.getName());
-                for (Node containerItemComponentNode : new NodeIterable(previouslyStoredNode.getNodes())) {
-                    JcrUtils.copy(session, containerItemComponentNode.getPath(), managedComponentNode.getPath() + "/" + containerItemComponentNode.getName());
-                }
+
+            final String componentId = managedComponent.getName() + "---" + managedComponent.getId();
+            if (storageNode.hasNode(componentId)) {
+                final Node previouslyStoredNode = storageNode.getNode(componentId);
+//                if (previouslyStoredNode.hasProperty("hippo:identifier") && previouslyStoredNode.getProperty("hippo:identifier").getString().equals(managedComponentNode.getName())) {
+                    for (Node containerItemComponentNode : new NodeIterable(previouslyStoredNode.getNodes())) {
+                        JcrUtils.copy(session, containerItemComponentNode.getPath(), managedComponentNode.getPath() + "/" + containerItemComponentNode.getName());
+                    }
+//                }
             }
         } else if (component instanceof StaticComponent) {
-            final StaticComponent staticComponent = (StaticComponent)component;
+            final StaticComponent staticComponent = (StaticComponent) component;
             String newNodePath = parentNodePath + "/" + component.getName();
             int componentCount = 0;
             Node staticComponentNode;
@@ -189,7 +200,7 @@ public class PageDao {
     }
 
     private Page createPageFromConfig(final HstComponentConfiguration config, Page.PageType type, final Session session) throws RepositoryException {
-        final String referenceComponent = ((HstComponentConfigurationService)config).getReferenceComponent();
+        final String referenceComponent = ((HstComponentConfigurationService) config).getReferenceComponent();
         final String ext = referenceComponent != null ? referenceComponent.substring(referenceComponent.lastIndexOf('/') + 1) : null;
         final Page page = Page.builder()
                 .name(config.getName())
@@ -246,8 +257,6 @@ public class PageDao {
         }
         return page;
     }
-
-
 
 
 }

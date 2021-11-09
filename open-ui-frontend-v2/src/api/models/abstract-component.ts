@@ -57,6 +57,8 @@ export interface AbstractComponent {
    */
   components?: Nullable<Array<AbstractComponent>>;
 
+  id?: Nullable<string>;
+
   /**
    * default display label for this component
    * @type {string}
