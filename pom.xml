@@ -34,7 +34,7 @@
     <hippo.hst.version>14.6.0</hippo.hst.version>
     <hippo.repository.version>14.6.0</hippo.repository.version>
     <hippo.services.version>14.6.0</hippo.services.version>
-    <cxf.version>3.3.5</cxf.version>
+    <cxf.version>3.3.13</cxf.version>
     <swagger-annotations.version>2.0.10</swagger-annotations.version>
     <validation-api.version>2.0.1.Final</validation-api.version>
   </properties>
