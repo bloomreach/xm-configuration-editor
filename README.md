@@ -123,7 +123,7 @@ cd demo && mvn verify && mvn -Pcargo.run
 Start the react-csr project (PORT 3001)
 
 ```bash
-cd react-csr-example
+cd react-csr
 npm run dev 
 ```
 
