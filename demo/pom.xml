@@ -12,7 +12,7 @@
   <description>XM Channel Config Editor Demo</description>
   <groupId>com.bloomreach.xm</groupId>
   <artifactId>channel-config-editor-demo</artifactId>
-  <version>0.1.1-SNAPSHOT</version>
+  <version>0.9.8</version>
   <packaging>pom</packaging>
 
   <!--
