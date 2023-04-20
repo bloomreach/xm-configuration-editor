@@ -4,7 +4,7 @@
   <parent>
     <groupId>com.bloomreach.xm</groupId>
     <artifactId>channel-config-editor-demo</artifactId>
-    <version>0.9.8</version>
+    <version>0.9.9-SNAPSHOT</version>
   </parent>
   <artifactId>channel-config-editor-demo-cms-dependencies</artifactId>
   <packaging>pom</packaging>
