@@ -45,7 +45,7 @@
       hippostd:state: unpublished
       hippostdpubwf:createdBy: admin
       hippostdpubwf:creationDate: 2021-03-03T14:35:45.869+01:00
-      hippostdpubwf:lastModificationDate: 2021-07-14T09:19:23.378+02:00
+      hippostdpubwf:lastModificationDate: 2023-04-03T14:12:33.871+05:30
       hippostdpubwf:lastModifiedBy: admin
       hippotranslation:id: a5fdec2d-05b8-4330-9ad6-471badf9038d
       hippotranslation:locale: en
@@ -70,33 +70,33 @@
             hst:template: essentials-carousel
         /main:
           jcr:primaryType: hst:component
-          jcr:uuid: db9a4f09-4ff3-4893-bddf-cd6ecb9b08b1
+          jcr:uuid: 64a9b23a-6a5e-444a-8d95-86c1d8e3ef05
           /section-white-:
             jcr:primaryType: hst:component
-            jcr:uuid: 30721d9b-a4e4-4890-a4b8-324dd6f4f583
+            jcr:uuid: 0ecc3cf4-984d-49a9-86d3-b8357dc8d987
             hst:description: White Section
             hst:parameternames: [background-color]
             hst:parametervalues: [white]
             /row-:
               jcr:primaryType: hst:component
-              jcr:uuid: 0699526d-370b-4505-9e2c-8504e6157f98
+              jcr:uuid: d27a70b3-00e0-4684-ab68-a48018c635e4
               hst:description: Row
               hst:parameternames: [background-color]
               hst:parametervalues: [white]
               /85cbfc94-e09e-44b5-92ff-c085c597d139:
                 jcr:primaryType: hst:containercomponent
-                jcr:uuid: 9508b8f5-bbc2-4fca-a817-401d038045f8
+                jcr:uuid: 7ca0ed69-c175-4508-b143-105d4749dd28
                 hippo:identifier: d99444e8-49fd-4252-b27e-1218d9afbe93
                 hst:description: Column
                 hst:lastmodified: 2020-08-08T06:23:11.158+02:00
                 hst:lockedby: admin
-                hst:lockedon: 2021-07-14T09:19:23.374+02:00
+                hst:lockedon: 2023-04-03T14:12:33.864+05:30
                 hst:parameternames: [background-color]
                 hst:parametervalues: [white]
                 hst:xtype: hst.vbox
                 /simplecontent:
                   jcr:primaryType: hst:containeritemcomponent
-                  jcr:uuid: 8b2b447b-cafb-499d-b8c0-ce3d838fafe0
+                  jcr:uuid: 985de5d8-24e9-420b-a07b-328e7a899bbd
                   hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsDocumentComponent
                   hst:iconpath: images/essentials/catalog-component-icons/simple-content.svg
                   hst:label: Simple Content
@@ -105,41 +105,41 @@
                   hst:template: contentpage-main
               /5e59ba27-c8be-4971-b783-86f551e201dc:
                 jcr:primaryType: hst:containercomponent
-                jcr:uuid: deaf4217-77bc-4c46-a6fa-1eb016c5861c
+                jcr:uuid: 94dcbf5c-a572-4e71-9a3f-5f7e3096a581
                 hippo:identifier: d99444e8-49fd-4252-b27e-1218d9afbe93
                 hst:description: Column
                 hst:lastmodified: 2020-08-08T06:23:11.158+02:00
                 hst:lockedby: admin
-                hst:lockedon: 2021-07-14T09:19:23.375+02:00
+                hst:lockedon: 2023-04-03T14:12:33.865+05:30
                 hst:parameternames: [background-color]
                 hst:parametervalues: [white]
                 hst:xtype: hst.vbox
           /section-grey-:
             jcr:primaryType: hst:component
-            jcr:uuid: 56883aba-231f-4370-b714-d448a6bb9ddb
+            jcr:uuid: 0b061d4c-9c4f-4750-8fea-f888c8670ca8
             hst:description: Grey Section
             hst:parameternames: [background-color, pageType]
             hst:parametervalues: [grey, bar]
             /row-:
               jcr:primaryType: hst:component
-              jcr:uuid: 1fb9eae1-eeb2-46fa-ad7b-a9ecf7b4f174
+              jcr:uuid: ba79b070-5633-4b0e-8b8d-76606449e7e5
               hst:description: Row
               hst:parameternames: [background-color, pageType]
               hst:parametervalues: [grey, bar]
               /f502acbc-2c98-48fe-8a7a-45feb427665c:
                 jcr:primaryType: hst:containercomponent
-                jcr:uuid: 2db063c5-710c-4084-8305-40b832cc7a9a
+                jcr:uuid: 43c8937a-3504-4a83-8c75-41612fc21912
                 hippo:identifier: d99444e8-49fd-4252-b27e-1218d9afbe93
                 hst:description: Column
                 hst:lastmodified: 2020-08-08T06:23:11.158+02:00
                 hst:lockedby: admin
-                hst:lockedon: 2021-07-14T09:19:23.376+02:00
+                hst:lockedon: 2023-04-03T14:12:33.867+05:30
                 hst:parameternames: [background-color, pageType]
                 hst:parametervalues: [grey, bar]
                 hst:xtype: hst.vbox
                 /banner:
                   jcr:primaryType: hst:containeritemcomponent
-                  jcr:uuid: 806f634f-941f-4aa7-8b32-1f82e969e65a
+                  jcr:uuid: 273085e7-938e-4fed-96b9-1fc70678eecf
                   hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
                   hst:iconpath: images/essentials/catalog-component-icons/banner.svg
                   hst:label: Banner
@@ -148,18 +148,18 @@
                   hst:template: essentials-banner
               /10158ba5-99a7-4dec-bbeb-f495c33ca9b5:
                 jcr:primaryType: hst:containercomponent
-                jcr:uuid: 180415b3-086a-4bab-a551-1606582809b7
+                jcr:uuid: bc582840-33eb-4876-bf8c-97ba39ee9db7
                 hippo:identifier: d99444e8-49fd-4252-b27e-1218d9afbe93
                 hst:description: Column
                 hst:lastmodified: 2020-08-08T06:23:11.158+02:00
                 hst:lockedby: admin
-                hst:lockedon: 2021-07-14T09:19:23.377+02:00
+                hst:lockedon: 2023-04-03T14:12:33.869+05:30
                 hst:parameternames: [background-color, pageType]
                 hst:parametervalues: [grey, bar]
                 hst:xtype: hst.vbox
                 /banner:
                   jcr:primaryType: hst:containeritemcomponent
-                  jcr:uuid: 1899da6a-d9fe-4e5e-a338-5aaed0698ced
+                  jcr:uuid: 2e692776-3ed7-4e52-80bb-7616dbc8910b
                   hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsBannerComponent
                   hst:iconpath: images/essentials/catalog-component-icons/banner.svg
                   hst:label: Banner
@@ -612,13 +612,13 @@
                   hst:parameternames: [background-color]
                   hst:parametervalues: [white]
                   hst:xtype: hst.vbox
-  /testunive-sales:
+  /test-sales:
     jcr:primaryType: hippo:handle
     jcr:mixinTypes: ['hippo:named', 'hippo:versionInfo', 'mix:referenceable']
     jcr:uuid: fdbee8ef-b827-4c7a-bcb3-5af42c8824f2
-    hippo:name: testunive sales
-    hippo:versionHistory: 8736bfe5-92dd-45ec-ae3b-b3741a0aab72
-    /testunive-sales[1]:
+    hippo:name: test sales
+    hippo:versionHistory: f4f94333-6611-464b-99e0-ae2a3b351b91
+    /test-sales[1]:
       jcr:primaryType: channelconfigeditordemo:contentdocument
       jcr:mixinTypes: ['hst:xpagemixin', 'mix:referenceable']
       jcr:uuid: 4c30e7fe-4ed1-4491-ad13-43b08e93da4a
@@ -639,7 +639,7 @@
       /channelconfigeditordemo:content:
         jcr:primaryType: hippostd:html
         hippostd:content: ''
-    /testunive-sales[2]:
+    /test-sales[2]:
       jcr:primaryType: channelconfigeditordemo:contentdocument
       jcr:mixinTypes: ['hst:xpagemixin', 'mix:referenceable', 'mix:versionable']
       jcr:uuid: eb2e0910-a9ad-4703-a50b-8968e9e7b48a

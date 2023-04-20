@@ -123,8 +123,9 @@ cd demo && mvn verify && mvn -Pcargo.run
 Start the react-csr project (PORT 3001)
 
 ```bash
-cd react-csr-example
-npm run dev 
+cd react-csr
+yarn
+yarn dev
 ```
 
 ## Configuration Editor Frontend

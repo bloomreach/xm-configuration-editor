@@ -12,15 +12,4 @@
       <destName>site.war</destName>
     </file>
   </files>
-  <dependencySets>
-    <dependencySet>
-      <useProjectArtifact>false</useProjectArtifact>
-      <outputDirectory>webapps</outputDirectory>
-      <outputFileNameMapping>bpm.war</outputFileNameMapping>
-      <scope>provided</scope>
-      <includes>
-        <include>com.onehippo.cms7:hippo-addon-wpm-camunda:war</include>
-      </includes>
-    </dependencySet>
-  </dependencySets>
 </component>
