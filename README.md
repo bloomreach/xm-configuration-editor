@@ -10,16 +10,17 @@ The current page feature will allow a CMS user with the appropriate user roles t
 
 ## Release Notes
 
-| CMS Version  | Plugin Version | Description  |
-|---|---|---|
-|14.2   | 0.1.0  | Initial Release  |
-|14.4   | 0.2.0  | XPage support, note that the "projects" feature will not work well in combination of this plugin. Awaiting https://issues.onehippo.com/browse/CMS-14297  |
-|14.4   | 0.9.0  | Refactoring of the API Model to compatible with brxSaaS and some other backend and frontend refactoring, note that the "projects" feature will not work well in combination of this plugin. Awaiting https://issues.onehippo.com/browse/CMS-14297  |
-|14.4   | 0.9.1  | Changed the logic so that only components from the workspace will be a choice for flex pages plugin. Note that the "projects" feature will not work well in combination of this plugin. Awaiting https://issues.onehippo.com/browse/CMS-14297  |
-|14.4   | 0.9.2  | Virtual host fix  |
-|14.4   | 0.9.3  | Page layout fix |
-|14.6   | 0.9.4  | Index matcher fix + Add component as last child |
-|14.6   | 0.9.6  | added support for componentclasses |
+| CMS Version | Plugin Version | Description                                                                                                                                                                                                                                       |
+|-------------|----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 14.2        | 0.1.0          | Initial Release                                                                                                                                                                                                                                   |
+| 14.4        | 0.2.0          | XPage support, note that the "projects" feature will not work well in combination of this plugin. Awaiting https://issues.onehippo.com/browse/CMS-14297                                                                                           |
+| 14.4        | 0.9.0          | Refactoring of the API Model to compatible with brxSaaS and some other backend and frontend refactoring, note that the "projects" feature will not work well in combination of this plugin. Awaiting https://issues.onehippo.com/browse/CMS-14297 |
+| 14.4        | 0.9.1          | Changed the logic so that only components from the workspace will be a choice for flex pages plugin. Note that the "projects" feature will not work well in combination of this plugin. Awaiting https://issues.onehippo.com/browse/CMS-14297     |
+| 14.4        | 0.9.2          | Virtual host fix                                                                                                                                                                                                                                  |
+| 14.4        | 0.9.3          | Page layout fix                                                                                                                                                                                                                                   |
+| 14.6        | 0.9.4          | Index matcher fix + Add component as last child                                                                                                                                                                                                   |
+| 14.6        | 0.9.6          | added support for componentclasses                                                                                                                                                                                                                |
+| 15.2.2      | 0.9.8          | Added support for CMS v15                                                                                                                                                                                                                         |
 
 
 ## Installation
