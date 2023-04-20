@@ -124,7 +124,8 @@ Start the react-csr project (PORT 3001)
 
 ```bash
 cd react-csr
-npm run dev 
+yarn
+yarn dev
 ```
 
 ## Configuration Editor Frontend
