@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.onehippo.cms7</groupId>
     <artifactId>hippo-cms7-enterprise-release</artifactId>
-    <version>15.2.2</version>
+    <version>16.0.0-SNAPSHOT</version>
   </parent>
 
   <name>XM Channel Config Editor Demo</name>
@@ -57,14 +57,11 @@
   <!-- End of emptied/overridden metadata from parent hippo-cms7-release pom. -->
 
   <properties>
-    <cargo.jvm.args>-Xms4096m -Xmx4096m -XX:MaxPermSize=2048M</cargo.jvm.args>
     <!--***START temporary override of versions*** -->
     <!-- ***END temporary override of versions*** -->
 
-    <essentials.version>15.2.2</essentials.version>
-    <jsp-api.version>2.2</jsp-api.version>
-    <taglibs.version>1.2.5</taglibs.version>
-    <brxm-configuration-editor.version>0.9.7rc2-SNAPSHOT</brxm-configuration-editor.version>
+    <essentials.version>16.0.0-SNAPSHOT</essentials.version>
+    <brxm-configuration-editor.version>0.9.9-SNAPSHOT</brxm-configuration-editor.version>
 
     <development-module-deploy-dir>shared/lib</development-module-deploy-dir>
 
@@ -74,41 +71,41 @@
 
   <repositories>
     <repository>
-      <id>hippo</id>
-      <name>Hippo maven 2 repository.</name>
-      <url>https://maven.onehippo.com/maven2/</url>
+      <id>bloomreach-maven2</id>
+      <name>Bloomreach maven 2 repository.</name>
+      <url>https://maven.bloomreach.com/maven2/</url>
     </repository>
     <repository>
       <releases>
         <updatePolicy>never</updatePolicy>
         <checksumPolicy>fail</checksumPolicy>
       </releases>
-      <id>hippo-maven2-enterprise</id>
-      <name>Hippo Enterprise Maven 2</name>
-      <url>https://maven.onehippo.com/maven2-enterprise</url>
+      <id>bloomreach-maven2-enterprise</id>
+      <name>Bloomreach Enterprise Maven 2</name>
+      <url>https://maven.bloomreach.com/maven2-enterprise/</url>
     </repository>
   </repositories>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>javax.servlet.jsp</groupId>
-        <artifactId>jsp-api</artifactId>
+        <groupId>jakarta.servlet.jsp</groupId>
+        <artifactId>jakarta.servlet.jsp-api</artifactId>
         <version>${jsp-api.version}</version>
         <scope>provided</scope>
       </dependency>
 
       <!-- other predefined runtime scope versioned dependencies -->
       <dependency>
-        <groupId>org.apache.taglibs</groupId>
-        <artifactId>taglibs-standard-spec</artifactId>
+        <groupId>com.bloomreach.xm</groupId>
+        <artifactId>taglibs-standard-spec-jakarta</artifactId>
         <version>${taglibs.version}</version>
         <scope>runtime</scope>
       </dependency>
 
       <dependency>
-        <groupId>org.apache.taglibs</groupId>
-        <artifactId>taglibs-standard-impl</artifactId>
+        <groupId>com.bloomreach.xm</groupId>
+        <artifactId>taglibs-standard-impl-jakarta</artifactId>
         <version>${taglibs.version}</version>
         <scope>runtime</scope>
       </dependency>
@@ -288,8 +285,8 @@
           <scope>compile</scope>
         </dependency>
         <dependency>
-          <groupId>javax.annotation</groupId>
-          <artifactId>javax.annotation-api</artifactId>
+          <groupId>jakarta.annotation</groupId>
+          <artifactId>jakarta.annotation-api</artifactId>
           <scope>compile</scope>
         </dependency>
         <dependency>
@@ -307,7 +304,7 @@
         <plugins>
           <plugin>
             <groupId>org.codehaus.cargo</groupId>
-            <artifactId>cargo-maven2-plugin</artifactId>
+            <artifactId>cargo-maven3-plugin</artifactId>
             <configuration>
               <configuration>
                 <configfiles>
@@ -441,11 +438,6 @@
           <scope>provided</scope>
         </dependency>
         <dependency>
-          <groupId>javax.annotation</groupId>
-          <artifactId>javax.annotation-api</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
           <groupId>jakarta.activation</groupId>
           <artifactId>jakarta.activation-api</artifactId>
           <scope>provided</scope>
@@ -527,7 +519,6 @@
         </plugins>
       </build>
     </profile>
-
   </profiles>
 
 </project>
