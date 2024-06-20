@@ -1,10 +1,13 @@
+/*
+ *  Copyright 2024 Bloomreach
+ */
 package com.bloomreach.xm.config.api.v2.rest;
 
 import java.net.URI;
 
 import javax.jcr.Session;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Response;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.core.Response;
 
 import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
 import com.bloomreach.xm.config.api.exception.PageLockedException;
@@ -22,7 +25,6 @@ import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.CONFIG_API_PERMI
 import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.ensureUserIsAuthorized;
 import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.closeSession;
 import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getImpersonatedSession;
-
 
 public class ChannelFlexPageOperationsApiServiceImpl implements ChannelFlexPageOperationsApi {
 
@@ -43,8 +45,7 @@ public class ChannelFlexPageOperationsApiServiceImpl implements ChannelFlexPageO
      */
     public Page getChannelPage(HttpServletRequest request, String channelId, String pagePath) throws ChannelNotFoundException, UnauthorizedException, WorkspaceComponentNotFoundException {
         ensureUserIsAuthorized(request, CONFIG_API_PERMISSION_CURRENT_PAGE_VIEWER, systemSession);
-        Page page = this.pageDao.getPage(request, channelId, pagePath);
-        return page;
+        return this.pageDao.getPage(request, channelId, pagePath);
     }
 
     /**

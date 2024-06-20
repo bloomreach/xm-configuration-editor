@@ -1,10 +1,13 @@
+/*
+ *  Copyright 2024 Bloomreach
+ */
 package com.bloomreach.xm.config.api.v2.dao;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
@@ -15,6 +18,8 @@ import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hippoecm.hst.configuration.site.HstSite;
 import org.hippoecm.repository.util.NodeIterable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static java.util.stream.Collectors.toMap;
 import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
@@ -33,6 +38,7 @@ import static org.hippoecm.repository.util.JcrUtils.getStringProperty;
 
 public class SiteMapDao {
 
+    private static final Logger log = LoggerFactory.getLogger(SiteMapDao.class);
     private final Session systemSession;
 
 
@@ -56,7 +62,7 @@ public class SiteMapDao {
                 save(childItem, sitemapItemNode);
             }
         } catch (RepositoryException e) {
-            //todo log something
+            log.error("An exception occurred while attempting to save.", e);
         }
 
     }
@@ -132,7 +138,7 @@ public class SiteMapDao {
                 }
             }
         } catch (RepositoryException e) {
-            //todo
+            log.error("An exception occurred while attempting to get.", e);
         }
         return sitemapItems;
     }

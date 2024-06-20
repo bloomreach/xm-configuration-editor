@@ -1,11 +1,14 @@
+/*
+ *  Copyright 2024 Bloomreach
+ */
 package com.bloomreach.xm.config.api.v2.rest;
 
 import java.net.URI;
 import java.util.List;
 
 import javax.jcr.Session;
-import javax.validation.Valid;
-import javax.ws.rs.core.Response;
+import jakarta.validation.Valid;
+import jakarta.ws.rs.core.Response;
 
 import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
 import com.bloomreach.xm.config.api.v2.dao.SiteMapDao;
@@ -14,7 +17,6 @@ import com.bloomreach.xm.config.api.v2.model.SitemapItem;
 import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.closeSession;
 import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getHstSite;
 import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getImpersonatedSession;
-
 
 public class ChannelSitemapOperationsApiServiceImpl implements ChannelSitemapOperationsApi {
 

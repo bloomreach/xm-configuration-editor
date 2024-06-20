@@ -1,10 +1,13 @@
+/*
+ *  Copyright 2024 Bloomreach
+ */
 package com.bloomreach.xm.config.api;
 
 import com.bloomreach.xm.config.api.exception.*;
 import com.bloomreach.xm.config.api.v2.rest.ChannelFlexPageOperationsApiServiceImpl;
 import com.bloomreach.xm.config.api.v2.rest.ChannelOtherOperationsApiServiceImpl;
 import com.bloomreach.xm.config.api.v2.rest.ChannelSitemapOperationsApiServiceImpl;
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
 import org.onehippo.repository.jaxrs.CXFRepositoryJaxrsEndpoint;
 import org.onehippo.repository.jaxrs.RepositoryJaxrsService;
 import org.onehippo.repository.jaxrs.api.ManagedUserSessionInvoker;

@@ -51,7 +51,7 @@
 
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>3.1.0</version>
+        <version>${maven.plugin.resources.version}</version>
         <executions>
           <execution>
             <id>copy-resources</id>
@@ -74,6 +74,7 @@
 
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
+        <version>${maven.plugin.clean.version}</version>
         <executions>
           <execution>
             <id>frontend-app-clean</id>

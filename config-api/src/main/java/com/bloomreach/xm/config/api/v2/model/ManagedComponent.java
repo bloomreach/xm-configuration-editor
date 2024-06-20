@@ -1,3 +1,6 @@
+/*
+ *  Copyright 2024 Bloomreach
+ */
 package com.bloomreach.xm.config.api.v2.model;
 
 import java.util.Map;
@@ -10,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.experimental.SuperBuilder;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @SuperBuilder

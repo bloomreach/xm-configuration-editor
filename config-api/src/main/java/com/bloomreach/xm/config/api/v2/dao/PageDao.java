@@ -1,30 +1,21 @@
+/*
+ *  Copyright 2024 Bloomreach
+ */
 package com.bloomreach.xm.config.api.v2.dao;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.InternalServerErrorException;
-
-import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
-import com.bloomreach.xm.config.api.exception.PageLockedException;
-import com.bloomreach.xm.config.api.exception.WorkspaceComponentNotFoundException;
-import com.bloomreach.xm.config.api.v2.model.AbstractComponent;
-import com.bloomreach.xm.config.api.v2.model.ManagedComponent;
-import com.bloomreach.xm.config.api.v2.model.Page;
-import com.bloomreach.xm.config.api.v2.model.StaticComponent;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hippoecm.hst.configuration.components.HstComponentConfiguration;
 import org.hippoecm.hst.configuration.experiencepage.ExperiencePageService;
 import org.hippoecm.hst.configuration.hosting.Mount;
 import org.hippoecm.hst.configuration.site.HstSite;
-import org.hippoecm.hst.core.request.ComponentConfiguration;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.exceptions.ClientException;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.helpers.LockHelper;
 import org.hippoecm.hst.platform.configuration.components.HstComponentConfigurationService;
@@ -37,8 +28,35 @@ import org.onehippo.repository.documentworkflow.DocumentWorkflow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.*;
-import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.*;
+import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
+import com.bloomreach.xm.config.api.exception.PageLockedException;
+import com.bloomreach.xm.config.api.exception.WorkspaceComponentNotFoundException;
+import com.bloomreach.xm.config.api.v2.model.AbstractComponent;
+import com.bloomreach.xm.config.api.v2.model.ManagedComponent;
+import com.bloomreach.xm.config.api.v2.model.Page;
+import com.bloomreach.xm.config.api.v2.model.StaticComponent;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.InternalServerErrorException;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getComponents;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getDescription;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getHstSite;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getUserSession;
+import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.checkoutCorrectBranch;
+import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getComponentConfig;
+import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getHandle;
+import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getMount;
+import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getObtainEditableInstanceWorkflow;
+import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getTemporaryStorageNode;
+import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getXPageModelFromVariantNode;
+import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getXPageTemplate;
+import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.getXPageUnpublishedNode;
+import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.isXPage;
+import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.setManagedComponentPropsOnNode;
+import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.setPagePropsOnNode;
+import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.setStaticComponentPropsOnNode;
+import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.storeContainerNodesTemporarily;
+import static com.bloomreach.xm.config.api.v2.utils.FlexPageUtils.unlockQuietly;
 import static org.hippoecm.hst.configuration.components.HstComponentConfiguration.Type.CONTAINER_COMPONENT;
 
 
@@ -78,22 +96,16 @@ public class PageDao {
             //leave a lock on the container node to let hst know that there are "unpublished changes".
             //aka the yellow exclamation mark
             new LockHelper().acquireLock(managedComponentNode, userId, 0);
-//            String id = UUID.randomUUID().toString().toLowerCase();
             setManagedComponentPropsOnNode(managedComponentNode, managedComponent);
-//            setStringProperty(managedComponentNode, PROP_IDENTIFIER, id);
-            //have to rename the managedComponentNode to uuid so they are always unique
-//            renameNode(managedComponentNode, id);
             //check storagenode if previously stored container exists there.
             //If so, copy over the container item in it
 
             final String componentId = managedComponent.getName() + "---" + managedComponent.getId();
             if (storageNode.hasNode(componentId)) {
                 final Node previouslyStoredNode = storageNode.getNode(componentId);
-//                if (previouslyStoredNode.hasProperty("hippo:identifier") && previouslyStoredNode.getProperty("hippo:identifier").getString().equals(managedComponentNode.getName())) {
-                    for (Node containerItemComponentNode : new NodeIterable(previouslyStoredNode.getNodes())) {
-                        JcrUtils.copy(session, containerItemComponentNode.getPath(), managedComponentNode.getPath() + "/" + containerItemComponentNode.getName());
-                    }
-//                }
+                for (Node containerItemComponentNode : new NodeIterable(previouslyStoredNode.getNodes())) {
+                    JcrUtils.copy(session, containerItemComponentNode.getPath(), managedComponentNode.getPath() + "/" + containerItemComponentNode.getName());
+                }
             }
         } else if (component instanceof StaticComponent) {
             final StaticComponent staticComponent = (StaticComponent) component;
@@ -150,7 +162,6 @@ public class PageDao {
         for (AbstractComponent component : page.getComponents()) {
             createNodeFromComponent(temporaryStorageNode, session, component, parentNodePath, userId);
         }
-//        updateNodeFromComponent(temporaryStorageNode, session, page, parentNodePath, userId);
 
         temporaryStorageNode.remove();
     }

@@ -1,9 +1,12 @@
+/*
+ *  Copyright 2024 Bloomreach
+ */
 package com.bloomreach.xm.config.api.v2.model;
 
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -13,7 +16,7 @@ import lombok.Builder;
 @Builder
 public class SitemapItem {
 
-    @Schema(required = true, description = "the name (url path element) of the sitemap item. Each sitemap item name must be unique between its siblings.")
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "the name (url path element) of the sitemap item. Each sitemap item name must be unique between its siblings.")
     /**
      * the name (url path element) of the sitemap item. Each sitemap item name must be unique between its siblings.
      **/

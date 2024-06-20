@@ -1,3 +1,6 @@
+/*
+ *  Copyright 2024 Bloomreach
+ */
 package com.bloomreach.xm.config.api.v2.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -7,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.experimental.SuperBuilder;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +18,7 @@ import java.util.Map;
 @SuperBuilder
 public class Page {
 
-    @Schema(required = true, description = "identifying name of this page within its channel")
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "identifying name of this page within its channel")
     /**
      * identifying name of this page within its channel
      **/
@@ -34,7 +37,7 @@ public class Page {
      * a map of string parameters (names/values) for this page
      **/
     private Map<String, String> parameters = null;
-    @Schema(required = true, description = "page type defines the usage. Only abstract pages can be extended. Valid values: abstract, page, xpage")
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "page type defines the usage. Only abstract pages can be extended. Valid values: abstract, page, xpage")
     /**
      * page type defines the usage. Only abstract pages can be extended. Valid values: abstract, page, xpage
      **/

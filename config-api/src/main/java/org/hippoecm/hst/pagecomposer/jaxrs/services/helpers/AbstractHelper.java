@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2020 Hippo B.V. (http://www.onehippo.com)
+ * Copyright 2014-2024 Bloomreach
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,6 +38,7 @@ import org.hippoecm.hst.configuration.HstNodeTypes;
 import org.hippoecm.hst.configuration.hosting.Mount;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.PageComposerContextService;
 import org.hippoecm.hst.platform.api.PlatformServices;
+import org.hippoecm.hst.util.HstRequestUtils;
 import org.hippoecm.repository.util.JcrUtils;
 import org.hippoecm.repository.util.NodeIterable;
 import org.onehippo.cms7.services.HippoServiceRegistry;
@@ -334,7 +335,7 @@ public abstract class AbstractHelper {
         return lockedNodesForUsers;
     }
 
-    protected String buildXPathQueryLockedNodesForUsers(final String previewConfigurationPath,
+    public String buildXPathQueryLockedNodesForUsers(final String previewConfigurationPath,
                                                         final List<String> userIds) {
         if (userIds.isEmpty()) {
             throw new IllegalArgumentException("List of user IDs cannot be empty");
@@ -348,11 +349,14 @@ public abstract class AbstractHelper {
 
         String concat = "";
         for (String userId : userIds) {
+            if (userId.contains("[") || userId.contains("]") || userId.contains("/")) {
+                throw new IllegalArgumentException("invalid userId provided");
+            }
             xpath.append(concat);
             xpath.append('@');
             xpath.append(GENERAL_PROPERTY_LOCKED_BY);
             xpath.append(" = '");
-            xpath.append(userId);
+            xpath.append(HstRequestUtils.escapeXml(userId));
             xpath.append("'");
             concat = " or ";
         }

@@ -9,10 +9,6 @@
 
   <artifactId>brxm-configuration-editor-api</artifactId>
 
-  <properties>
-    <lombok.version>1.18.26</lombok.version>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.onehippo.cms7.hst.components</groupId>
