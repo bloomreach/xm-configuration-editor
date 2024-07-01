@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.onehippo.cms7</groupId>
     <artifactId>hippo-cms7-enterprise-release</artifactId>
-    <version>16.0.0-SNAPSHOT</version>
+    <version>16.0.0</version>
   </parent>
 
   <name>XM Channel Config Editor Demo</name>
@@ -60,7 +60,7 @@
     <!--***START temporary override of versions*** -->
     <!-- ***END temporary override of versions*** -->
 
-    <essentials.version>16.0.0-SNAPSHOT</essentials.version>
+    <essentials.version>16.0.0</essentials.version>
     <brxm-configuration-editor.version>0.9.9-SNAPSHOT</brxm-configuration-editor.version>
 
     <development-module-deploy-dir>shared/lib</development-module-deploy-dir>
@@ -73,7 +73,7 @@
     <repository>
       <id>bloomreach-maven2</id>
       <name>Bloomreach maven 2 repository.</name>
-      <url>https://maven.bloomreach.com/maven2/</url>
+      <url>https://maven.bloomreach.com/repository/maven2/</url>
     </repository>
     <repository>
       <releases>
@@ -82,7 +82,7 @@
       </releases>
       <id>bloomreach-maven2-enterprise</id>
       <name>Bloomreach Enterprise Maven 2</name>
-      <url>https://maven.bloomreach.com/maven2-enterprise/</url>
+      <url>https://maven.bloomreach.com/repository/maven2-enterprise/</url>
     </repository>
   </repositories>
 

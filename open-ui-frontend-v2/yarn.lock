@@ -1188,10 +1188,10 @@
   "resolved" "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   "version" "0.2.3"
 
-"@bloomreach/ui-extension@^15.6.0":
-  "integrity" "sha512-fMB8kKragEyHcO3UgMU9yK4ZVjlWusDU2pGaDaYPiOWig8GK0EOXBSWKg9JrqT0spNBucIOlKWGAO+oR6i0j4g=="
-  "resolved" "https://registry.npmjs.org/@bloomreach/ui-extension/-/ui-extension-15.6.0.tgz"
-  "version" "15.6.0"
+"@bloomreach/ui-extension@^16.0.0":
+  "integrity" "sha512-+VF2YwEUxgVhFRlc3wNINTHYhPIwqrhb66T4s3HUA6BuMNI2qfiB9gmDMYsci/jpChTF/lFkl2/SMwPO87PusQ=="
+  "resolved" "https://registry.npmjs.org/@bloomreach/ui-extension/-/ui-extension-16.0.0.tgz"
+  "version" "16.0.0"
   dependencies:
     "emittery" "^0.6"
     "penpal" "^4.1"
