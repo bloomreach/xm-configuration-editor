@@ -1,3 +1,6 @@
+/*
+ *  Copyright 2024 Bloomreach
+ */
 package com.bloomreach.xm.config.api.v2.utils;
 
 import java.rmi.RemoteException;
@@ -11,26 +14,15 @@ import java.util.stream.Stream;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-import javax.ws.rs.InternalServerErrorException;
-
-import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
-import com.bloomreach.xm.config.api.exception.WorkspaceComponentNotFoundException;
-import com.bloomreach.xm.config.api.v2.model.AbstractComponent;
-import com.bloomreach.xm.config.api.v2.model.ManagedComponent;
-import com.bloomreach.xm.config.api.v2.model.Page;
-import com.bloomreach.xm.config.api.v2.model.StaticComponent;
-import com.bloomreach.xm.config.api.v2.rest.ChannelFlexPageOperationsApiServiceImpl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.value.StringValue;
 import org.hippoecm.hst.configuration.HstNodeTypes;
 import org.hippoecm.hst.configuration.components.HstComponentConfiguration;
 import org.hippoecm.hst.configuration.hosting.Mount;
-import org.hippoecm.hst.configuration.internal.InternalHstSiteMapItem;
 import org.hippoecm.hst.configuration.site.HstSite;
 import org.hippoecm.hst.configuration.sitemap.HstSiteMap;
 import org.hippoecm.hst.configuration.sitemap.HstSiteMapItem;
-import org.hippoecm.hst.container.PlatformRequestContextProvider;
 import org.hippoecm.hst.container.RequestContextProvider;
 import org.hippoecm.hst.content.beans.ObjectBeanManagerException;
 import org.hippoecm.hst.core.internal.PreviewDecorator;
@@ -56,9 +48,27 @@ import org.onehippo.repository.util.JcrConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.*;
-import static org.hippoecm.hst.configuration.HstNodeTypes.*;
+import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
+import com.bloomreach.xm.config.api.exception.WorkspaceComponentNotFoundException;
+import com.bloomreach.xm.config.api.v2.model.AbstractComponent;
+import com.bloomreach.xm.config.api.v2.model.ManagedComponent;
+import com.bloomreach.xm.config.api.v2.model.Page;
+import com.bloomreach.xm.config.api.v2.model.StaticComponent;
+import com.bloomreach.xm.config.api.v2.rest.ChannelFlexPageOperationsApiServiceImpl;
+
+import jakarta.ws.rs.InternalServerErrorException;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.PROP_COMPONENTCLASSNAME;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.PROP_DESC;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.PROP_IDENTIFIER;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getVirtualHostGroupName;
+import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.isWorkspaceComponent;
+import static org.hippoecm.hst.configuration.HstNodeTypes.COMPONENT_PROPERTY_LABEL;
+import static org.hippoecm.hst.configuration.HstNodeTypes.COMPONENT_PROPERTY_XTYPE;
+import static org.hippoecm.hst.configuration.HstNodeTypes.GENERAL_PROPERTY_PARAMETER_NAMES;
+import static org.hippoecm.hst.configuration.HstNodeTypes.GENERAL_PROPERTY_PARAMETER_VALUES;
 import static org.hippoecm.hst.configuration.HstNodeTypes.INDEX;
+import static org.hippoecm.hst.configuration.HstNodeTypes.NODENAME_HST_XPAGE;
+import static org.hippoecm.hst.configuration.HstNodeTypes.NODETYPE_HST_CONTAINERCOMPONENT;
 import static org.hippoecm.repository.api.HippoNodeType.HIPPO_PROPERTY_BRANCH_ID;
 import static org.hippoecm.repository.util.JcrUtils.getStringProperty;
 import static org.hippoecm.repository.util.WorkflowUtils.Variant.UNPUBLISHED;
@@ -66,14 +76,13 @@ import static org.onehippo.repository.branch.BranchConstants.MASTER_BRANCH_ID;
 
 public class FlexPageUtils {
 
-
     private static final Logger LOGGER = LoggerFactory.getLogger(FlexPageUtils.class);
 
     private FlexPageUtils() {
     }
 
     public static HstModelRegistry getHstModelRegistry() {
-        HstModelRegistry hstModelRegistry = HippoServiceRegistry.getService(HstModelRegistry.class);
+        final HstModelRegistry hstModelRegistry = HippoServiceRegistry.getService(HstModelRegistry.class);
         if (hstModelRegistry == null) {
             LOGGER.info("Cannot create resolve URL's without hstModelRegistry");
             throw new IllegalStateException("Cannot create resolve URL's without hstModelRegistry");
@@ -95,17 +104,15 @@ public class FlexPageUtils {
             final Node xPageHandle = getXPageHandle(channelId, path, userSession);
             final Optional<Node> unpublished = WorkflowUtils.getDocumentVariantNode(xPageHandle, UNPUBLISHED);
 
-            if (!unpublished.isPresent()) {
+            if (unpublished.isEmpty()) {
                 throw new WorkflowException("Expected unpublished variant to be present");
             }
             return unpublished.get();
         } catch (WorkflowException e) {
-            LOGGER.error("Error while trying to access workflow {} ", e);
+            LOGGER.error("Error while trying to access workflow.", e);
         }
         return null;
     }
-
-//    private static ClassLoader platformClassloader = this.getClass().getClassLoader();
 
     public static Node getXPageHandle(String channelId, String path, Session userSession) throws ChannelNotFoundException {
         final HstModelRegistry hstModelRegistry = getHstModelRegistry();
@@ -294,26 +301,24 @@ public class FlexPageUtils {
             throw new WorkflowException(e.getMessage());
         }
 
-        final String targetBranchId = selectedBranchId;
-
         // validate that the targetBranchId is the SAME as the branch ID belonging to the request identifier node (this
         // can be a workspace container item or a container item in version history! This check is to avoid that for
         // some reason, there is a mismatch between the container item branch and the CMS session context branch
 
         final Optional<Node> unpublished = WorkflowUtils.getDocumentVariantNode(documentWorkflow.getNode(), UNPUBLISHED);
 
-        if (!unpublished.isPresent()) {
+        if (unpublished.isEmpty()) {
             throw new WorkflowException("Expected unpublished variant to be present");
         }
 
         final String currentBranchId = getStringProperty(unpublished.get(), HIPPO_PROPERTY_BRANCH_ID, MASTER_BRANCH_ID);
-        if (currentBranchId.equals(targetBranchId)) {
+        if (currentBranchId.equals(selectedBranchId)) {
             LOGGER.debug(String.format("target branch '%s' is current unpublished, no need to invoke checkoutBranch workflow",
-                    targetBranchId));
+                    selectedBranchId));
             return false;
         }
 
-        documentWorkflow.checkoutBranch(targetBranchId);
+        documentWorkflow.checkoutBranch(selectedBranchId);
         return true;
     }
 

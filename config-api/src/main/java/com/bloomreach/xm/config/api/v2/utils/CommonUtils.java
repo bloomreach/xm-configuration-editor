@@ -1,3 +1,6 @@
+/*
+ *  Copyright 2024 Bloomreach
+ */
 package com.bloomreach.xm.config.api.v2.utils;
 
 import java.util.List;
@@ -10,9 +13,9 @@ import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.SimpleCredentials;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.ws.rs.InternalServerErrorException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import jakarta.ws.rs.InternalServerErrorException;
 
 import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
 import com.bloomreach.xm.config.api.exception.UnauthorizedException;
@@ -97,7 +100,7 @@ public class CommonUtils {
 
         final String finalBranchId = branchId;
         if (finalBranchId != null) {
-            String masterChannelId = StringUtils.remove(channelId, branchId + "-");
+            final String masterChannelId = StringUtils.remove(channelId, branchId + "-");
             LOGGER.debug("fetching hstSite for project branch: {}", finalBranchId);
             return getHstSiteStream(hstModel, masterChannelId)
                     .map(hstSite -> ((CompositeHstSite) hstSite).getBranches().get(finalBranchId))
@@ -128,14 +131,12 @@ public class CommonUtils {
                         .type(AbstractComponent.TypeEnum.MANAGED);
             }
 
-            AbstractComponent component = builder
+            return builder
                     .name(componentConfiguration.getName())
                     .description(getDescription(componentConfiguration, session))
                     .parameters(componentConfiguration.getParameters())
                     .xtype(AbstractComponent.XtypeEnum.fromValue(componentConfiguration.getXType()))
                     .build();
-
-            return component;
         };
     }
 
@@ -221,11 +222,9 @@ public class CommonUtils {
                 break;
         }
 
-        List<AbstractComponent> components = config.getChildren().values().stream()
+        return config.getChildren().values().stream()
                 .filter(filter)
                 .map(configToComponentMapper(session, type)).collect(Collectors.toList());
-
-        return components;
     }
 
 }

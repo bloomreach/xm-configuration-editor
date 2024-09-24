@@ -1,19 +1,18 @@
+/*
+ *  Copyright 2024 Bloomreach
+ */
 package com.bloomreach.xm.config.api.v2.model;
 
 import java.util.Map;
-
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
+import jakarta.validation.constraints.NotNull;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -38,7 +37,7 @@ public class AbstractComponent {
         this.type = type;
     }
 
-    @Schema(required = true, description = "identifying name of this component within its page")
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "identifying name of this component within its page")
     /**
      * identifying name of this component within its page
      **/
@@ -60,7 +59,7 @@ public class AbstractComponent {
      * the layout used for rendering inner containers
      **/
     private XtypeEnum xtype = null;
-    @Schema(required = true, description = "the type of this component")
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "the type of this component")
     /**
      * the type of this component
      **/

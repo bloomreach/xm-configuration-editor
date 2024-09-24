@@ -1,3 +1,6 @@
+/*
+ *  Copyright 2024 Bloomreach
+ */
 package com.bloomreach.xm.config.api.v2.rest;
 
 import java.util.List;
@@ -5,14 +8,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.jcr.Session;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.InternalServerErrorException;
-import javax.ws.rs.core.Response;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.InternalServerErrorException;
+import jakarta.ws.rs.core.Response;
 
 import com.bloomreach.xm.config.api.exception.ChannelNotFoundException;
 import com.bloomreach.xm.config.api.exception.UnauthorizedException;
 import com.bloomreach.xm.config.api.v2.model.AbstractComponent;
 import com.bloomreach.xm.config.api.v2.model.Page;
+import com.bloomreach.xm.config.api.v2.utils.CommonUtils;
 import com.bloomreach.xm.config.api.v2.utils.FlexPageUtils;
 
 import org.hippoecm.hst.configuration.components.HstComponentConfiguration;
@@ -25,7 +29,6 @@ import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.ensureUserIsAuth
 import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getConfigApiPermissions;
 import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.getHstSite;
 import static com.bloomreach.xm.config.api.v2.utils.CommonUtils.isWorkspaceComponent;
-
 
 public class ChannelOtherOperationsApiServiceImpl implements ChannelOtherOperationsApi {
 
@@ -45,7 +48,7 @@ public class ChannelOtherOperationsApiServiceImpl implements ChannelOtherOperati
         ensureUserIsAuthorized(request, CONFIG_API_PERMISSION_CURRENT_PAGE_EDITOR, systemSession);
         final Map<String, HstComponentConfiguration> componentConfigurations = getHstSite(channelId).getComponentsConfiguration().getComponentConfigurations();
         final List<AbstractComponent> components = componentConfigurations.values().stream()
-                .filter(componentConfiguration -> isWorkspaceComponent(componentConfiguration))
+                .filter(CommonUtils::isWorkspaceComponent)
                 .filter(FlexPageUtils::isFirstLevelChildOfHstComponents)
                 .map(configToComponentMapper(systemSession, Page.PageType.ABSTRACT))
                 .collect(Collectors.toList());

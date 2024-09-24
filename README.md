@@ -21,6 +21,7 @@ The current page feature will allow a CMS user with the appropriate user roles t
 | 14.6        | 0.9.4          | Index matcher fix + Add component as last child                                                                                                                                                                                                   |
 | 14.6        | 0.9.6          | added support for componentclasses                                                                                                                                                                                                                |
 | 15.2.2      | 0.9.8          | Added support for CMS v15                                                                                                                                                                                                                         |
+| 16.0.0      | 2.0.0          | Upgraded to brXM v16                                                                                                                                                                                                                              |
 
 
 ## Installation
