@@ -20,23 +20,24 @@
   <parent>
     <groupId>org.onehippo.cms7</groupId>
     <artifactId>hippo-cms7-project</artifactId>
-    <version>16.0.0</version>
+    <version>17.0.0</version>
   </parent>
 
   <groupId>com.bloomreach.xm</groupId>
   <artifactId>brxm-configuration-editor</artifactId>
   <name>brXM Configuration Editor</name>
   <description>brXM Configuration Editor</description>
-  <version>2.0.1-SNAPSHOT</version>
+  <version>3.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <properties>
-    <hippo.hst.version>16.0.0</hippo.hst.version>
-    <hippo.repository.version>16.0.0</hippo.repository.version>
-    <hippo.services.version>16.0.0</hippo.services.version>
-    <lombok.version>1.18.26</lombok.version>
+    <hippo.hst.version>17.0.0</hippo.hst.version>
+    <hippo.repository.version>17.0.0</hippo.repository.version>
+    <hippo.services.version>17.0.0</hippo.services.version>
+    <lombok.version>1.18.34</lombok.version>
     <swagger-annotations.version>2.2.20</swagger-annotations.version>
     <validation-api.version>3.1.0</validation-api.version>
+    <junit.version>4.13.2</junit.version>
   </properties>
 
   <developers>
@@ -51,10 +52,10 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:git@github.com:bloomreach/xm-configuration-editor.git</connection>
-    <developerConnection>scm:git:git@github.com:bloomreach/xm-configuration-editor.git</developerConnection>
-    <url>https://github.com/bloomreach/xm-configuration-editor.git</url>
-    <tag>2.0.0</tag>
+    <connection>scm:git:git@github.com:bloomreach-forge/xm-configuration-editor.git</connection>
+    <developerConnection>scm:git:git@github.com:bloomreach-forge/xm-configuration-editor.git</developerConnection>
+    <url>https://github.com/bloomreach-forge/xm-configuration-editor</url>
+    <tag>HEAD</tag>
   </scm>
 
   <distributionManagement>
@@ -67,7 +68,7 @@
   </distributionManagement>
 
   <issueManagement>
-    <url>https://issues.onehippo.com/browse/FORGE</url>
+    <url>https://bloomreach.atlassian.net/browse/FORGE</url>
   </issueManagement>
 
   <organization>
