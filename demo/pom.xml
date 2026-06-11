@@ -5,14 +5,14 @@
   <parent>
     <groupId>com.onehippo.cms7</groupId>
     <artifactId>hippo-cms7-enterprise-release</artifactId>
-    <version>16.0.0</version>
+    <version>17.0.0</version>
   </parent>
 
   <name>XM Channel Config Editor Demo</name>
   <description>XM Channel Config Editor Demo</description>
   <groupId>com.bloomreach.xm</groupId>
   <artifactId>channel-config-editor-demo</artifactId>
-  <version>0.9.9-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <!--
@@ -60,8 +60,8 @@
     <!--***START temporary override of versions*** -->
     <!-- ***END temporary override of versions*** -->
 
-    <essentials.version>16.0.0</essentials.version>
-    <brxm-configuration-editor.version>0.9.9-SNAPSHOT</brxm-configuration-editor.version>
+    <essentials.version>17.0.0</essentials.version>
+    <brxm-configuration-editor.version>3.0.0-SNAPSHOT</brxm-configuration-editor.version>
 
     <development-module-deploy-dir>shared/lib</development-module-deploy-dir>
 
